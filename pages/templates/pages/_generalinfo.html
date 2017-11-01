@@ -1,0 +1,20 @@
+{% load static %}
+
+<section class="generalinfo-display">
+  <div class="row align-items-end justify-content-center border border-dark">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 order-sm-2 text-center p-5">
+      <img src="{% static "img/blank-profile-picture.png" %}" class="rounded-circle profile-img" alt="avatar">
+    </div>
+    {% if module.name or module.identity %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 order-sm-1 p-5">
+      {% if module.name %}
+        <p class="h1">Hi</p>
+        <p class="lead">I am {{module.name}}</p>
+      {% endif %}
+      {% if module.identity %}
+        <p class="lead">{{ module.get_identity_display }}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
