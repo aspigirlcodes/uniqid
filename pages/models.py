@@ -1,3 +1,5 @@
+from itertools import chain
+from operator import attrgetter
 from django.db import models
 # Create your models here.
 
@@ -8,7 +10,8 @@ MODULES = (
 
 
 class Page(models.Model):
-    title = models.CharField(max_length=255, default="", blank=True)
+    title = models.CharField(verbose_name="Page Title", max_length=255,
+                             default="", blank=True)
     module_num = models.PositiveIntegerField(default=0, blank=True)
 
     def get_all_modules(self):
@@ -17,6 +20,12 @@ class Page(models.Model):
             'freetextmodule': self.freetextmodule_set.all(),
         }
 
+    def get_all_modules_sorted(self):
+        module_dict = self.get_all_modules()
+        return sorted(
+            chain(*module_dict.values()),
+            key=attrgetter('position'))
+
     def __str__(self):
         return self.title
 
@@ -24,8 +33,13 @@ class Page(models.Model):
 class Module(models.Model):
     class Meta:
         abstract = True
+
     page = models.ForeignKey(Page)
     position = models.IntegerField()
+
+    @property
+    def type(self):
+        return self.__class__.__name__
 
 
 class GeneralInfoModule(Module):
@@ -47,6 +61,8 @@ class GeneralInfoModule(Module):
         (ID_ASPIE, "I am an aspie"),
     )
 
+    template = "pages/_generalinfo.html"
+
     name = models.CharField(max_length=255, default="", blank=True)
     identity = models.CharField(max_length=32,
                                 choices=IDENTITIES,
@@ -59,6 +75,9 @@ class GeneralInfoModule(Module):
 
 
 class FreeTextModule(Module):
+
+    template = "pages/_freetext.html"
+
     title = models.CharField(max_length=255, default="", blank=True)
     text = models.TextField(default="", blank=True)
 

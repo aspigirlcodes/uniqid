@@ -2,7 +2,8 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from .models import Page, GeneralInfoModule, FreeTextModule
-from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm
+from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
+                   FreeTextModuleForm
 
 
 class PageCreateView(CreateView):
@@ -17,11 +18,27 @@ class PageCreateView(CreateView):
         return HttpResponseRedirect(url)
 
 
-class GeneralInfoModuleCreateView(CreateView):
-    model = GeneralInfoModule
-    form_class = GeneralInfoModuleForm
-    template_name = "pages/creategeneralinfomodule.html"
+class SelectModuleView(UpdateView):
+    model = Page
+    form_class = AddModuleForm
+    template_name = "pages/createpage.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['modules'] = self.object.get_all_modules_sorted()
+        return context
+
+    def form_valid(self, form):
+        self.object = form.save()
+        if "submit_next" in self.request.POST:
+            url = reverse("pages:pagepreview", args=[self.object.id, ])
+        else:
+            url_name = "pages:create" + form.cleaned_data['module']
+            url = reverse(url_name, args=[self.object.id, ])
+        return HttpResponseRedirect(url)
+
+
+class ModuleCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         self.page = Page.objects.get(id=self.kwargs.get('page_id'))
@@ -40,30 +57,23 @@ class GeneralInfoModuleCreateView(CreateView):
         return HttpResponseRedirect(url)
 
 
-class FreeTextModuleCreateView(CreateView):
+class GeneralInfoModuleCreateView(ModuleCreateView):
+    model = GeneralInfoModule
+    form_class = GeneralInfoModuleForm
+    template_name = "pages/creategeneralinfomodule.html"
+
+
+class FreeTextModuleCreateView(ModuleCreateView):
     model = FreeTextModule
-    template_name = "pages/empty.html"
-    fields = []
-
-
-class SelectModuleView(UpdateView):
-    model = Page
-    form_class = AddModuleForm
-    template_name = "pages/createpage.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['modules'] = self.object.get_all_modules()
-        print(context['modules'])
-        return context
-
-    def form_valid(self, form):
-        self.object = form.save()
-        url_name = "pages:create" + form.cleaned_data['module']
-        url = reverse(url_name, args=[self.object.id, ])
-        return HttpResponseRedirect(url)
+    form_class = FreeTextModuleForm
+    template_name = "pages/createfreetextmodule.html"
 
 
 class PagePreview(DetailView):
     model = Page
-    template_name = "pages/empty.html"
+    template_name = "pages/page_preview.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['modules'] = self.object.get_all_modules_sorted()
+        return context
