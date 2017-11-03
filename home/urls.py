@@ -27,6 +27,6 @@ urlpatterns = [
         name="about"),
     url(r'^examples/', TemplateView.as_view(template_name='pages/empty.html'),
         name="examples"),
-    url(r'^', TemplateView.as_view(template_name='pages/empty.html'),
+    url(r'^', TemplateView.as_view(template_name='home/home.html'),
         name="home"),
 ]

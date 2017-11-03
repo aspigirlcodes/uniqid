@@ -1,0 +1,16 @@
+<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="82" width="82" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <ellipse ry="40" rx="40" id="svg_9" cy="40.000002" cx="40" stroke-opacity="null" stroke-width="null" stroke="null" fill="#72767b"/>
+  <g id="svg_8">
+   <path fill="#ffffff" id="svg_3" d="m57,52l-34,0c-0.552999,0 -1,-0.448002 -1,-1l0,-22c0,-0.552 0.447001,-1 1,-1l3,0l0,2l-2,0l0,20l32,0l0,-4l2,0l0,5c0,0.551998 -0.446999,1 -1,1z"/>
+   <path fill="#ffffff" id="svg_5" d="m63,44l-34,0c-0.553001,0 -1,-0.447998 -1,-1l0,-22c0,-0.552 0.446999,-1 1,-1l34,0c0.553001,0 1,0.448 1,1l0,22c0,0.552002 -0.446999,1 -1,1zm-33,-2l32,0l0,-20l-32,0l0,20z"/>
+   <path fill="#ffffff" id="svg_7" d="m51,60l-34,0c-0.552999,0 -1,-0.448002 -1,-1l0,-22c0,-0.552002 0.447001,-1 1,-1l3,0l0,2l-2,0l0,20l32,0l0,-4l2,0l0,5c0,0.551998 -0.446999,1 -1,1z"/>
+  </g>
+ </g>
+</svg>
