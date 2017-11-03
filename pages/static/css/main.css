@@ -1,3 +1,19 @@
+#banner {
+  background: linear-gradient( to right, rgba(62,68,74,0.9) , rgba(52,58,64,0.6)), url('../img/banner.jpg') 0% 0%/cover
+}
+
+.fill-60-viewport {
+  min-height: 60vh
+}
+
+.fill-30-viewport
+{
+  min-height: 30vh
+}
+
 .profile-img{
   max-width: 200px;
+}
+.text-white-70 {
+  color: rgba(255,255,255,0.7)
 }
