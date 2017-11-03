@@ -1,13 +1,14 @@
 {% extends "pages/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <section id="banner">
   <div class="container">
     <div class="row fill-60-viewport align-items-center">
       <div class="col-12 col-md-4">
-        <h1 class="text-white">Personalised Autism Infographics</h1>
-        <a href="{% url "pages:createpage" %}" role="button" class="btn btn-success">Create one!</a>
+        <h1 class="text-white">{% trans "Personalised Autism Infographics" %}</h1>
+        <a href="{% url "pages:createpage" %}" role="button" class="btn btn-success">{% trans "Create one!" context "Action button" %}</a>
       </div>
     </div>
   </div>
@@ -22,29 +23,29 @@
     <div class="row">
       <div class="col-12 col-md-4 text-center">
         <img src="{% static "img/icon-step-1.svg" %}" class="img-fluid my-4"/>
-        <h3>Step 1: Create</h3>
+        <h3>{% trans "Step 1: Create" %}</h3>
         <p>
-          Choose from our predefined modules and add your own content.
+          {% trans "Choose from our predefined modules and add your own content." %}
         </p>
       </div>
       <div class="col-12 col-md-4 text-center">
         <img src="{% static "img/icon-step-2.svg" %}" class="img-fluid my-4"/>
-        <h3>Step 2: Arrange</h3>
+        <h3>{% trans "Step 2: Arrange" %}</h3>
         <p>
-          Arrange the modules in the order you want them.
+          {% trans "Arrange the modules in the order you want them." %}
         </p>
       </div>
       <div class="col-12 col-md-4 text-center">
         <img src="{% static "img/icon-step-3.svg" %}" class="img-fluid my-4"/>
-        <h3>Step 3: Finish</h3>
+        <h3>{% trans "Step 3: Finish" %}</h3>
         <p>
-          Once you're happy, you can save the result to your device, share it, or print it out.
+          {% trans "Once you're happy, you can save the result to your device, share it, or print it out." %}
         </p>
       </div>
     </div>
     <div class="row mb-4">
       <div class="col-12 text-right">
-        <a href="{% url "pages:createpage" %}" role="button" class="btn btn-success">Let's do this!</a>
+        <a href="{% url "pages:createpage" %}" role="button" class="btn btn-success">{% trans "Let's do this!" context "Action button" %}</a>
       </div>
     </div>
   </div>
@@ -53,22 +54,31 @@
   <div class="container">
     <div class="row pt-4">
       <div class="col-12">
-        <h2>Why should I create a personalised autism infographic?</h2>
+        <h2>{% trans "Why should I create a personalised autism infographic?" %}</h2>
       </div>
     </div>
     <div class="row py-4">
       <div class="col-12 col-md-4">
-        <h3>You are unique</h3>
-        <p>As are all autistic people. There is no one explanation that fits all.</p>
+        <h3>{% trans "You are unique" %}</h3>
+        <p>{% blocktrans trimmed %}
+          As are all autistic people. There is no one explanation that fits all.
+          {% endblocktrans %}
+        </p>
       </div>
       <div class="col-12 col-md-4">
-        <h3> You're worth to be understood</h3>
-        <p>We are convinced that the right explanation can lead to more acceptance.</p>
+        <h3>{% trans "You're worth to be understood" %}</h3>
+        <p>{% blocktrans trimmed %}
+          We are convinced that the right explanation can lead to more acceptance.
+          {% endblocktrans %}
+        </p>
       </div>
       <div class="col-12 col-md-4">
-        <h3>Explaining isn't allways easy</h3>
-        <p>By creating an infographic you will be prepared for those situations
-          where you can't find the right words or don't have the energy to speak.</p>
+        <h3>{% trans "Explaining isn't allways easy" %}</h3>
+        <p>{% blocktrans trimmed %}
+          By creating an infographic you will be prepared for those situations
+          where you can't find the right words or don't have the energy to speak.
+          {% endblocktrans %}
+        </p>
       </div>
     </div>
   </div>
@@ -79,14 +89,20 @@
       <div class="col-12">
         <ul class="list-unstyled">
           <li><h6 class="text-white">ABOUT</h6></li>
-          <li> Personalised Autism Infographics is a project by and for autistic people.
+          <li> {% blocktrans trimmed %}
+            Personalised Autism Infographics is a project by and for autistic people.
+            {% endblocktrans %}
           </li>
           <li>
+            {% blocktrans trimmed %}
             It has been created as a thesis project of the bachelor in computer science at the University of Bern.
+            {% endblocktrans %}
           </li>
           <li>
+            {% blocktrans trimmed %}
             If you want to give feedback or support, or have any questions you can contact me at
-             <a class="text-white"href="https://twitter.com/aspigirlcodes" target="_blank">@AspiGirlCodes</a>
+            <a class="text-white"href="https://twitter.com/aspigirlcodes" target="_blank">@AspiGirlCodes</a>
+            {% endblocktrans %}
            </li>
           </ul>
       </div>

@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,27 +23,27 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link px-3" href="{% url "home:home" %}">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link px-3" href="{% url "home:home" %}">{% trans "Home" context "Homepage" %} <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link px-3 btn btn-outline-success" href="{% url "pages:createpage" %}">Create one!</a>
+          <a class="nav-link px-3 btn btn-outline-success" href="{% url "pages:createpage" %}">{%trans "Create one!" context "action button" %}</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link px-3" href="{% url "home:how" %}">How it works</a>
+          <a class="nav-link px-3" href="{% url "home:how" %}">{% trans "How it works" context "menu item" %}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link px-3" href="{% url "home:examples" %}">Examples</a>
+          <a class="nav-link px-3" href="{% url "home:examples" %}">{% trans "Examples" context "menu item" %}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link px-3" href="{% url "home:faq" %}">FAQ</a>
+          <a class="nav-link px-3" href="{% url "home:faq" %}">{% trans "FAQ" context "menu item" %}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link px-3" href="{% url "home:about" %}">About</a>
+          <a class="nav-link px-3" href="{% url "home:about" %}">{% trans "About" context "menu item" %}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link px-3 disabled" href="#">Log in</a>
+          <a class="nav-link px-3 disabled" href="#">{% trans "Log in" context "menu item" %}</a>
         </li>
       </ul>
     </div>
@@ -50,7 +51,7 @@
   {% block content %}
 
   {% endblock content %}
-  
+
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>

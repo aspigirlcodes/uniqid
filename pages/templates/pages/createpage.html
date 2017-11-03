@@ -1,5 +1,6 @@
 {% extends "pages/base.html" %}
 {% load widget_tweaks %}
+{% load i18n %}
 
 {% block content %}
 <section id="create-form" class="pb-5">
@@ -41,7 +42,7 @@
       {% if modules %}
         <div class="row my-3 justify-content-center">
           <div class="col-12">
-            <h4> You allready have the following modules: </h4>
+            <h4>{% trans "You allready have the following modules:" %} </h4>
           </div>
           <div class="col-11">
               {% for module in modules %}
@@ -77,9 +78,9 @@
             {% endif %}
           </div>
           <div class="text-right">
-            <button type="submit" name="submit_module" class="btn btn-lg btn-primary"> Create module </button>
+            <button type="submit" name="submit_module" class="btn btn-lg btn-primary"> {% trans "Create module" context "Button" %} </button>
             {% if modules %}
-                <button type="submit" name="submit_next" class="btn btn-lg btn-success"> Next step: Arrange modules </button>
+                <button type="submit" name="submit_next" class="btn btn-lg btn-success"> {%trans "Next step: Arrange modules" context "Button" %}</button>
             {% endif %}
           </div>
         </div>

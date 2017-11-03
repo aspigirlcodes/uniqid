@@ -1,0 +1,286 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-03 16:43+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: home/templates/home/home.html:10
+msgid "Personalised Autism Infographics"
+msgstr "Personalisierte Autismus Infografiken"
+
+#: home/templates/home/home.html:11
+msgctxt "Action button"
+msgid "Create one!"
+msgstr "Probiere es aus!"
+
+#: home/templates/home/home.html:26
+msgid "Step 1: Create"
+msgstr "Schritt 1: Erstellen"
+
+#: home/templates/home/home.html:28
+msgid "Choose from our predefined modules and add your own content."
+msgstr "Wähle einen unseren vordefinierten Modulen und füge deine eigenen Inhalte hinzu."
+
+#: home/templates/home/home.html:33
+msgid "Step 2: Arrange"
+msgstr "Schritt 2: Anordnen"
+
+#: home/templates/home/home.html:35
+msgid "Arrange the modules in the order you want them."
+msgstr "Plaziere die Module in die von dir gewünschte Reihenfolge."
+
+#: home/templates/home/home.html:40
+msgid "Step 3: Finish"
+msgstr "Schritt 3: Fertigstellen"
+
+#: home/templates/home/home.html:42
+msgid ""
+"Once you're happy, you can save the result to your device, share it, or "
+"print it out."
+msgstr "Wenn du mit dem Resultat zufrieden bist, kannst du es speichern, teilen, "
+"oder ausdrucken."
+
+#: home/templates/home/home.html:48
+msgctxt "Action button"
+msgid "Let's do this!"
+msgstr "Legen wir los!"
+
+#: home/templates/home/home.html:57
+msgid "Why should I create a personalised autism infographic?"
+msgstr "Wieso sollte ich eine personalisierte Autismusinfografik erstellen?"
+
+#: home/templates/home/home.html:62
+msgid "You are unique"
+msgstr "Du bist einzigartig"
+
+#: home/templates/home/home.html:63
+msgid "As are all autistic people. There is no one explanation that fits all."
+msgstr "Genau wie die anderen Autisten auch. Es gibt keine generische Beschreibung die für jeden passt."
+
+#: home/templates/home/home.html:69
+msgid "You're worth to be understood"
+msgstr "Du bist es Wert verstanden zu werden."
+
+#: home/templates/home/home.html:70
+msgid ""
+"We are convinced that the right explanation can lead to more acceptance."
+msgstr "Wir sind davon überzeugt, dass die passende Erklärung zu mehr Akzeptanz führen kann."
+
+#: home/templates/home/home.html:76
+msgid "Explaining isn't allways easy"
+msgstr "Das Erlautern ist nicht immer einfach"
+
+#: home/templates/home/home.html:77
+msgid ""
+"By creating an infographic you will be prepared for those situations where "
+"you can't find the right words or don't have the energy to speak."
+msgstr "Wenn du eine Infografik machst, bist du bestens vorbereitet für die "
+"Situationen wo dir die richtige Worte nicht einfallen, "
+"oder wenn du keine Energie zum Reden hast."
+
+#: home/templates/home/home.html:92
+msgid ""
+"Personalised Autism Infographics is a project by and for autistic people."
+msgstr "Dies ist ein Projekt von und für Autisten"
+
+#: home/templates/home/home.html:97
+msgid ""
+"It has been created as a thesis project of the bachelor in computer science "
+"at the University of Bern."
+msgstr "Es wird im Rahmen eines Bachelorprojekts in die Informatik an der Universität Bern"
+
+#: home/templates/home/home.html:102
+msgid ""
+"If you want to give feedback or support, or have any questions you can "
+"contact me at <a class=\"text-white\"href=\"https://twitter.com/aspigirlcodes"
+"\" target=\"_blank\">@AspiGirlCodes</a>"
+msgstr "Für Feedback oder Support, oder wenn du Fragen hast, kannst du mir über twitter erreichen: "
+"<a class=\"text-white\"href=\"https://twitter.com/aspigirlcodes"
+"\" target=\"_blank\">@AspiGirlCodes</a>"
+
+#: pages/forms.py:8
+msgid "Choose a module to start with"
+msgstr "Wähle die Module womit do anfangen willst"
+
+#: pages/forms.py:10
+msgid "You can add more modules later"
+msgstr "Du kannst später noch weitere Module hinzufügen"
+
+#: pages/forms.py:18
+msgid "Choose a title for your page"
+msgstr "Wähle einen Titel für deine Seite"
+
+#: pages/forms.py:22
+msgid "Choose another module"
+msgstr "Wähle eine weitere Module"
+
+#: pages/forms.py:24
+msgid "You can add more modules or go to the next step when you are finished"
+msgstr "Du kannst weitere Module hinzu fügen, oder zum nächsten Schritt gehen wenn du fertig bist"
+
+#: pages/models.py:7
+msgid "General info module"
+msgstr "Allgemeine Informationen"
+
+#: pages/models.py:8
+msgid "Free text module"
+msgstr "Freier Text"
+
+#: pages/models.py:13
+msgid "Page Title"
+msgstr "Titel der Seite"
+
+#: pages/models.py:37
+msgid "Page"
+msgstr "Seite"
+
+#: pages/models.py:38
+msgid "Position"
+msgstr "Position"
+
+#: pages/models.py:55
+msgid "I am autistic"
+msgstr "Ich bin Autist*in"
+
+#: pages/models.py:56
+msgid "I have autism"
+msgstr "Ich habe Autismus"
+
+#: pages/models.py:57
+msgid "I am on the autism spectrum"
+msgstr "Ich bin im Autismus-Spektrum"
+
+#: pages/models.py:58
+msgid "I have an autism spectrum disorder"
+msgstr "Ich habe eine Autismusspektrumstörung"
+
+#: pages/models.py:59
+msgid "I am neurodivergent"
+msgstr "Ich bin Neurodivergent"
+
+#: pages/models.py:60
+msgid "I have aspergers syndrome"
+msgstr "Ich habe das Asperger-Syndrom"
+
+#: pages/models.py:61
+msgid "I am an aspie"
+msgstr "Ich bin ein Aspie"
+
+#: pages/models.py:66
+msgid "Name"
+msgstr "Name"
+
+#: pages/models.py:68
+msgid "Identity"
+msgstr "Identität"
+
+#: pages/models.py:83
+msgid "Title"
+msgstr "Titel"
+
+#: pages/models.py:85
+msgid "Text"
+msgstr "Tekst"
+
+#: pages/templates/pages/_generalinfo.html:12
+msgid "Hi,"
+msgstr "Hallo,"
+
+#: pages/templates/pages/_generalinfo.html:14
+#, python-format
+msgid "I am %(name)s."
+msgstr "Ich bin %(name)s."
+
+#: pages/templates/pages/base.html:26
+msgctxt "Homepage"
+msgid "Home"
+msgstr "Home"
+
+#: pages/templates/pages/base.html:29
+msgctxt "action button"
+msgid "Create one!"
+msgstr "Probiere es aus!"
+
+#: pages/templates/pages/base.html:34
+msgctxt "menu item"
+msgid "How it works"
+msgstr "Wie Funktioniert es"
+
+#: pages/templates/pages/base.html:37
+msgctxt "menu item"
+msgid "Examples"
+msgstr "Beispiele"
+
+#: pages/templates/pages/base.html:40
+msgctxt "menu item"
+msgid "FAQ"
+msgstr "FAQ"
+
+#: pages/templates/pages/base.html:43
+msgctxt "menu item"
+msgid "About"
+msgstr "Über uns"
+
+#: pages/templates/pages/base.html:46
+msgctxt "menu item"
+msgid "Log in"
+msgstr "Einloggen"
+
+#: pages/templates/pages/createfreetextmodule.html:11
+#: pages/templates/pages/creategeneralinfomodule.html:11
+msgctxt "superscript above page title"
+msgid "creating page"
+msgstr "Erstellung der Seite"
+
+#: pages/templates/pages/createfreetextmodule.html:15
+#: pages/templates/pages/creategeneralinfomodule.html:15
+msgid "No Title"
+msgstr "Kein Titel"
+
+#: pages/templates/pages/createfreetextmodule.html:22
+msgid "Free Text Module"
+msgstr "Module mit Freier Text"
+
+#: pages/templates/pages/createfreetextmodule.html:78
+#: pages/templates/pages/creategeneralinfomodule.html:78
+msgctxt "Button"
+msgid "Back"
+msgstr "Zurück"
+
+#: pages/templates/pages/createfreetextmodule.html:81
+#: pages/templates/pages/creategeneralinfomodule.html:81
+msgctxt "Button"
+msgid "Save"
+msgstr "Speichern"
+
+#: pages/templates/pages/creategeneralinfomodule.html:22
+msgid "General Information Module"
+msgstr "Modulle mit allgemeine Informationen"
+
+#: pages/templates/pages/createpage.html:45
+msgid "You allready have the following modules:"
+msgstr "Du hast schon folgende Module erstellt:"
+
+#: pages/templates/pages/createpage.html:81
+msgctxt "Button"
+msgid "Create module"
+msgstr "Module Erstellen"
+
+#: pages/templates/pages/createpage.html:83
+msgctxt "Button"
+msgid "Next step: Arrange modules"
+msgstr "Nächster Schritt: Modulen Anordnen"
