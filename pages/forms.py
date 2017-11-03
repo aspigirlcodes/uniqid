@@ -1,5 +1,5 @@
 from django import forms
-from .models import MODULES, Page, GeneralInfoModule
+from .models import MODULES, Page, GeneralInfoModule, FreeTextModule
 
 
 class PageCreateForm(forms.ModelForm):
@@ -36,3 +36,9 @@ class GeneralInfoModuleForm(forms.ModelForm):
     class Meta:
         model = GeneralInfoModule
         fields = ['name', 'identity']
+
+
+class FreeTextModuleForm(forms.ModelForm):
+    class Meta:
+        model = FreeTextModule
+        fields = ['title', 'text']

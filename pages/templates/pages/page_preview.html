@@ -1,0 +1,19 @@
+{% extends "pages/base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<section id="page" class="pb-5">
+  <div class="container">
+    {% if page.title %}
+      <div class="row p-5">
+        <div class="col-12">
+          <h1>{{page.title}}</h1>
+        </div>
+      </div>
+    {% endif %}
+    {% for module in modules %}
+      {% include module.template %}
+    {% endfor %}
+  </div>
+</section>
+{% endblock content %}

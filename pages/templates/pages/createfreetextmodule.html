@@ -17,12 +17,12 @@
     </div>
     <div class="row">
       <div class="col">
-        <h2>General Information Module</h2>
+        <h2>Free Text Module</h2>
       </div>
     </div>
     <form action="" method="post">
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12">
           {% csrf_token %}
           {% if form.non_field_errors %}
           <div class="alert alert-danger" role="alert">
@@ -34,39 +34,39 @@
           </div>
           {% endif %}
           <div class="form-group">
-            <label for="{{form.name.auto_id}}">
-              {{ form.name.label }}
+            <label for="{{form.title.auto_id}}">
+              {{ form.title.label }}
             </label>
-            {% if form.name.errors %}
-            {{ form.name|add_class:"form-control is-invalid" }}
+            {% if form.title.errors %}
+            {{ form.title|add_class:"form-control is-invalid" }}
             <div class="invalid-feedback">
               <ul class="list-unstyled">
-                {% for error in form.name.errors %}
+                {% for error in form.title.errors %}
                 <li><strong>{{ error|escape }}</strong></li>
                 {% endfor %}
               </ul>
             </div>
             {% else %}
-            {{ form.name|add_class:"form-control" }}
+            {{ form.title|add_class:"form-control" }}
             {% endif %}
           </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12">
           <div class="form-group">
-            <label for="{{form.identity.auto_id}}">
-              {{ form.identity.label }}
+            <label for="{{form.text.auto_id}}">
+              {{ form.text.label }}
             </label>
-            {% if form.identity.errors %}
-            {{ form.identity|add_class:"form-control is-invalid" }}
+            {% if form.text.errors %}
+            {{ form.text|add_class:"form-control is-invalid" }}
             <div class="invalid-feedback">
               <ul class="list-unstyled">
-                {% for error in form.identity.errors %}
+                {% for error in form.text.errors %}
                 <li><strong>{{ error|escape }}</strong></li>
                 {% endfor %}
               </ul>
             </div>
             {% else %}
-            {{ form.identity|add_class:"form-control" }}
+            {{ form.text|add_class:"form-control" }}
             {% endif %}
           </div>
         </div>

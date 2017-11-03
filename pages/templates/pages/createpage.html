@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<section id="create-form">
+<section id="create-form" class="pb-5">
   <div class="container">
     <form action="" method="post">
       {% csrf_token %}
@@ -44,14 +44,12 @@
             <h4> You allready have the following modules: </h4>
           </div>
           <div class="col-11">
-              {% for category, moduleset in modules.items %}
-                {% for module in moduleset %}
-                  {% if category == "generalinfomodule" %}
-                    {% include "pages/_generalinfo.html" %}
+              {% for module in modules %}
+                  {% if module.template %}
+                    {% include module.template %}
                   {% else %}
                     <p>{{module}} </p>
                   {% endif %}
-                {% endfor %}
               {% endfor %}
           </div>
         </div>
@@ -79,9 +77,9 @@
             {% endif %}
           </div>
           <div class="text-right">
-            <button type="submit" value="submit_module" class="btn btn-lg btn-primary"> Create module </button>
+            <button type="submit" name="submit_module" class="btn btn-lg btn-primary"> Create module </button>
             {% if modules %}
-                <button type="submit" value="submit_next" class="btn btn-lg btn-success"> Next step: Arrange modules </button>
+                <button type="submit" name="submit_next" class="btn btn-lg btn-success"> Next step: Arrange modules </button>
             {% endif %}
           </div>
         </div>

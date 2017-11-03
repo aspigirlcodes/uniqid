@@ -1,2 +1,4 @@
 Django ~= 1.11
 psycopg2 ~= 2.7
+django-widget-tweaks
+django-extensions
