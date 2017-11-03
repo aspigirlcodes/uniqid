@@ -1,16 +1,16 @@
 from itertools import chain
 from operator import attrgetter
 from django.db import models
-# Create your models here.
+from django.utils.translation import ugettext as _
 
 MODULES = (
-    ("generalinfomodule", "General info module"),
-    ("freetextmodule", "Free text module")
+    ("generalinfomodule", _("General info module")),
+    ("freetextmodule", _("Free text module"))
 )
 
 
 class Page(models.Model):
-    title = models.CharField(verbose_name="Page Title", max_length=255,
+    title = models.CharField(verbose_name=_("Page Title"), max_length=255,
                              default="", blank=True)
     module_num = models.PositiveIntegerField(default=0, blank=True)
 
@@ -34,8 +34,8 @@ class Module(models.Model):
     class Meta:
         abstract = True
 
-    page = models.ForeignKey(Page)
-    position = models.IntegerField()
+    page = models.ForeignKey(Page, verbose_name=_("Page"))
+    position = models.IntegerField(verbose_name=_("Position"))
 
     @property
     def type(self):
@@ -52,19 +52,21 @@ class GeneralInfoModule(Module):
     ID_ASPIE = "07_aspie"
 
     IDENTITIES = (
-        (ID_AUTISTIC, "I am autistic"),
-        (ID_HAVE_AUT, "I have autism"),
-        (ID_SPECTRUM, "I am on the autism spectrum"),
-        (ID_ASD, "I have an autism spectrum disorder"),
-        (ID_NEURODIV, "I am neurodivergent"),
-        (ID_ASP_SYN, "I have aspergers syndrome"),
-        (ID_ASPIE, "I am an aspie"),
+        (ID_AUTISTIC, _("I am autistic")),
+        (ID_HAVE_AUT, _("I have autism")),
+        (ID_SPECTRUM, _("I am on the autism spectrum")),
+        (ID_ASD, _("I have an autism spectrum disorder")),
+        (ID_NEURODIV, _("I am neurodivergent")),
+        (ID_ASP_SYN, _("I have aspergers syndrome")),
+        (ID_ASPIE, _("I am an aspie")),
     )
 
     template = "pages/_generalinfo.html"
 
-    name = models.CharField(max_length=255, default="", blank=True)
-    identity = models.CharField(max_length=32,
+    name = models.CharField(verbose_name=_("Name"), max_length=255, default="",
+                            blank=True)
+    identity = models.CharField(verbose_name=_("Identity"),
+                                max_length=32,
                                 choices=IDENTITIES,
                                 default="",
                                 blank=True)
@@ -78,8 +80,9 @@ class FreeTextModule(Module):
 
     template = "pages/_freetext.html"
 
-    title = models.CharField(max_length=255, default="", blank=True)
-    text = models.TextField(default="", blank=True)
+    title = models.CharField(verbose_name=_("Title"),
+                             max_length=255, default="", blank=True)
+    text = models.TextField(verbose_name=_("Text"), default="", blank=True)
 
     def __str__(self):
         return "{page} Freetextmodule: {title}"\

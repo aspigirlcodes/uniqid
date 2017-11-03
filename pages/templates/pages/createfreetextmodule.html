@@ -1,23 +1,25 @@
 {% extends "pages/base.html" %}
 {% load widget_tweaks %}
+{% load i18n %}
 
 {% block content %}
 <section id="create-form" class="pb-5">
   <div class="container">
     <div class="row my-4">
       <div class="col">
-          <h6 class="my-0"><small class="text-uppercase text-secondary font-weight-light">creating page</small></h6>
+          <h6 class="my-0"><small class="text-uppercase text-secondary font-weight-light">
+            {% trans "creating page" context "superscript above page title" %}</small></h6>
           {% if page.title %}
             <h1>{{page.title}}</h1>
           {% else %}
-            <h1 class="text-secondary">No Title</h1>
+            <h1 class="text-secondary">{% trans "No Title" %}</h1>
           {% endif %}
         </h1>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <h2>Free Text Module</h2>
+        <h2>{% trans "Free Text Module" %}</h2>
       </div>
     </div>
     <form action="" method="post">
@@ -73,10 +75,10 @@
       </div>
       <div class="row">
         <div class="col">
-          <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">Back</a>
+          <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
         </div>
         <div class="col text-right">
-          <button type="submit" value="submit_add_more" class="btn btn-primary">Save</button>
+          <button type="submit" value="submit_add_more" class="btn btn-primary">{% trans "Save" context "Button" %}</button>
         </div>
         </div>
       </div>
