@@ -16,7 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.views.generic import TemplateView
 
+from .views import switch_lang
+
 urlpatterns = [
+    url(r'^i18n/set-lang/(?P<lang>\w{2})/', switch_lang, name="switch_lang"),
     url(r'^how/', TemplateView.as_view(template_name='pages/empty.html'),
         name="how"),
     url(r'^why/', TemplateView.as_view(template_name='pages/empty.html'),

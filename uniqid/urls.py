@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^pages/',
         include('pages.urls', namespace='pages', app_name='pages')),
     url(r'^', include('home.urls', namespace='home', app_name='home'))
