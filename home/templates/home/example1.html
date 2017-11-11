@@ -1,0 +1,129 @@
+{% load static %}
+{% load i18n %}
+<section id="page" class="pb-5">
+    <div class="row py-3">
+      <div class="col-12">
+        <h1>{% trans "Hairdresser visit" %}</h1>
+      </div>
+    </div>
+    <section class="generalinfo-display bg-dark text-white">
+      <div class="row align-items-end justify-content-center">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 order-sm-2 text-center p-5">
+          <img src="{% static "img/blank-profile-picture.png" %}" class="rounded-circle profile-img" alt="avatar">
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 order-sm-1 p-5">
+            <p class="h1">{% trans "Hi," %}</p>
+            <p class="lead">
+              {% blocktrans trimmed with name="Sara" %}
+                I am {{name}}.
+              {% endblocktrans %}
+              </p>
+            <p class="lead">{% trans "I am autistic." %}</p>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 px-5 pb-5">
+          {% trans "Read on to learn more about what autism means to me and how you can help me." %}
+        </div>
+      </div>
+    </section>
+
+    <section class="communication">
+      <div class="row my-2">
+        <div class="col-12">
+          <h2>{% trans "Communication" %}</h2>
+        </div>
+      </div>
+      <div class="card-deck">
+        <div class="card">
+          <div class="card-header bg-success text-light text-center">
+            <h4 class="mt-2">{% trans "In general" %}</h4>
+          </div>
+          <div class="card-body border border-success">
+            <div class="text-grey">
+              <h5>{% trans "You can use" %}</h5>
+              <ul>
+                <li>{% trans "Spoken language" %}</li>
+                <li>{% trans "Written language" %}</li>
+              </ul>
+            </div>
+            <img src="{% static "img/communication-dialogue-icon-3.png" %}" class="mx-auto d-block" style="width:50%; max-width:150px">
+            <h5>{% trans "I will use" %}</h5>
+            <ul>
+              <li>{% trans "Spoken language" %}</li>
+              <li>{% trans "Written language" %}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header bg-danger text-light text-center">
+            <h4 class="mt-2">{% trans "When I am stressed" %}</h4>
+          </div>
+          <div class="card-body border border-danger">
+            <div class="text-grey">
+              <h5>{% trans "You can use" %}</h5>
+              <ul>
+                <li>{% trans "Spoken language" %}</li>
+                <li>{% trans "Written language" %}</li>
+              </ul>
+            </div>
+            <img src="{% static "img/communication-dialogue-icon-3.png" %}" class="mx-auto d-block" style="width:50%; max-width:150px">
+            <h5>{% trans "I will use" %}</h5>
+            <ul>
+              <li>{% trans "Written language" %}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="do-dont">
+      <div class="row my-2">
+        <div class="col-12">
+          <h2>{% trans "Do's and Don'ts" %}</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 my-2">
+          <div class="border border-2 border-danger">
+            <ul class="mt-3">
+              <li> {% trans "Don't ask me too many questions" %}</li>
+              <li> {% trans "Don't make unexpected hard noises such as slamming the door" %}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-12 my-2">
+          <div class="border border-2 border-warning">
+            <ul class="mt-3">
+              <li> {% trans "Ask before touching my stuff" %}</li>
+              <li> {% trans "Ask me before using products with a pronounced smell" %}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-12 my-2">
+          <div class="border border-2 border-success">
+            <ul class="mt-3">
+              <li> {% trans "Leave me enough time to answer your questions or to make decisions" %}</li>
+              <li> {% trans "Tell me what is going to happen beforehand" %}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="free-image">
+      <div class="row my-2">
+        <div class="col-12">
+          <h2>{% trans "This is what I want my hair to look like" %}</h2>
+          <div class="card w-50">
+            <img src="{% static "img/shoulder-length-curly-hairstyle.jpg" %}" class="card-img-top">
+            <div class="card-body">
+              <p class="card-text">
+                {% trans "As my hair is curly it will be shorter when dry. Please don't cut it too short as I still want to be able to bind it together in a ponytail." %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</section>

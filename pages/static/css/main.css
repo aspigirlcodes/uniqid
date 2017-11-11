@@ -10,10 +10,16 @@
 {
   min-height: 30vh
 }
-
+.text-grey {
+  color: #555555;
+}
 .profile-img{
   max-width: 200px;
 }
 .text-white-70 {
   color: rgba(255,255,255,0.7)
+}
+
+.border-2{
+  border-width: 2px !important;
 }
