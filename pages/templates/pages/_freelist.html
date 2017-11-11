@@ -1,0 +1,19 @@
+
+<section class="freelist-display">
+  <div class="row p-5 border border-dark">
+    {% if module.title %}
+    <div class="col-12">
+      <h2> {{ module.title }} </h2>
+    </div>
+    {% endif %}
+    {% if module.items %}
+    <div class="col-12">
+      <ul>
+        {% for item in module.items %}
+        {{item}}
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</section>

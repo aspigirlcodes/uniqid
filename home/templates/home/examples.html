@@ -1,0 +1,36 @@
+{% extends "pages/base.html" %}
+{% load i18n %}
+{% block content %}
+<section id="empty">
+  <div class="container">
+    <div class="row p-5">
+      <div class="col-12">
+        <ul class="nav nav-tabs mb-3" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="ex1-tab" data-toggle="tab" href="#example1" role="tab" aria-controls="example1" aria-selected="true">{% trans "Example 1" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="ex2-tab" data-toggle="tab" href="#example2" role="tab" aria-controls="example2" aria-selected="false">{% trans "Example 2" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="ex3-tab" data-toggle="tab" href="#example3" role="tab" aria-controls="example3" aria-selected="false">{% trans "Example 3" %}</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="example1" role="tabpanel" aria-labelledby="ex1-tab">
+            {% include "home/example1.html" %}
+          </div>
+          <div class="tab-pane fade" id="example2" role="tabpanel" aria-labelledby="ex2-tab">
+            {% include "home/example2.html" %}
+          </div>
+          <div class="tab-pane fade" id="example3" role="tabpanel" aria-labelledby="ex3-tab">
+            {% include "home/example3.html" %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock content %}

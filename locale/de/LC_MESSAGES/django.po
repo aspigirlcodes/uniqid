@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-03 16:43+0100\n"
+"POT-Creation-Date: 2017-11-11 16:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,272 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: home/templates/home/example1.html:6
+msgid "Hairdresser visit"
+msgstr "Coiffeurbesuch"
+
+#: home/templates/home/example1.html:15 home/templates/home/example2.html:15
+#: home/templates/home/example3.html:15
+#: pages/templates/pages/_generalinfo.html:12
+msgid "Hi,"
+msgstr "Hallo,"
+
+#: home/templates/home/example1.html:17 home/templates/home/example2.html:17
+#: home/templates/home/example3.html:17
+#: pages/templates/pages/_generalinfo.html:14
+#, python-format
+msgid "I am %(name)s."
+msgstr "Ich bin %(name)s."
+
+#: home/templates/home/example1.html:21
+msgid "I am autistic."
+msgstr "Ich bin Autist*in."
+
+#: home/templates/home/example1.html:26 home/templates/home/example2.html:26
+msgid ""
+"Read on to learn more about what autism means to me and how you can help me."
+msgstr ""
+"Lese weiter und erfahre mehr darüber was Autismus für mich bedeutet und wie "
+"Sie mir helfen können."
+
+#: home/templates/home/example1.html:34
+msgid "Communication"
+msgstr "Kommunikation"
+
+#: home/templates/home/example1.html:40
+msgid "In general"
+msgstr "Allgemein"
+
+#: home/templates/home/example1.html:44 home/templates/home/example1.html:64
+msgid "You can use"
+msgstr "Du kannst benutzen"
+
+#: home/templates/home/example1.html:46 home/templates/home/example1.html:53
+#: home/templates/home/example1.html:66
+msgid "Spoken language"
+msgstr "Mündliche Kommunikation"
+
+#: home/templates/home/example1.html:47 home/templates/home/example1.html:54
+#: home/templates/home/example1.html:67 home/templates/home/example1.html:73
+msgid "Written language"
+msgstr "Schriftliche Kommunikation"
+
+#: home/templates/home/example1.html:51 home/templates/home/example1.html:71
+msgid "I will use"
+msgstr "Ich werde benutzen"
+
+#: home/templates/home/example1.html:60
+msgid "When I am stressed"
+msgstr "In eine Stresssituation"
+
+#: home/templates/home/example1.html:83 home/templates/home/example2.html:34
+msgid "Do's and Don'ts"
+msgstr "Do's and Don'ts"
+
+#: home/templates/home/example1.html:90 home/templates/home/example2.html:42
+msgid "Don't ask me too many questions"
+msgstr "Stelle mich nicht zu viele Fragen"
+
+#: home/templates/home/example1.html:91
+msgid "Don't make unexpected hard noises such as slamming the door"
+msgstr ""
+"Mache keine unerwartete laute Geraüsche (zum Beispiel die Türe zuschlagen)"
+
+#: home/templates/home/example1.html:98 home/templates/home/example2.html:49
+msgid "Ask before touching my stuff"
+msgstr "Meine Sachen nicht berühren ohne zuerst zu fragen"
+
+#: home/templates/home/example1.html:99
+msgid "Ask me before using products with a pronounced smell"
+msgstr "Keine Produkte mit ausgesprochen Geruch benutzen ohne zuerst zu fragen"
+
+#: home/templates/home/example1.html:106 home/templates/home/example2.html:58
+msgid "Leave me enough time to answer your questions or to make decisions"
+msgstr ""
+"Lasse mich genug Zeit um Fragen zu beantworten oder entscheidungen zu treffen"
+
+#: home/templates/home/example1.html:107 home/templates/home/example2.html:59
+msgid "Tell me what is going to happen beforehand"
+msgstr "Sage mir im Voraus was passieren wird"
+
+#: home/templates/home/example1.html:117
+msgid "This is what I want my hair to look like"
+msgstr "Ich möchte das meine Haare etwa so aussehen"
+
+#: home/templates/home/example1.html:122
+msgid ""
+"As my hair is curly it will be shorter when dry. Please don't cut it too "
+"short as I still want to be able to bind it together in a ponytail."
+msgstr ""
+"Weil ich Locken habe werden meine Haare kurzer sein wenn trocken. Bitte "
+"schneiden Sie meine Haare nicht zu kurz weil ich sie nachher noch zu einen "
+"Pferdenschwanz zusammen binden können möchte."
+
+#: home/templates/home/example2.html:6
+msgid "Doctors visit"
+msgstr "Arztbesuch"
+
+#: home/templates/home/example2.html:21
+#, fuzzy
+#| msgid "I have an autism spectrum disorder"
+msgid "I have an Autism Spectrum Condition."
+msgstr "Ich habe eine Autismusspektrumstörung"
+
+#: home/templates/home/example2.html:41
+msgid "Don't touch me without permission"
+msgstr "Berühre mich nicht ohne meine Zustimmung"
+
+#: home/templates/home/example2.html:50
+msgid "Ask me if I am ready to go before you take me to a new place"
+msgstr "Frage mich ob ich parat bin bevor Sie mich zu einen neuen Ort bringen"
+
+#: home/templates/home/example2.html:57
+msgid "Give me clear instructions if I have to do something"
+msgstr "Ich brauche klare Instruktionen wenn ich etwas machen soll"
+
+#: home/templates/home/example2.html:60
+msgid "Write important information down for me."
+msgstr "Schreibe alle wichtige informationen für mich auf."
+
+#: home/templates/home/example2.html:70
+msgid "Sensory sensitivities"
+msgstr "Sensorische Empfindlichkeit"
+
+#: home/templates/home/example2.html:77
+msgid "I am very sensitive to sound"
+msgstr "Ich bin sehr empfindlich bezüglich Geräusche"
+
+#: home/templates/home/example2.html:83
+msgid "I am very sensitive to light"
+msgstr "Ich bin sehr empfindlich bezüglich Licht "
+
+#: home/templates/home/example2.html:84
+msgid "I can't cope with fluorescent lighting"
+msgstr "Ich kann das Licht von Leuchtstofflampen nicht ertragen "
+
+#: home/templates/home/example2.html:90
+msgid "I am less sensitive than average to temperature"
+msgstr "Ich bin weniger als durchschnittlich empfindlich bezüglich Wärme/Kälte"
+
+#: home/templates/home/example2.html:96
+msgid ""
+"I have trouble processing more than one sense at a time, for example hearing "
+"you while looking at something"
+msgstr ""
+"Ich habe mühe damit mehr als einen Sinn gleichzeitig zu verarbeiten, zum "
+"beisplie Ihnen zuhören währenddem das ich etwas anschaue"
+
+#: home/templates/home/example2.html:97
+msgid "I have difficulties recognizing and/or reporting pain or other symptoms"
+msgstr ""
+"Ich habe schwierigkeiten damit Schmerzen und andere Symptome zu erkennen und/"
+"oder darüber zu berichten"
+
+#: home/templates/home/example2.html:106
+#, fuzzy
+#| msgid "Communication"
+msgid "Medication"
+msgstr "Kommunikation"
+
+#: home/templates/home/example2.html:114
+msgid "What"
+msgstr "Was"
+
+#: home/templates/home/example2.html:115
+msgid "When"
+msgstr "Wann"
+
+#: home/templates/home/example2.html:116
+msgid "Quantity"
+msgstr "Wieviel"
+
+#: home/templates/home/example2.html:117
+msgid "Remarks"
+msgstr "Bemerkungen"
+
+#: home/templates/home/example2.html:122
+msgid "Wonder pills"
+msgstr "Wunderpille"
+
+#: home/templates/home/example2.html:123
+msgid "Breakfast"
+msgstr "Beim Frühstuck"
+
+#: home/templates/home/example2.html:125
+msgid "Take with my favorite banana yoghurt"
+msgstr "mit mein favorites Bananenyoghurt"
+
+#: home/templates/home/example2.html:128
+msgid "Dinner"
+msgstr "beim Abendessen"
+
+#: home/templates/home/example2.html:132
+msgid "sweet sirup"
+msgstr "Süsse Sirup"
+
+#: home/templates/home/example2.html:133
+msgid "before sleeping"
+msgstr "vor dem Schlafen"
+
+#: home/templates/home/example2.html:146 home/templates/home/example3.html:48
+msgid "Contacts"
+msgstr "Kontakte"
+
+#: home/templates/home/example2.html:153
+msgid "My GP (General Practitioner)"
+msgstr "Mein Hausarzt"
+
+#: home/templates/home/example3.html:6
+msgid "Travel"
+msgstr "Reise"
+
+#: home/templates/home/example3.html:21
+msgid "I have autism."
+msgstr "Ich habe Autismus."
+
+#: home/templates/home/example3.html:30
+msgid "This situation is very stressful to me"
+msgstr "Diese Situation ist für mich sehr Stressig"
+
+#: home/templates/home/example3.html:34
+msgid "I might not be able to talk or answer your questions"
+msgstr ""
+"Es kann sein das ich Ihre Fragen nicht beantworten kann oder gar nicht rede"
+
+#: home/templates/home/example3.html:35
+msgid ""
+"I might be able to write if you give me pen and paper or type on my "
+"smartphone"
+msgstr ""
+"Es ist möglich dass ich schriftlich kommunizieren kann wenn sie mir einen "
+"Stift und Papier geben, oder indem ich auf mein Smartphone tippe"
+
+#: home/templates/home/example3.html:36
+msgid "Please don't touch me or try to comfort me by talking a lot"
+msgstr ""
+"Bitte berühren Sie mich nicht und versuchen sie nicht mich mit viele Worten "
+"zu beruhigen"
+
+#: home/templates/home/example3.html:37
+msgid "Please help me get back to my hotel"
+msgstr "Bitte hilfen Sie mir zurück zum Hotel zu gelangen."
+
+#: home/templates/home/example3.html:69
+msgid "Emergency contact"
+msgstr "Notfallkontakt"
+
+#: home/templates/home/examples.html:10
+msgid "Example 1"
+msgstr "Beispiel 1"
+
+#: home/templates/home/examples.html:13
+msgid "Example 2"
+msgstr "Beispiel 2"
+
+#: home/templates/home/examples.html:16
+msgid "Example 3"
+msgstr "Beispiel 3"
 
 #: home/templates/home/home.html:10
 msgid "Personalised Autism Infographics"
@@ -27,13 +293,19 @@ msgctxt "Action button"
 msgid "Create one!"
 msgstr "Probiere es aus!"
 
+#: home/templates/home/home.html:20
+msgid "How it works"
+msgstr "Wie es funktioniert"
+
 #: home/templates/home/home.html:26
 msgid "Step 1: Create"
 msgstr "Schritt 1: Erstellen"
 
 #: home/templates/home/home.html:28
 msgid "Choose from our predefined modules and add your own content."
-msgstr "Wähle einen unseren vordefinierten Modulen und füge deine eigenen Inhalte hinzu."
+msgstr ""
+"Wähle einen unseren vordefinierten Modulen und füge deine eigenen Inhalte "
+"hinzu."
 
 #: home/templates/home/home.html:33
 msgid "Step 2: Arrange"
@@ -51,7 +323,8 @@ msgstr "Schritt 3: Fertigstellen"
 msgid ""
 "Once you're happy, you can save the result to your device, share it, or "
 "print it out."
-msgstr "Wenn du mit dem Resultat zufrieden bist, kannst du es speichern, teilen, "
+msgstr ""
+"Wenn du mit dem Resultat zufrieden bist, kannst du es speichern, teilen, "
 "oder ausdrucken."
 
 #: home/templates/home/home.html:48
@@ -69,7 +342,9 @@ msgstr "Du bist einzigartig"
 
 #: home/templates/home/home.html:63
 msgid "As are all autistic people. There is no one explanation that fits all."
-msgstr "Genau wie die anderen Autisten auch. Es gibt keine generische Beschreibung die für jeden passt."
+msgstr ""
+"Genau wie die anderen Autisten auch. Es gibt keine generische Beschreibung "
+"die für jeden passt."
 
 #: home/templates/home/home.html:69
 msgid "You're worth to be understood"
@@ -78,7 +353,9 @@ msgstr "Du bist es Wert verstanden zu werden."
 #: home/templates/home/home.html:70
 msgid ""
 "We are convinced that the right explanation can lead to more acceptance."
-msgstr "Wir sind davon überzeugt, dass die passende Erklärung zu mehr Akzeptanz führen kann."
+msgstr ""
+"Wir sind davon überzeugt, dass die passende Erklärung zu mehr Akzeptanz "
+"führen kann."
 
 #: home/templates/home/home.html:76
 msgid "Explaining isn't allways easy"
@@ -88,9 +365,10 @@ msgstr "Das Erlautern ist nicht immer einfach"
 msgid ""
 "By creating an infographic you will be prepared for those situations where "
 "you can't find the right words or don't have the energy to speak."
-msgstr "Wenn du eine Infografik machst, bist du bestens vorbereitet für die "
-"Situationen wo dir die richtige Worte nicht einfallen, "
-"oder wenn du keine Energie zum Reden hast."
+msgstr ""
+"Wenn du eine Infografik machst, bist du bestens vorbereitet für die "
+"Situationen wo dir die richtige Worte nicht einfallen, oder wenn du keine "
+"Energie zum Reden hast."
 
 #: home/templates/home/home.html:92
 msgid ""
@@ -101,16 +379,19 @@ msgstr "Dies ist ein Projekt von und für Autisten"
 msgid ""
 "It has been created as a thesis project of the bachelor in computer science "
 "at the University of Bern."
-msgstr "Es wird im Rahmen eines Bachelorprojekts in die Informatik an der Universität Bern"
+msgstr ""
+"Es wird im Rahmen eines Bachelorprojekts in die Informatik an der "
+"Universität Bern"
 
 #: home/templates/home/home.html:102
 msgid ""
 "If you want to give feedback or support, or have any questions you can "
 "contact me at <a class=\"text-white\"href=\"https://twitter.com/aspigirlcodes"
 "\" target=\"_blank\">@AspiGirlCodes</a>"
-msgstr "Für Feedback oder Support, oder wenn du Fragen hast, kannst du mir über twitter erreichen: "
-"<a class=\"text-white\"href=\"https://twitter.com/aspigirlcodes"
-"\" target=\"_blank\">@AspiGirlCodes</a>"
+msgstr ""
+"Für Feedback oder Support, oder wenn du Fragen hast, kannst du mir über "
+"twitter erreichen: <a class=\"text-white\"href=\"https://twitter.com/"
+"aspigirlcodes\" target=\"_blank\">@AspiGirlCodes</a>"
 
 #: pages/forms.py:8
 msgid "Choose a module to start with"
@@ -130,80 +411,83 @@ msgstr "Wähle eine weitere Module"
 
 #: pages/forms.py:24
 msgid "You can add more modules or go to the next step when you are finished"
-msgstr "Du kannst weitere Module hinzu fügen, oder zum nächsten Schritt gehen wenn du fertig bist"
+msgstr ""
+"Du kannst weitere Module hinzu fügen, oder zum nächsten Schritt gehen wenn "
+"du fertig bist"
 
-#: pages/models.py:7
+#: pages/models.py:8
 msgid "General info module"
 msgstr "Allgemeine Informationen"
 
-#: pages/models.py:8
+#: pages/models.py:9
 msgid "Free text module"
 msgstr "Freier Text"
 
-#: pages/models.py:13
+#: pages/models.py:14
 msgid "Page Title"
 msgstr "Titel der Seite"
 
-#: pages/models.py:37
+#: pages/models.py:38
 msgid "Page"
 msgstr "Seite"
 
-#: pages/models.py:38
+#: pages/models.py:39
 msgid "Position"
 msgstr "Position"
 
-#: pages/models.py:55
+#: pages/models.py:56
 msgid "I am autistic"
 msgstr "Ich bin Autist*in"
 
-#: pages/models.py:56
+#: pages/models.py:57
 msgid "I have autism"
 msgstr "Ich habe Autismus"
 
-#: pages/models.py:57
+#: pages/models.py:58
 msgid "I am on the autism spectrum"
 msgstr "Ich bin im Autismus-Spektrum"
 
-#: pages/models.py:58
+#: pages/models.py:59
 msgid "I have an autism spectrum disorder"
 msgstr "Ich habe eine Autismusspektrumstörung"
 
-#: pages/models.py:59
+#: pages/models.py:60
 msgid "I am neurodivergent"
 msgstr "Ich bin Neurodivergent"
 
-#: pages/models.py:60
+#: pages/models.py:61
 msgid "I have aspergers syndrome"
 msgstr "Ich habe das Asperger-Syndrom"
 
-#: pages/models.py:61
+#: pages/models.py:62
 msgid "I am an aspie"
 msgstr "Ich bin ein Aspie"
 
-#: pages/models.py:66
+#: pages/models.py:67
 msgid "Name"
 msgstr "Name"
 
-#: pages/models.py:68
+#: pages/models.py:69
 msgid "Identity"
 msgstr "Identität"
 
-#: pages/models.py:83
+#: pages/models.py:84 pages/models.py:97 pages/models.py:111
 msgid "Title"
 msgstr "Titel"
 
-#: pages/models.py:85
+#: pages/models.py:86
 msgid "Text"
 msgstr "Tekst"
 
-#: pages/templates/pages/_generalinfo.html:12
-msgid "Hi,"
-msgstr "Hallo,"
+#: pages/models.py:100
+msgid "Items"
+msgstr ""
 
-#: pages/templates/pages/_generalinfo.html:14
-#, python-format
-msgid "I am %(name)s."
-msgstr "Ich bin %(name)s."
+#: pages/models.py:115
+#, fuzzy
+#| msgid "Position"
+msgid "Description"
+msgstr "Position"
 
 #: pages/templates/pages/base.html:26
 msgctxt "Homepage"
@@ -215,22 +499,22 @@ msgctxt "action button"
 msgid "Create one!"
 msgstr "Probiere es aus!"
 
-#: pages/templates/pages/base.html:34
+#: pages/templates/pages/base.html:32
 msgctxt "menu item"
 msgid "How it works"
-msgstr "Wie Funktioniert es"
+msgstr "Wie es funktioniert"
 
-#: pages/templates/pages/base.html:37
+#: pages/templates/pages/base.html:35
 msgctxt "menu item"
 msgid "Examples"
 msgstr "Beispiele"
 
-#: pages/templates/pages/base.html:40
+#: pages/templates/pages/base.html:38
 msgctxt "menu item"
 msgid "FAQ"
 msgstr "FAQ"
 
-#: pages/templates/pages/base.html:43
+#: pages/templates/pages/base.html:41
 msgctxt "menu item"
 msgid "About"
 msgstr "Über uns"
@@ -284,3 +568,11 @@ msgstr "Module Erstellen"
 msgctxt "Button"
 msgid "Next step: Arrange modules"
 msgstr "Nächster Schritt: Modulen Anordnen"
+
+#: uniqid/settings.py:114
+msgid "English"
+msgstr "Englisch"
+
+#: uniqid/settings.py:115
+msgid "German"
+msgstr "Deutsch"

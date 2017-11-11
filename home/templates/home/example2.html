@@ -1,0 +1,165 @@
+{% load static %}
+{% load i18n %}
+<section id="page" class="pb-5">
+    <div class="row py-3">
+      <div class="col-12">
+        <h1>{% trans "Doctors visit" %}</h1>
+      </div>
+    </div>
+    <section class="generalinfo-display bg-dark text-white">
+      <div class="row align-items-end justify-content-center">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 order-sm-2 text-center p-5">
+          <img src="{% static "img/blank-profile-picture.png" %}" class="rounded-circle profile-img" alt="avatar">
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 order-sm-1 p-5">
+            <p class="h1">{% trans "Hi," %}</p>
+            <p class="lead">
+              {% blocktrans trimmed with name="Sara" %}
+                I am {{name}}.
+              {% endblocktrans %}
+              </p>
+            <p class="lead">{% trans "I have an Autism Spectrum Condition." %}</p>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 px-5 pb-5">
+          {% trans "Read on to learn more about what autism means to me and how you can help me." %}
+        </div>
+      </div>
+    </section>
+
+    <section class="do-dont">
+      <div class="row my-2">
+        <div class="col-12">
+          <h2>{% trans "Do's and Don'ts" %}</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 my-2">
+          <div class="border border-2 border-danger">
+            <ul class="mt-3">
+              <li> {% trans "Don't touch me without permission" %}</li>
+              <li> {% trans "Don't ask me too many questions" %}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-12 my-2">
+          <div class="border border-2 border-warning">
+            <ul class="mt-3">
+              <li> {% trans "Ask before touching my stuff" %}</li>
+              <li> {% trans "Ask me if I am ready to go before you take me to a new place" %}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-12 my-2">
+          <div class="border border-2 border-success">
+            <ul class="mt-3">
+              <li> {% trans "Give me clear instructions if I have to do something" %}</li>
+              <li> {% trans "Leave me enough time to answer your questions or to make decisions" %}</li>
+              <li> {% trans "Tell me what is going to happen beforehand" %}</li>
+              <li> {% trans "Write important information down for me." %}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sensory">
+      <div class="row my-2">
+        <div class="col-12">
+          <h2>{% trans "Sensory sensitivities" %}</h2>
+        </div>
+      </div>
+      <div class="card-deck">
+      <div class="card">
+        <img class="card-img-top" src="{% static "img/ear.svg" %}" alt="Card image cap">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{% trans "I am very sensitive to sound" %}</li>
+        </ul>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{% static "img/eye.svg" %}" alt="Card image cap">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{% trans "I am very sensitive to light" %}</li>
+          <li class="list-group-item">{% trans "I can't cope with fluorescent lighting" %}</li>
+        </ul>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{% static "img/termo.svg" %}" alt="Card image cap">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{% trans "I am less sensitive than average to temperature" %}</li>
+        </ul>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{% static "img/brain.svg" %}" alt="Card image cap">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{% trans "I have trouble processing more than one sense at a time, for example hearing you while looking at something" %}</li>
+          <li class="list-group-item">{% trans "I have difficulties recognizing and/or reporting pain or other symptoms" %}</li>
+        </ul>
+      </div>
+    </div>
+    </section>
+
+    <section class="medication">
+      <div class="row my-2">
+        <div class="col-12">
+          <h2>{% trans "Medication" %}</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-bordered table-responsive-md">
+            <thead>
+              <tr>
+                <th scope="col">{% trans "What" %}</th>
+                <th scope="col">{% trans "When" %}</th>
+                <th scope="col">{% trans "Quantity" %}</th>
+                <th scope="col">{% trans "Remarks" %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2">{% trans "Wonder pills" %}</td>
+                <td>{% trans "Breakfast" %}</td>
+                <td>2</td>
+                <td rowspan="2">{% trans "Take with my favorite banana yoghurt" %}</td>
+              </tr>
+              <tr>
+                <td>{% trans "Dinner" %}</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>{% trans "sweet sirup" %}</td>
+                <td>{% trans "before sleeping" %}</td>
+                <td>200 ml</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact">
+      <div class="row my-2">
+        <div class="col-12">
+          <h2>{% trans "Contacts" %}</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">{% trans "My GP (General Practitioner)" %}</h4>
+              <address>
+                Dr. Jef Arzt <br/>
+                Praxisstrasse 1 <br/>
+                3000 Bern <br/>
+                Tel: 031 123 45 67 <br/>
+              </address>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</section>

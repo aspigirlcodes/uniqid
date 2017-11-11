@@ -1,0 +1,79 @@
+{% load static %}
+{% load i18n %}
+<section id="page" class="pb-5">
+  <div class="row py-3">
+    <div class="col-12">
+      <h1>{% trans "Travel" %}</h1>
+    </div>
+  </div>
+  <section class="generalinfo-display bg-dark text-white">
+    <div class="row align-items-end justify-content-center">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 order-sm-2 text-center p-5">
+        <img src="{% static "img/blank-profile-picture.png" %}" class="rounded-circle profile-img" alt="avatar">
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 order-sm-1 p-5">
+          <p class="h1">{% trans "Hi," %}</p>
+          <p class="lead">
+            {% blocktrans trimmed with name="Sara" %}
+              I am {{name}}.
+            {% endblocktrans %}
+            </p>
+          <p class="lead">{% trans "I have autism." %}</p>
+      </div>
+    </div>
+  </section>
+  <section class="free-text">
+    <div class="row my-2">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-danger text-light">
+            <h4 class="mt-2">{% trans "This situation is very stressful to me" %}</h4>
+          </div>
+          <div class="card-body border border-danger">
+            <ul>
+              <li>{% trans "I might not be able to talk or answer your questions" %}</li>
+              <li>{% trans "I might be able to write if you give me pen and paper or type on my smartphone" %}</li>
+              <li>{% trans "Please don't touch me or try to comfort me by talking a lot" %}</li>
+              <li><strong>{% trans "Please help me get back to my hotel" %}</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="row my-2">
+      <div class="col-12">
+        <h2>{% trans "Contacts" %}</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card">
+          <img src="{% static "img/map.png" %}" class="card-img-top">
+          <div class="card-body">
+            <h4 class="card-title">Hotel Imperial</h4>
+            <address>
+              Gran Via de les Corts Catalanes, 668<br/>
+              08010 Barcelona,<br/>
+              Spanien <br/>
+              Tel: +34 935 10 11 30 <br/>
+            </address>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{% trans "Emergency contact" %}</h4>
+            <address>
+              John Doe <br/>
+              Tel: +41 76 123 45 67 <br/>
+            </address>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
