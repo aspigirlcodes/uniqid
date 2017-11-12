@@ -14,11 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from .views import PageCreateView, GeneralInfoModuleCreateView,\
+from django.views.generic import TemplateView
+from .views import GeneralInfoModuleCreateView,\
                    FreeTextModuleCreateView, SelectModuleView, PagePreview
 
 urlpatterns = [
-    url(r'^createpage/', PageCreateView.as_view(), name="createpage"),
+    # url(r'^createpage/', PageCreateView.as_view(), name="createpage"),
+    url(r'^createpage/',
+        TemplateView.as_view(template_name='pages/empty.html'),
+        name="createpage"),
     url(r'^(?P<pk>[0-9]+)/addmodule/',
         SelectModuleView.as_view(), name="addmodule"),
     url(r'^(?P<page_id>[0-9]+)/creategeneralinfomodule/',

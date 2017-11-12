@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-11 16:08+0100\n"
+"POT-Creation-Date: 2017-11-12 14:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -383,16 +383,6 @@ msgstr ""
 "Es wird im Rahmen eines Bachelorprojekts in die Informatik an der "
 "Universität Bern"
 
-#: home/templates/home/home.html:102
-msgid ""
-"If you want to give feedback or support, or have any questions you can "
-"contact me at <a class=\"text-white\"href=\"https://twitter.com/aspigirlcodes"
-"\" target=\"_blank\">@AspiGirlCodes</a>"
-msgstr ""
-"Für Feedback oder Support, oder wenn du Fragen hast, kannst du mir über "
-"twitter erreichen: <a class=\"text-white\"href=\"https://twitter.com/"
-"aspigirlcodes\" target=\"_blank\">@AspiGirlCodes</a>"
-
 #: pages/forms.py:8
 msgid "Choose a module to start with"
 msgstr "Wähle die Module womit do anfangen willst"
@@ -481,13 +471,11 @@ msgstr "Tekst"
 
 #: pages/models.py:100
 msgid "Items"
-msgstr ""
+msgstr "Items"
 
 #: pages/models.py:115
-#, fuzzy
-#| msgid "Position"
 msgid "Description"
-msgstr "Position"
+msgstr "Beschreibung"
 
 #: pages/templates/pages/base.html:26
 msgctxt "Homepage"
@@ -569,6 +557,14 @@ msgctxt "Button"
 msgid "Next step: Arrange modules"
 msgstr "Nächster Schritt: Modulen Anordnen"
 
+#: pages/templates/pages/empty.html:10
+#, python-format
+msgid ""
+"<p> nothing here yet. Have a look at our <a href=\"%(ex_url)s\">examples</a> "
+"instead.</p>"
+msgstr "<p>Hier gibt es noch keine Inhalte. Du kannst dich aber die "
+"<a href=\"%(ex_url)s\">Beispiele</a> anschauen.</p>"
+
 #: uniqid/settings.py:114
 msgid "English"
 msgstr "Englisch"
@@ -576,3 +572,12 @@ msgstr "Englisch"
 #: uniqid/settings.py:115
 msgid "German"
 msgstr "Deutsch"
+
+#~ msgid ""
+#~ "If you want to give feedback or support, or have any questions you can "
+#~ "contact me at <a class=\"text-white\"href=\"https://twitter.com/"
+#~ "aspigirlcodes\" target=\"_blank\">@AspiGirlCodes</a>"
+#~ msgstr ""
+#~ "Für Feedback oder Support, oder wenn du Fragen hast, kannst du mir über "
+#~ "twitter erreichen: <a class=\"text-white\"href=\"https://twitter.com/"
+#~ "aspigirlcodes\" target=\"_blank\">@AspiGirlCodes</a>"

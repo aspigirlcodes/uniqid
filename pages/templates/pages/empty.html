@@ -1,10 +1,16 @@
 {% extends "pages/base.html" %}
+{% load i18n %}
+
 {% block content %}
 <section id="empty">
   <div class="containter">
-    <div class="row">
+    <div class="row mt-4">
       <div class="col">
-        <p> nothing here yet</p>
+        {% url "home:examples" as ex_url %}
+        {% blocktrans trimmed %}
+        <p> nothing here yet. Have a look at our
+          <a href="{{ex_url}}">examples</a> instead.</p>
+        {% endblocktrans %}
       </div>
     </div>
   </div>
