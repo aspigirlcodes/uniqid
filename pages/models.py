@@ -20,6 +20,7 @@ class Page(models.Model):
         return {
             'generalinfomodule': self.generalinfomodule_set.all(),
             'freetextmodule': self.freetextmodule_set.all(),
+            'freelistmodule': self.freelistmodule_set.all(),
         }
 
     def get_all_modules_sorted(self):
