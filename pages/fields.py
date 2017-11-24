@@ -15,7 +15,7 @@ class ItemTextWidget(TextInput):
 
 
 class DynamicSplitArrayWidget(Widget):
-    template_name = 'postgres/widgets/split_array.html'
+    template_name = 'widgets/split_array_list.html'
 
     def __init__(self, widget, max_size, **kwargs):
         self.widget = widget() if isinstance(widget, type) else widget
@@ -44,6 +44,18 @@ class DynamicSplitArrayWidget(Widget):
             id_ += '_0'
         return id_
 
+    def _get_widget_context(self, name, value, id_, final_attrs, index,
+                            is_last=False):
+        widget_value = value
+        if id_:
+            final_attrs = dict(final_attrs, id='%s_%s' % (id_, index))
+        final_attrs['aria-label'] = _("Item number %(n)d") % {"n": index + 1}
+        widget_context = self.widget.get_context(name + '_%s' % index,
+                                                 widget_value,
+                                                 final_attrs)['widget']
+        widget_context['is_last'] = is_last
+        return widget_context
+
     def get_context(self, name, value, attrs=None):
         attrs = {} if attrs is None else attrs
         context = super().get_context(name, value, attrs)
@@ -55,22 +67,13 @@ class DynamicSplitArrayWidget(Widget):
         id_ = final_attrs.get('id')
         length = min(len(value), self.max_size)
         for i in range(length):
-            widget_value = value[i]
-            if id_:
-                final_attrs = dict(final_attrs, id='%s_%s' % (id_, i))
             context['widget']['subwidgets'].append(
-                self.widget.get_context(name + '_%s' % i,
-                                        widget_value, final_attrs)['widget']
+                self._get_widget_context(name, value[i], id_, final_attrs, i)
             )
         # add an empty item als the last item
-        widget_value = None
-        if id_:
-            final_attrs = dict(final_attrs, id='%s_%s' % (id_, length))
-        widget_context = self.widget.get_context(name + '_%s' % length,
-                                                 widget_value,
-                                                 final_attrs)['widget']
-        widget_context['is_last'] = True
-        context['widget']['subwidgets'].append(widget_context)
+        context['widget']['subwidgets'].append(
+            self._get_widget_context(name, None, id_, final_attrs, length,
+                                     is_last=True))
         return context
 
     @property
@@ -117,7 +120,7 @@ class DynamicSplitArrayField(Field):
                     error,
                     self.error_messages['item_invalid'],
                     code='item_invalid',
-                    params={'nth': index},
+                    params={'nth': index + 1},
                 ))
                 cleaned_data.append(None)
             else:

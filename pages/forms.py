@@ -51,8 +51,13 @@ class FreeTextModuleForm(ModelForm):
 class FreeListModuleForm(ModelForm):
     items = DynamicSplitArrayField(CharField(required=False,
                                              widget=ItemTextWidget),
+                                   required=False,
                                    max_size=50,
-                                   remove_nulls=True)
+                                   remove_nulls=True,
+                                   help_text=_("Click the plus-sign at the "
+                                               "end of the last item to add "
+                                               "more items. Empty lines will "
+                                               "be ignored."))
 
     class Meta:
         model = FreeListModule
