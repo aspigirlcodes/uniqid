@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.i18n import JavaScriptCatalog
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     url(r'^pages/',
         include('pages.urls', namespace='pages', app_name='pages')),
     url(r'^', include('home.urls', namespace='home', app_name='home'))

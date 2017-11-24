@@ -1,19 +1,21 @@
 
 <section class="freelist-display">
-  <div class="row p-5 border border-dark">
-    {% if module.title %}
+  <div class="row my-2">
     <div class="col-12">
-      <h2> {{ module.title }} </h2>
-    </div>
-    {% endif %}
-    {% if module.items %}
-    <div class="col-12">
-      <ul>
-        {% for item in module.items %}
-        {{item}}
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
+      <div class="card">
+        {% if module.title %}
+          <div class="card-header">
+            <h4 class="mt-2">{{ module.title }}</h4>
+          </div>
+        {% endif %}
+        {% if module.items %}
+          <div class="card-body">
+            <ul>
+              {% for item in module.items %}
+              <li>{{item}}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
   </div>
 </section>

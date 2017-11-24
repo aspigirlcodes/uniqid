@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-12 14:05+0100\n"
+"POT-Creation-Date: 2017-11-24 10:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -383,27 +383,44 @@ msgstr ""
 "Es wird im Rahmen eines Bachelorprojekts in die Informatik an der "
 "Universität Bern"
 
-#: pages/forms.py:8
+#: pages/fields.py:52
+#, python-format
+msgid "Item number %(n)d"
+msgstr "Listeneintrag Nummer %(n)d"
+
+#: pages/fields.py:95
+#, python-format
+msgid "Item %(nth)s in the array did not validate: "
+msgstr "Eintrag %(nth)s der Liste konnte enthalt ein Fehler:"
+
+#: pages/forms.py:10
 msgid "Choose a module to start with"
 msgstr "Wähle die Module womit do anfangen willst"
 
-#: pages/forms.py:10
+#: pages/forms.py:12
 msgid "You can add more modules later"
 msgstr "Du kannst später noch weitere Module hinzufügen"
 
-#: pages/forms.py:18
+#: pages/forms.py:20
 msgid "Choose a title for your page"
 msgstr "Wähle einen Titel für deine Seite"
 
-#: pages/forms.py:22
+#: pages/forms.py:24
 msgid "Choose another module"
 msgstr "Wähle eine weitere Module"
 
-#: pages/forms.py:24
+#: pages/forms.py:26
 msgid "You can add more modules or go to the next step when you are finished"
 msgstr ""
 "Du kannst weitere Module hinzu fügen, oder zum nächsten Schritt gehen wenn "
 "du fertig bist"
+
+#: pages/forms.py:57
+msgid ""
+"Click the plus-sign at the end of the last item to add more items. Empty "
+"lines will be ignored."
+msgstr "Du kannst mehr Einträge hinzufügen indem de auf das Plus-Zeichen am "
+"Ende des letzten Eintrags Klickst. Leere Einträge werden ignoriert."
 
 #: pages/models.py:8
 msgid "General info module"
@@ -413,67 +430,80 @@ msgstr "Allgemeine Informationen"
 msgid "Free text module"
 msgstr "Freier Text"
 
-#: pages/models.py:14
+#: pages/models.py:10
+#, fuzzy
+#| msgid "Free text module"
+msgid "Free list module"
+msgstr "Freier Text"
+
+#: pages/models.py:15
 msgid "Page Title"
 msgstr "Titel der Seite"
 
-#: pages/models.py:38
+#: pages/models.py:39
 msgid "Page"
 msgstr "Seite"
 
-#: pages/models.py:39
+#: pages/models.py:40
 msgid "Position"
 msgstr "Position"
 
-#: pages/models.py:56
+#: pages/models.py:57
 msgid "I am autistic"
 msgstr "Ich bin Autist*in"
 
-#: pages/models.py:57
+#: pages/models.py:58
 msgid "I have autism"
 msgstr "Ich habe Autismus"
 
-#: pages/models.py:58
+#: pages/models.py:59
 msgid "I am on the autism spectrum"
 msgstr "Ich bin im Autismus-Spektrum"
 
-#: pages/models.py:59
+#: pages/models.py:60
 msgid "I have an autism spectrum disorder"
 msgstr "Ich habe eine Autismusspektrumstörung"
 
-#: pages/models.py:60
+#: pages/models.py:61
 msgid "I am neurodivergent"
 msgstr "Ich bin Neurodivergent"
 
-#: pages/models.py:61
+#: pages/models.py:62
 msgid "I have aspergers syndrome"
 msgstr "Ich habe das Asperger-Syndrom"
 
-#: pages/models.py:62
+#: pages/models.py:63
 msgid "I am an aspie"
 msgstr "Ich bin ein Aspie"
 
-#: pages/models.py:67
+#: pages/models.py:68
 msgid "Name"
 msgstr "Name"
 
-#: pages/models.py:69
+#: pages/models.py:70
 msgid "Identity"
 msgstr "Identität"
 
-#: pages/models.py:84 pages/models.py:97 pages/models.py:111
+#: pages/models.py:85 pages/models.py:98 pages/models.py:112
 msgid "Title"
 msgstr "Titel"
 
-#: pages/models.py:86
+#: pages/models.py:87
 msgid "Text"
 msgstr "Tekst"
 
-#: pages/models.py:100
+#: pages/models.py:101
 msgid "Items"
 msgstr "Items"
 
-#: pages/models.py:115
+#: pages/models.py:121
+#, fuzzy
+#| msgctxt "Button"
+#| msgid "Create module"
+msgid "module"
+msgstr "Module Erstellen"
+
+#: pages/models.py:124
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -482,62 +512,72 @@ msgctxt "Homepage"
 msgid "Home"
 msgstr "Home"
 
-#: pages/templates/pages/base.html:29
+#: pages/templates/pages/base.html:30
 msgctxt "action button"
 msgid "Create one!"
 msgstr "Probiere es aus!"
 
-#: pages/templates/pages/base.html:32
+#: pages/templates/pages/base.html:34
 msgctxt "menu item"
 msgid "How it works"
 msgstr "Wie es funktioniert"
 
-#: pages/templates/pages/base.html:35
+#: pages/templates/pages/base.html:38
 msgctxt "menu item"
 msgid "Examples"
 msgstr "Beispiele"
 
-#: pages/templates/pages/base.html:38
+#: pages/templates/pages/base.html:42
 msgctxt "menu item"
 msgid "FAQ"
 msgstr "FAQ"
 
-#: pages/templates/pages/base.html:41
+#: pages/templates/pages/base.html:46
 msgctxt "menu item"
 msgid "About"
 msgstr "Über uns"
 
-#: pages/templates/pages/base.html:46
+#: pages/templates/pages/base.html:52
 msgctxt "menu item"
 msgid "Log in"
 msgstr "Einloggen"
 
+#: pages/templates/pages/createfreelistmodule.html:11
 #: pages/templates/pages/createfreetextmodule.html:11
 #: pages/templates/pages/creategeneralinfomodule.html:11
 msgctxt "superscript above page title"
 msgid "creating page"
 msgstr "Erstellung der Seite"
 
+#: pages/templates/pages/createfreelistmodule.html:15
 #: pages/templates/pages/createfreetextmodule.html:15
 #: pages/templates/pages/creategeneralinfomodule.html:15
 msgid "No Title"
 msgstr "Kein Titel"
 
-#: pages/templates/pages/createfreetextmodule.html:22
-msgid "Free Text Module"
+#: pages/templates/pages/createfreelistmodule.html:22
+#, fuzzy
+#| msgid "Free Text Module"
+msgid "Free List Module"
 msgstr "Module mit Freier Text"
 
+#: pages/templates/pages/createfreelistmodule.html:81
 #: pages/templates/pages/createfreetextmodule.html:78
 #: pages/templates/pages/creategeneralinfomodule.html:78
 msgctxt "Button"
 msgid "Back"
 msgstr "Zurück"
 
+#: pages/templates/pages/createfreelistmodule.html:84
 #: pages/templates/pages/createfreetextmodule.html:81
 #: pages/templates/pages/creategeneralinfomodule.html:81
 msgctxt "Button"
 msgid "Save"
 msgstr "Speichern"
+
+#: pages/templates/pages/createfreetextmodule.html:22
+msgid "Free Text Module"
+msgstr "Module mit Freier Text"
 
 #: pages/templates/pages/creategeneralinfomodule.html:22
 msgid "General Information Module"
@@ -562,14 +602,19 @@ msgstr "Nächster Schritt: Modulen Anordnen"
 msgid ""
 "<p> nothing here yet. Have a look at our <a href=\"%(ex_url)s\">examples</a> "
 "instead.</p>"
-msgstr "<p>Hier gibt es noch keine Inhalte. Du kannst dich aber die "
-"<a href=\"%(ex_url)s\">Beispiele</a> anschauen.</p>"
+msgstr ""
+"<p>Hier gibt es noch keine Inhalte. Du kannst dich aber die <a href="
+"\"%(ex_url)s\">Beispiele</a> anschauen.</p>"
 
-#: uniqid/settings.py:114
+#: pages/templates/widgets/itemtext.html:14
+msgid "add item"
+msgstr "Füge ein weiteres Item hinzu"
+
+#: uniqid/settings.py:107
 msgid "English"
 msgstr "Englisch"
 
-#: uniqid/settings.py:115
+#: uniqid/settings.py:108
 msgid "German"
 msgstr "Deutsch"
 
