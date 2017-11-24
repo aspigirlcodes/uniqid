@@ -59,7 +59,7 @@
               {{ form.items.label }}
             </label>
             {% if form.items.errors %}
-            {{ form.text|add_class:"form-control is-invalid" }}
+            {{ form.items|add_class:"form-control is-invalid" }}
             <div class="invalid-feedback">
               <ul class="list-unstyled">
                 {% for error in form.items.errors %}
@@ -68,7 +68,10 @@
               </ul>
             </div>
             {% else %}
-            {{ form.items|add_class:"form-control" }}
+            {{ form.items|attr:"aria-describedby:items-help"|add_class:"form-control" }}
+            <p id="items-help" class="form-text text-muted">
+              {{ form.items.help_text }}
+            </p>
             {% endif %}
           </div>
         </div>

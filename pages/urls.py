@@ -20,18 +20,18 @@ from .views import GeneralInfoModuleCreateView, PageCreateView,\
                    FreeListModuleCreateView
 
 urlpatterns = [
-    url(r'^createpage/', PageCreateView.as_view(), name="createpage"),
+    url(r'^createpage/$', PageCreateView.as_view(), name="createpage"),
     # url(r'^createpage/',
     #     TemplateView.as_view(template_name='pages/empty.html'),
     #     name="createpage"),
-    url(r'^(?P<pk>[0-9]+)/addmodule/',
+    url(r'^(?P<pk>[0-9]+)/addmodule/$',
         SelectModuleView.as_view(), name="addmodule"),
-    url(r'^(?P<page_id>[0-9]+)/creategeneralinfomodule/',
+    url(r'^(?P<page_id>[0-9]+)/creategeneralinfomodule/$',
         GeneralInfoModuleCreateView.as_view(), name="creategeneralinfomodule"),
-    url(r'^(?P<page_id>[0-9]+)/createfreetextmodule/',
+    url(r'^(?P<page_id>[0-9]+)/createfreetextmodule/$',
         FreeTextModuleCreateView.as_view(), name="createfreetextmodule"),
-    url(r'^(?P<page_id>[0-9]+)/createfreelistmodule/',
+    url(r'^(?P<page_id>[0-9]+)/createfreelistmodule/$',
         FreeListModuleCreateView.as_view(), name="createfreelistmodule"),
-    url(r'^(?P<pk>[0-9]+)/preview/',
+    url(r'^(?P<pk>[0-9]+)/preview/$',
         PagePreview.as_view(), name="pagepreview"),
 ]

@@ -1,4 +1,5 @@
-
+{% load i18n %}
+<li class="input-list-item">
 {% if widget.is_last %}
   <div class="input-group">
 {% endif %}
@@ -10,7 +11,8 @@
        {% include "django/forms/widgets/attrs.html" %}/>
 {% if widget.is_last %}
   <span class="input-group-btn">
-    <button class="btn btn-secondary" type="button" onclick="add_item(this)">+</button>
+    <button class="btn btn-secondary" type="button" onclick="add_item(this)" aria-label="{% trans "add item" %}">+</button>
   </span>
 </div>
 {% endif %}
+</li>
