@@ -1,9 +1,9 @@
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from .models import Page, GeneralInfoModule, FreeTextModule
+from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule
 from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
-                   FreeTextModuleForm
+                   FreeTextModuleForm, FreeListModuleForm
 
 
 class PageCreateView(CreateView):
@@ -67,6 +67,12 @@ class FreeTextModuleCreateView(ModuleCreateView):
     model = FreeTextModule
     form_class = FreeTextModuleForm
     template_name = "pages/createfreetextmodule.html"
+
+
+class FreeListModuleCreateView(ModuleCreateView):
+    model = FreeListModule
+    form_class = FreeListModuleForm
+    template_name = "pages/createfreelistmodule.html"
 
 
 class PagePreview(DetailView):

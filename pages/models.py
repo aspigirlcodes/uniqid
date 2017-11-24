@@ -2,10 +2,12 @@ from itertools import chain
 from operator import attrgetter
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.postgres.fields import ArrayField
 
 MODULES = (
     ("generalinfomodule", _("General info module")),
-    ("freetextmodule", _("Free text module"))
+    ("freetextmodule", _("Free text module")),
+    ("freelistmodule", _("Free list module"))
 )
 
 
@@ -18,6 +20,7 @@ class Page(models.Model):
         return {
             'generalinfomodule': self.generalinfomodule_set.all(),
             'freetextmodule': self.freetextmodule_set.all(),
+            'freelistmodule': self.freelistmodule_set.all(),
         }
 
     def get_all_modules_sorted(self):
@@ -87,3 +90,37 @@ class FreeTextModule(Module):
     def __str__(self):
         return "{page} Freetextmodule: {title}"\
             .format(page=str(self.page), title=self.title)
+
+
+class FreeListModule(Module):
+
+    template = "pages/_freelist.html"
+
+    title = models.CharField(verbose_name=_("Title"),
+                             max_length=255, default="", blank=True)
+    items = ArrayField(models.CharField(max_length=255),
+                       verbose_name=_("Items"), blank=True)
+
+    def __str__(self):
+        return "{page} Freelistmodule: {title}"\
+            .format(page=str(self.page), title=self.title)
+
+
+class FreePictureModule(Module):
+
+    template = "pages/_freepicture.html"
+
+    title = models.CharField(verbose_name=_("Title"),
+                             max_length=255, default="", blank=True)
+
+    def __str__(self):
+        return "{page} Freelistmodule: {title}"\
+            .format(page=str(self.page), title=self.title)
+
+
+class ModulePicture(models.Model):
+    module = models.ForeignKey(FreePictureModule, verbose_name=_("module"))
+    # picture = models.ImageField(verbose_name=_("Picture"), blank=True,
+    #                             null=True)
+    description = models.TextField(verbose_name=_("Description"), null=True,
+                                   blank=True)

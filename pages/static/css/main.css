@@ -23,3 +23,7 @@
 .border-2{
   border-width: 2px !important;
 }
+
+.input-list-item input{
+  vertical-align:middle;
+}
