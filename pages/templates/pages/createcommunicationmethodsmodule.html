@@ -1,0 +1,160 @@
+{% extends "pages/base.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block content %}
+<section id="create-form" class="pb-5">
+  <div class="container">
+    <div class="row my-4">
+      <div class="col">
+          <h6 class="my-0"><small class="text-uppercase text-secondary font-weight-light">
+            {% trans "creating page" context "superscript above page title" %}</small></h6>
+          {% if page.title %}
+            <h1>{{page.title}}</h1>
+          {% else %}
+            <h1 class="text-secondary">{% trans "No Title" %}</h1>
+          {% endif %}
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h2>{% trans "Communication methods module" %}</h2>
+      </div>
+    </div>
+    <form action="" method="post">
+      <div class="row">
+        <div class="col-12">
+          {% csrf_token %}
+          {% if form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">
+            <ul class="list-unstyled my-0">
+              {% for error in form.non_field_errors %}
+              <li> {{ error|escape }} </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          <div class="form-group">
+            <label for="{{form.situation.auto_id}}">
+              {{ form.situation.label }}
+            </label>
+            {% if form.situation.errors %}
+            {{ form.situation|add_class:"form-control is-invalid" }}
+            <div class="invalid-feedback">
+              <ul class="list-unstyled">
+                {% for error in form.situation.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% else %}
+            {{ form.situation|add_class:"form-control" }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="{{form.me_to_you_choices.auto_id}}">
+              {{ form.me_to_you_choices.label }}
+            </label>
+            {% if form.me_to_you_choices.errors %}
+            {{ form.me_to_you_choices|add_class:"is-invalid" }}
+            <div class="invalid-feedback">
+              <ul class="list-unstyled">
+                {% for error in form.me_to_you_choices.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% else %}
+            {{ form.me_to_you_choices|attr:"aria-describedby:me_to_you_choices-help" }}
+            <p id="me_to_you_choices-help" class="form-text text-muted">
+              {{ form.me_to_you_choices.help_text }}
+            </p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="{{form.me_to_you_free.auto_id}}">
+              {{ form.me_to_you_free.label }}
+            </label>
+            {% if form.me_to_you_free.errors %}
+            {{ form.me_to_you_free|add_class:"form-control is-invalid" }}
+            <div class="invalid-feedback">
+              <ul class="list-unstyled">
+                {% for error in form.me_to_you_free.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% else %}
+            {{ form.me_to_you_free|attr:"aria-describedby:me_to_you_free-help"|add_class:"form-control" }}
+            <p id="me_to_you_free-help" class="form-text text-muted">
+              {{ form.me_to_you_free.help_text }}
+            </p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="{{form.you_to_me_choices.auto_id}}">
+              {{ form.you_to_me_choices.label }}
+            </label>
+            {% if form.you_to_me_choices.errors %}
+            {{ form.you_to_me_choices|add_class:"is-invalid" }}
+            <div class="invalid-feedback">
+              <ul class="list-unstyled">
+                {% for error in form.you_to_me_choices.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% else %}
+            {{ form.you_to_me_choices|attr:"aria-describedby:you_to_me_choices-help" }}
+            <p id="you_to_me_choices-help" class="form-text text-muted">
+              {{ form.you_to_me_choices.help_text }}
+            </p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="{{form.you_to_me_free.auto_id}}">
+              {{ form.you_to_me_free.label }}
+            </label>
+            {% if form.you_to_me_free.errors %}
+            {{ form.you_to_me_free|add_class:"form-control is-invalid" }}
+            <div class="invalid-feedback">
+              <ul class="list-unstyled">
+                {% for error in form.you_to_me_free.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% else %}
+            {{ form.you_to_me_free|attr:"aria-describedby:you_to_me_free-help"|add_class:"form-control" }}
+            <p id="you_to_me_free-help" class="form-text text-muted">
+              {{ form.you_to_me_free.help_text }}
+            </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
+        </div>
+        <div class="col text-right">
+          <button type="submit" value="submit_add_more" class="btn btn-primary">{% trans "Save" context "Button" %}</button>
+        </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock content %}
+{% block scripts %}
+{{ form.media.js }}
+{% endblock scripts %}
