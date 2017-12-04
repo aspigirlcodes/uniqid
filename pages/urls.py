@@ -17,7 +17,8 @@ from django.conf.urls import url
 # from django.views.generic import TemplateView
 from .views import GeneralInfoModuleCreateView, PageCreateView,\
                    FreeTextModuleCreateView, SelectModuleView, PagePreview,\
-                   FreeListModuleCreateView
+                   FreeListModuleCreateView, \
+                   CommunicationMethodsModuleCreateView
 
 urlpatterns = [
     url(r'^createpage/$', PageCreateView.as_view(), name="createpage"),
@@ -28,6 +29,9 @@ urlpatterns = [
         SelectModuleView.as_view(), name="addmodule"),
     url(r'^(?P<page_id>[0-9]+)/creategeneralinfomodule/$',
         GeneralInfoModuleCreateView.as_view(), name="creategeneralinfomodule"),
+    url(r'^(?P<page_id>[0-9]+)/createcommunicationmethodsmodule/$',
+        CommunicationMethodsModuleCreateView.as_view(),
+        name="createcommunicationmethodsmodule"),
     url(r'^(?P<page_id>[0-9]+)/createfreetextmodule/$',
         FreeTextModuleCreateView.as_view(), name="createfreetextmodule"),
     url(r'^(?P<page_id>[0-9]+)/createfreelistmodule/$',

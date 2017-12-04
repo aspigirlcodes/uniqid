@@ -1,8 +1,10 @@
 import copy
 from itertools import chain
 
-from django.forms import TextInput, Field, Widget
+from django.forms import TextInput, Field, Widget, CheckboxSelectMultiple, \
+                         TypedMultipleChoiceField
 from django.contrib.postgres.utils import prefix_validation_error
+from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
@@ -132,3 +134,38 @@ class DynamicSplitArrayField(Field):
         if errors:
             raise ValidationError(list(chain.from_iterable(errors)))
         return cleaned_data
+
+
+class ArraySelectMultiple(CheckboxSelectMultiple):
+    template_name = 'widgets/bs_checkbox_select.html'
+    option_template_name = 'widgets/bs_checkbox_option.html'
+
+    def value_omitted_from_data(self, data, files, name):
+        return False
+
+    def create_option(self, name, value, label, selected, index,
+                      subindex=None, attrs=None):
+        if not attrs:
+            attrs = {}
+        classes = attrs.get('class', None)
+        if classes:
+            attrs["class"] = classes + " form-check-input"
+        else:
+            attrs["class"] = "form-check-input"
+        return super().create_option(name, value, label, selected, index,
+                                     subindex=subindex, attrs=attrs)
+
+
+class ChoiceArrayField(ArrayField):
+
+    def formfield(self, **kwargs):
+        defaults = {
+            'form_class': TypedMultipleChoiceField,
+            'choices': self.base_field.choices,
+            'widget': ArraySelectMultiple
+        }
+        defaults.update(kwargs)
+        # Skip our parent's formfield implementation completely
+        # as we don't care for it.
+        # pylint:disable=bad-super-call
+        return super(ArrayField, self).formfield(**defaults)

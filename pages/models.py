@@ -3,9 +3,11 @@ from operator import attrgetter
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import ArrayField
+from .fields import ChoiceArrayField
 
 MODULES = (
     ("generalinfomodule", _("General info module")),
+    ("communicationmethodsmodule", _("Communication methods module")),
     ("freetextmodule", _("Free text module")),
     ("freelistmodule", _("Free list module"))
 )
@@ -19,6 +21,8 @@ class Page(models.Model):
     def get_all_modules(self):
         return {
             'generalinfomodule': self.generalinfomodule_set.all(),
+            'communicationmethodsmodule':
+                self.communicationmethodsmodule_set.all(),
             'freetextmodule': self.freetextmodule_set.all(),
             'freelistmodule': self.freelistmodule_set.all(),
         }
@@ -77,6 +81,44 @@ class GeneralInfoModule(Module):
     def __str__(self):
         return "{page} Generalinfomodule: {name}, {id}"\
             .format(page=str(self.page), name=self.name, id=self.identity)
+
+
+class CommunicationMethodsModule(Module):
+
+    template = "pages/_communicationmethods.html"
+
+    SPOKEN = "01_spoken"
+    WRITTEN = "02_written"
+    TEXT_AAC = "03_text_aac"
+    PIC_AAC = "04_pic_aac"
+    OFF_SIGN = "05_off_sign"
+    OTHER_SIGN = "06_other_sign"
+
+    METHODS = (
+        (SPOKEN, _("Spoken language")),
+        (WRITTEN, _("Written language")),
+        (TEXT_AAC, _("Text based alternative to speech")),
+        (PIC_AAC, _("Picture based alternative to speech")),
+        (OFF_SIGN, _("Official signlanguage")),
+        (OTHER_SIGN, _("Other signs, gestures or behaviours"))
+    )
+
+    situation = models.CharField(verbose_name=_("Situation"),
+                                 max_length=255, default="", blank=True)
+    you_to_me_choices = ChoiceArrayField(
+        models.CharField(max_length=32, choices=METHODS),
+        verbose_name=_("You can use"), blank=True)
+    you_to_me_free = ArrayField(
+        models.CharField(max_length=255),
+        verbose_name=_("Other communication methods you can use"),
+        blank=True)
+    me_to_you_choices = ChoiceArrayField(
+        models.CharField(max_length=32, choices=METHODS),
+        verbose_name=_("I will use"), blank=True)
+    me_to_you_free = ArrayField(
+        models.CharField(max_length=255),
+        verbose_name=_("Other communication methods I might use"),
+        blank=True)
 
 
 class FreeTextModule(Module):
