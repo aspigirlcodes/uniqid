@@ -2,7 +2,7 @@ from django.forms import ModelForm, ChoiceField, CharField
 from django.utils.translation import ugettext_lazy as _
 
 from .models import MODULES, Page, GeneralInfoModule, FreeTextModule, \
-                    FreeListModule
+                    FreeListModule, CommunicationMethodsModule
 from .fields import ItemTextWidget, DynamicSplitArrayField
 
 
@@ -42,6 +42,30 @@ class GeneralInfoModuleForm(ModelForm):
         fields = ['name', 'identity']
 
 
+class CommunicationMethodsModuleForm(ModelForm):
+    me_to_you_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("Other communication methods I might use"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+    you_to_me_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("Other communication methods you can use"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+
+    class Meta:
+        model = CommunicationMethodsModule
+        fields = ['situation', 'me_to_you_choices', 'me_to_you_free',
+                  'you_to_me_choices', 'you_to_me_free']
+
+
 class FreeTextModuleForm(ModelForm):
     class Meta:
         model = FreeTextModule
@@ -51,6 +75,7 @@ class FreeTextModuleForm(ModelForm):
 class FreeListModuleForm(ModelForm):
     items = DynamicSplitArrayField(CharField(required=False,
                                              widget=ItemTextWidget),
+                                   label=_("Items"),
                                    required=False,
                                    max_size=50,
                                    remove_nulls=True,

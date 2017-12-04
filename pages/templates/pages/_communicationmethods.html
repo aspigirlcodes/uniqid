@@ -1,0 +1,41 @@
+{% load static %}
+{% load i18n %}
+{% load pages_tags %}
+
+<section class="communicationmethods-display">
+  <div class="row my-2">
+    <div class="col-12">
+      <h2>{% trans "Communication" %}</h2>
+    </div>
+  </div>
+  <div class="card-deck">
+    <div class="card">
+      <div class="card-header text-center">
+        <h4 class="mt-2">{{ module.situation }}</h4>
+      </div>
+      <div class="card-body">
+        <div class="text-grey">
+          <h5>{% trans "You can use" %}</h5>
+          <ul>
+            {% for item in module.you_to_me_choices %}
+              <li>{{ module.METHODS|get_display_value:item }}</li>
+            {% endfor %}
+            {% for item in module.you_to_me_free %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <img src="{% static "img/communication-dialogue-icon-3.png" %}" class="mx-auto d-block" style="width:50%; max-width:150px">
+        <h5>{% trans "I will use" %}</h5>
+        <ul>
+          {% for item in module.me_to_you_choices %}
+            <li>{{ module.METHODS|get_display_value:item }}</li>
+          {% endfor %}
+          {% for item in module.me_to_you_free %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
