@@ -8,6 +8,7 @@ from .fields import ChoiceArrayField
 MODULES = (
     ("generalinfomodule", _("General info module")),
     ("communicationmethodsmodule", _("Communication methods module")),
+    ("dodontmodule", _("Do's and Don'ts module")),
     ("freetextmodule", _("Free text module")),
     ("freelistmodule", _("Free list module")),
     ("freepicturemodule", _("Free picture module"))
@@ -24,6 +25,7 @@ class Page(models.Model):
             'generalinfomodule': self.generalinfomodule_set.all(),
             'communicationmethodsmodule':
                 self.communicationmethodsmodule_set.all(),
+            'dodontmodule': self.dodontmodule_set.all(),
             'freetextmodule': self.freetextmodule_set.all(),
             'freelistmodule': self.freelistmodule_set.all(),
             'freepicturemodule': self.freepicturemodule_set.all(),
@@ -120,6 +122,103 @@ class CommunicationMethodsModule(Module):
     me_to_you_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("Other communication methods I might use"),
+        blank=True)
+
+
+class DoDontModule(Module):
+    template = "pages/_dodont.html"
+
+    DO_TIME = "01_do_time"
+    DO_LIGHT = "02_do_light"
+    DO_QUIET = "03_do_quiet"
+    DO_HEADPHONES = "04_do_headphones"
+    DO_EAR_PROTECT = "05_do_ear_protect"
+    DO_FIDGET = "06_do_fidget"
+    DO_CALM = "07_do_calm"
+    DO_CHANGES = "08_do_changes"
+    DO_NOISES = "09_do_noises"
+    DO_INSTRUCTIONS = "10_do_instructions"
+    DO_PREPARE = "11_do_prepare"
+
+    ASK_TOUCH = "01_ask_touch"
+    ASK_STUFF = "02_ask_stuff"
+    ASK_READY = "03_ask_ready"
+    ASK_COMMUNICATE = "04_ask_communicate"
+    ASK_TALK = "05_ask_talk"
+
+    DONT_TOUCH = "01_dont_touch"
+    DONT_EYE = "02_dont_eye"
+    DONT_QUESTIONS = "03_dont_questions"
+    DONT_CLOSE = "04_dont_close"
+    DONT_CHITCHAT = "05_chitchat"
+    DONT_TALK = "06_dont_talk"
+    DONT_NOISES = "07_dont_noises"
+
+    DOS = (
+        (DO_TIME, _("Leave me enough time to answer your questions "
+                    "or to make decisions")),
+        (DO_LIGHT, _("Use natural light and turn off fluorescent lights "
+                     "if possible")),
+        (DO_QUIET, _("Try to find a quiet room or space for me")),
+        (DO_HEADPHONES, _("Let me use my headphones "
+                          "to listen to my favorite music")),
+        (DO_EAR_PROTECT, _("Let me use my ear protection "
+                           "to block out noises")),
+        (DO_FIDGET, _("Let me fidget, move around, flap my arms or "
+                      "make other sounds or motions")),
+        (DO_CALM, _("Talk to me with a calm voice")),
+        (DO_CHANGES, _("Tel me about changes in plans as soon as possible")),
+        (DO_NOISES, _("Turn of the TV, radio or other things "
+                      "that make noise")),
+        (DO_INSTRUCTIONS, _("Give me clear instructions "
+                            "if I have to do something")),
+        (DO_PREPARE, _("Tell me what is going to happen beforehand"))
+    )
+
+    ASKS = (
+        (ASK_TOUCH, _("Ask before you touch me")),
+        (ASK_STUFF, _("Ask befor touching my stuff")),
+        (ASK_READY, _("Ask me if I am ready to go (and where we go to) "
+                      "befor you take me to a new place")),
+        (ASK_COMMUNICATE, _("Ask me about what method of communication "
+                            "I want to use")),
+        (ASK_TALK, _("Ask me if I want to talk or socialize "
+                     "before introducing me to new people"))
+    )
+
+    DONTS = (
+        (DONT_TOUCH, _("Don't touch me without permission")),
+        (DONT_EYE, _("Don't force me to make eye contact")),
+        (DONT_QUESTIONS, _("Don't ask me to many questions")),
+        (DONT_CLOSE, _("Do not sit or stand close to me "
+                       "unless it is necessary")),
+        (DONT_CHITCHAT, _("Avoid chitchat")),
+        (DONT_TALK, _("Don't talk a lot to try to calm me, "
+                      "as this has the contrary effect")),
+        (DONT_NOISES, _("Don't make unexpected hard noises "
+                        "such as slamming a door")),
+    )
+
+    do_choices = ChoiceArrayField(
+        models.CharField(max_length=32, choices=DOS),
+        verbose_name=_("Things others can do to help you"), blank=True)
+    do_free = ArrayField(
+        models.CharField(max_length=255),
+        verbose_name=_("More things others can do"),
+        blank=True)
+    ask_choices = ChoiceArrayField(
+        models.CharField(max_length=32, choices=ASKS),
+        verbose_name=_("Things people should ask you about"), blank=True)
+    ask_free = ArrayField(
+        models.CharField(max_length=255),
+        verbose_name=_("More things others should ask"),
+        blank=True)
+    dont_choices = ChoiceArrayField(
+        models.CharField(max_length=32, choices=DONTS),
+        verbose_name=_("Things others should not do"), blank=True)
+    dont_free = ArrayField(
+        models.CharField(max_length=255),
+        verbose_name=_("More things others shouldn't do"),
         blank=True)
 
 

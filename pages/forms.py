@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import MODULES, Page, GeneralInfoModule, FreeTextModule, \
                     FreeListModule, CommunicationMethodsModule, \
-                    FreePictureModule, ModulePicture
+                    FreePictureModule, ModulePicture, DoDontModule
 from .fields import ItemTextWidget, DynamicSplitArrayField
 
 
@@ -72,6 +72,38 @@ class CommunicationMethodsModuleForm(ModelForm):
         model = CommunicationMethodsModule
         fields = ['situation', 'me_to_you_choices', 'me_to_you_free',
                   'you_to_me_choices', 'you_to_me_free']
+
+
+class DoDontModuleForm(ModelForm):
+    do_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("More things others can do"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+    ask_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("More things others should ask"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+    dont_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("More things others shouldn't do"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+
+    class Meta:
+        model = DoDontModule
+        fields = ['do_choices', 'do_free', 'ask_choices',
+                  'ask_free', 'dont_choices', 'dont_free']
 
 
 class FreeTextModuleForm(ModelForm):
