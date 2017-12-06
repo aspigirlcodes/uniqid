@@ -1,9 +1,17 @@
 from django.forms import ModelForm, ChoiceField, CharField
+from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
 from .models import MODULES, Page, GeneralInfoModule, FreeTextModule, \
-                    FreeListModule, CommunicationMethodsModule
+                    FreeListModule, CommunicationMethodsModule, \
+                    FreePictureModule, ModulePicture
 from .fields import ItemTextWidget, DynamicSplitArrayField
+
+
+PictureFormSet = inlineformset_factory(FreePictureModule, ModulePicture,
+                                       fields=['title', 'picture',
+                                               'description'],
+                                       extra=1)
 
 
 class PageCreateForm(ModelForm):

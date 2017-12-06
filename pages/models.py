@@ -9,7 +9,8 @@ MODULES = (
     ("generalinfomodule", _("General info module")),
     ("communicationmethodsmodule", _("Communication methods module")),
     ("freetextmodule", _("Free text module")),
-    ("freelistmodule", _("Free list module"))
+    ("freelistmodule", _("Free list module")),
+    ("freepicturemodule", _("Free picture module"))
 )
 
 
@@ -25,6 +26,7 @@ class Page(models.Model):
                 self.communicationmethodsmodule_set.all(),
             'freetextmodule': self.freetextmodule_set.all(),
             'freelistmodule': self.freelistmodule_set.all(),
+            'freepicturemodule': self.freepicturemodule_set.all(),
         }
 
     def get_all_modules_sorted(self):
@@ -162,7 +164,9 @@ class FreePictureModule(Module):
 
 class ModulePicture(models.Model):
     module = models.ForeignKey(FreePictureModule, verbose_name=_("module"))
-    # picture = models.ImageField(verbose_name=_("Picture"), blank=True,
-    #                             null=True)
-    description = models.TextField(verbose_name=_("Description"), null=True,
-                                   blank=True)
+    picture = models.ImageField(verbose_name=_("Image"), blank=True,
+                                null=True)
+    description = models.TextField(verbose_name=_("Image description"),
+                                   null=True, blank=True)
+    title = models.CharField(verbose_name=_("Image title"),
+                             max_length=255, default="", blank=True)
