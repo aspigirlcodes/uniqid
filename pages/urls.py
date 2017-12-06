@@ -17,7 +17,7 @@ from django.conf.urls import url
 # from django.views.generic import TemplateView
 from .views import GeneralInfoModuleCreateView, PageCreateView,\
                    FreeTextModuleCreateView, SelectModuleView, PagePreview,\
-                   FreeListModuleCreateView, \
+                   FreeListModuleCreateView, FreePictureModuleCreateView, \
                    CommunicationMethodsModuleCreateView
 
 urlpatterns = [
@@ -36,6 +36,8 @@ urlpatterns = [
         FreeTextModuleCreateView.as_view(), name="createfreetextmodule"),
     url(r'^(?P<page_id>[0-9]+)/createfreelistmodule/$',
         FreeListModuleCreateView.as_view(), name="createfreelistmodule"),
+    url(r'^(?P<page_id>[0-9]+)/createfreepicturemodule/$',
+        FreePictureModuleCreateView.as_view(), name="createfreepicturemodule"),
     url(r'^(?P<pk>[0-9]+)/preview/$',
         PagePreview.as_view(), name="pagepreview"),
 ]

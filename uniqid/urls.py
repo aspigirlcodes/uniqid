@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 from django.views.i18n import JavaScriptCatalog
 
 urlpatterns = [
@@ -22,6 +24,7 @@ urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     url(r'^pages/',
-        include('pages.urls', namespace='pages', app_name='pages')),
+        include('pages.urls', namespace='pages', app_name='pages'))] +\
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + [
     url(r'^', include('home.urls', namespace='home', app_name='home'))
 ]

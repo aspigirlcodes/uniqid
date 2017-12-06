@@ -2,10 +2,10 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
-                    CommunicationMethodsModule
+                    CommunicationMethodsModule, FreePictureModule
 from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    FreeTextModuleForm, FreeListModuleForm,\
-                   CommunicationMethodsModuleForm
+                   CommunicationMethodsModuleForm, PictureFormSet
 
 
 class PageCreateView(CreateView):
@@ -81,6 +81,32 @@ class FreeListModuleCreateView(ModuleCreateView):
     model = FreeListModule
     form_class = FreeListModuleForm
     template_name = "pages/createfreelistmodule.html"
+
+
+class FreePictureModuleCreateView(ModuleCreateView):
+    model = FreePictureModule
+    template_name = "pages/createfreepicturemodule.html"
+    fields = ['title']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['picture_formset'] = PictureFormSet(self.request.POST,
+                                                        self.request.FILES)
+        else:
+            context['picture_formset'] = PictureFormSet()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['picture_formset']
+        if formset.is_valid():
+            redirect_url = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return redirect_url
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
 
 class PagePreview(DetailView):

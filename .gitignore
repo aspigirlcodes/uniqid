@@ -5,3 +5,4 @@ uniqid/settings_local.py
 logs/
 uniqid-env/
 static/
+media/
