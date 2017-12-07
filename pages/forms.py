@@ -4,7 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import MODULES, Page, GeneralInfoModule, FreeTextModule, \
                     FreeListModule, CommunicationMethodsModule, \
-                    FreePictureModule, ModulePicture, DoDontModule
+                    FreePictureModule, ModulePicture, DoDontModule, \
+                    MedicationItem, MedicationIntake
 from .fields import ItemTextWidget, DynamicSplitArrayField
 
 
@@ -12,6 +13,10 @@ PictureFormSet = inlineformset_factory(FreePictureModule, ModulePicture,
                                        fields=['title', 'picture',
                                                'description'],
                                        extra=1)
+
+IntakeFormSet = inlineformset_factory(MedicationItem, MedicationIntake,
+                                      fields=['time', 'quantity'],
+                                      extra=1)
 
 
 class PageCreateForm(ModelForm):
