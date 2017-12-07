@@ -2,11 +2,12 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
-                    CommunicationMethodsModule, FreePictureModule, DoDontModule
+                    CommunicationMethodsModule, FreePictureModule, \
+                    DoDontModule, MedicationModule, MedicationItem
 from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    FreeTextModuleForm, FreeListModuleForm,\
                    CommunicationMethodsModuleForm, PictureFormSet, \
-                   DoDontModuleForm
+                   DoDontModuleForm, IntakeFormSet
 
 
 class PageCreateView(CreateView):
@@ -76,6 +77,49 @@ class DoDontModuleCreateView(ModuleCreateView):
     model = DoDontModule
     form_class = DoDontModuleForm
     template_name = "pages/createdodontmodule.html"
+
+
+class MedicationModuleCreateView(ModuleCreateView):
+    model = MedicationItem
+    fields = ['name', 'remarks']
+    template_name = "pages/createmedicationmodule.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        module_id = self.kwargs.get('module_id', None)
+        if module_id:
+            self.module = MedicationModule.objects.get(id=module_id)
+            context['module'] = self.module
+        else:
+            self.module = None
+        if self.request.POST:
+            context['intake_formset'] = IntakeFormSet(self.request.POST)
+        else:
+            context['intake_formset'] = IntakeFormSet()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['intake_formset']
+        if formset.is_valid():
+            # create module if it doesn't exist yet
+            if not self.module:
+                self.module = MedicationModule.objects.create(
+                    page=self.page, position=self.page.module_num + 1)
+                self.page.module_num += 1
+                self.page.save()
+            # save MedicationItem
+            self.object = form.save(commit=False)
+            self.object.module = self.module
+            self.object.save()
+            # save intakes
+            formset.instance = self.object
+            formset.save()
+            # redirect
+            url = reverse("pages:addmodule", args=[self.page.id, ])
+            return HttpResponseRedirect(url)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
 
 class FreeTextModuleCreateView(ModuleCreateView):

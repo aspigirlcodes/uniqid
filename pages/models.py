@@ -9,6 +9,7 @@ MODULES = (
     ("generalinfomodule", _("General info module")),
     ("communicationmethodsmodule", _("Communication methods module")),
     ("dodontmodule", _("Do's and Don'ts module")),
+    ("medicationmodule", _("Medication module")),
     ("freetextmodule", _("Free text module")),
     ("freelistmodule", _("Free list module")),
     ("freepicturemodule", _("Free picture module"))
@@ -26,6 +27,7 @@ class Page(models.Model):
             'communicationmethodsmodule':
                 self.communicationmethodsmodule_set.all(),
             'dodontmodule': self.dodontmodule_set.all(),
+            'medicationmodule': self.medicationmodule_set.all(),
             'freetextmodule': self.freetextmodule_set.all(),
             'freelistmodule': self.freelistmodule_set.all(),
             'freepicturemodule': self.freepicturemodule_set.all(),
@@ -220,6 +222,27 @@ class DoDontModule(Module):
         models.CharField(max_length=255),
         verbose_name=_("More things others shouldn't do"),
         blank=True)
+
+
+class MedicationModule(Module):
+    template = "pages/_medication.html"
+
+
+class MedicationItem(models.Model):
+    name = models.CharField(verbose_name=_("Medication name"),
+                            max_length=255, default="", blank=True)
+    remarks = models.TextField(verbose_name=_("Remarks"), default="",
+                               blank=True)
+    module = models.ForeignKey(MedicationModule, verbose_name=_("module"))
+
+
+class MedicationIntake(models.Model):
+    time = models.CharField(verbose_name=_("Intake time"),
+                            max_length=255, default="", blank=True)
+    quantity = models.CharField(verbose_name=_("Intake quantity"),
+                                max_length=255, default="", blank=True)
+    medication = models.ForeignKey(MedicationItem,
+                                   verbose_name=_("medication"))
 
 
 class FreeTextModule(Module):
