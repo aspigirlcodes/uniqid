@@ -4,11 +4,11 @@ from django.http import HttpResponseRedirect
 from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
                     CommunicationMethodsModule, FreePictureModule, \
                     DoDontModule, MedicationModule, MedicationItem, \
-                    ContactModule
+                    ContactModule, SensoryModule
 from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    FreeTextModuleForm, FreeListModuleForm,\
                    CommunicationMethodsModuleForm, PictureFormSet, \
-                   DoDontModuleForm, IntakeFormSet
+                   DoDontModuleForm, IntakeFormSet, SensoryModuleForm
 
 
 class PageCreateView(CreateView):
@@ -127,6 +127,12 @@ class ContactModuleCreateView(ModuleCreateView):
     model = ContactModule
     fields = ['title', 'name', 'address', 'phone', 'email', 'extra']
     template_name = "pages/createcontactmodule.html"
+
+
+class SensoryModuleCreateView(ModuleCreateView):
+    model = SensoryModule
+    form_class = SensoryModuleForm
+    template_name = "pages/createsensorymodule.html"
 
 
 class FreeTextModuleCreateView(ModuleCreateView):

@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from .models import MODULES, Page, GeneralInfoModule, FreeTextModule, \
                     FreeListModule, CommunicationMethodsModule, \
                     FreePictureModule, ModulePicture, DoDontModule, \
-                    MedicationItem, MedicationIntake
+                    MedicationItem, MedicationIntake, SensoryModule
 from .fields import ItemTextWidget, DynamicSplitArrayField
 
 
@@ -109,6 +109,22 @@ class DoDontModuleForm(ModelForm):
         model = DoDontModule
         fields = ['do_choices', 'do_free', 'ask_choices',
                   'ask_free', 'dont_choices', 'dont_free']
+
+
+class SensoryModuleForm(ModelForm):
+    extra_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("More additional sensory info"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+
+    class Meta:
+        model = SensoryModule
+        fields = ['sound', 'light', 'smell',
+                  'temperature', 'extra_choices', 'extra_free']
 
 
 class FreeTextModuleForm(ModelForm):

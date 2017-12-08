@@ -1,0 +1,48 @@
+{% load i18n %}
+{% load pages_tags %}
+
+<section class="freetext-display">
+  <div class="row p-5 border border-dark">
+    <div class="col-12">
+      <h2> {% trans "Sensory sensitivities" %} </h2>
+    </div>
+    {% if module.has_sensory_profile %}
+      <div class="col-12">
+        <h3>{% trans "Sensory Profile" %} </h3>
+      </div>
+      {% if module.sound != module.SENS_NONE %}
+      <div class="col-12">
+        {{ module.sound|sensitivity_desc:"sound" }}
+      </div>
+      {% endif %}
+      {% if module.light != module.SENS_NONE %}
+      <div class="col-12">
+        {{ module.light|sensitivity_desc:"light" }}
+      </div>
+      {% endif %}
+      {% if module.smell != module.SENS_NONE %}
+      <div class="col-12">
+        {{ module.smell|sensitivity_desc:"smell" }}
+      </div>
+      {% endif %}
+      {% if module.temperature != module.SENS_NONE %}
+      <div class="col-12">
+        {{ module.temperature|sensitivity_desc:"temperature" }}
+      </div>
+      {% endif %}
+    {% endif %}
+    {% if module.extra_choices or module.extra_free %}
+      <div class="col-12">
+        <h3>{% trans "Additional Sensory Info" %} </h3>
+      </div>
+      <ul>
+        {% for item in module.extra_choices %}
+          <li>{{ module.EXTRAS|get_display_value:item }}</li>
+        {% endfor %}
+        {% for item in module.extra_free %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</section>
