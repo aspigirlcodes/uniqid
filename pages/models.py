@@ -10,6 +10,7 @@ MODULES = (
     ("communicationmethodsmodule", _("Communication methods module")),
     ("dodontmodule", _("Do's and Don'ts module")),
     ("medicationmodule", _("Medication module")),
+    ("sensorymodule", _("Sensory module")),
     ("contactmodule", _("Contact module")),
     ("freetextmodule", _("Free text module")),
     ("freelistmodule", _("Free list module")),
@@ -29,6 +30,7 @@ class Page(models.Model):
                 self.communicationmethodsmodule_set.all(),
             'dodontmodule': self.dodontmodule_set.all(),
             'medicationmodule': self.medicationmodule_set.all(),
+            'sensorymodule': self.sensorymodule_set.all(),
             'contactmodule': self.contactmodule_set.all(),
             'freetextmodule': self.freetextmodule_set.all(),
             'freelistmodule': self.freelistmodule_set.all(),
@@ -245,6 +247,71 @@ class MedicationIntake(models.Model):
                                 max_length=255, default="", blank=True)
     medication = models.ForeignKey(MedicationItem,
                                    verbose_name=_("medication"))
+
+
+class SensoryModule(Module):
+    template = "pages/_sensory.html"
+
+    SENS_NONE = "00_sens_none"
+    SENS_V_LOW = "01_sens_v_low"
+    SENS_LOW = "02_sens_low"
+    SENS_MED = "03_sens_med"
+    SENS_HIGH = "04_sens_high"
+    SENS_V_HIGH = "05_sens_v_high"
+
+    RANGE = (
+        (SENS_NONE, _("Do not include")),
+        (SENS_V_LOW, _("Very low")),
+        (SENS_LOW, _("Lower than average")),
+        (SENS_MED, _("Average")),
+        (SENS_HIGH, _("Higher than average")),
+        (SENS_V_HIGH, _("Very high"))
+    )
+
+    EXTRA_FLUO = "01_extra_fluo"
+    EXTRA_MULTI = "02_extra_multi"
+    EXTRA_PAIN = "03_extra_pain"
+
+    EXTRAS = (
+        (EXTRA_FLUO, _("I can't cope with fluorescent lighting")),
+        (EXTRA_MULTI, _("I have trouble processing more than on sense at a "
+                        "time, for example hearing you while looking at "
+                        "something")),
+        (EXTRA_PAIN, _("I have difficulties recognizing and or reporting pain "
+                       "or other symptoms"))
+    )
+
+    sound = models.CharField(verbose_name=_("Sensitivity to sound"),
+                             max_length=32,
+                             choices=RANGE,
+                             default=SENS_NONE)
+    light = models.CharField(verbose_name=_("Sensitivity to light"),
+                             max_length=32,
+                             choices=RANGE,
+                             default=SENS_NONE)
+    smell = models.CharField(verbose_name=_("Sensitivity to smells"),
+                             max_length=32,
+                             choices=RANGE,
+                             default=SENS_NONE)
+    temperature = models.CharField(
+        verbose_name=_("Sensitivity to temperature"),
+        max_length=32,
+        choices=RANGE,
+        default=SENS_NONE)
+    extra_choices = ChoiceArrayField(
+        models.CharField(max_length=32, choices=EXTRAS),
+        verbose_name=_("Additional sensory info"), blank=True)
+    extra_free = ArrayField(
+        models.CharField(max_length=255),
+        verbose_name=_("More additional sensory info"),
+        blank=True)
+
+    @property
+    def has_sensory_profile(self):
+        return self.sound != self.SENS_NONE \
+                or self.light != self.SENS_NONE \
+                or self.smell != self.SENS_NONE \
+                or self.temperature != self.SENS_NONE
 
 
 class ContactModule(Module):
