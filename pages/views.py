@@ -3,7 +3,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
                     CommunicationMethodsModule, FreePictureModule, \
-                    DoDontModule, MedicationModule, MedicationItem
+                    DoDontModule, MedicationModule, MedicationItem, \
+                    ContactModule
 from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    FreeTextModuleForm, FreeListModuleForm,\
                    CommunicationMethodsModuleForm, PictureFormSet, \
@@ -120,6 +121,12 @@ class MedicationModuleCreateView(ModuleCreateView):
             return HttpResponseRedirect(url)
         else:
             return self.render_to_response(self.get_context_data(form=form))
+
+
+class ContactModuleCreateView(ModuleCreateView):
+    model = ContactModule
+    fields = ['title', 'name', 'address', 'phone', 'email', 'extra']
+    template_name = "pages/createcontactmodule.html"
 
 
 class FreeTextModuleCreateView(ModuleCreateView):

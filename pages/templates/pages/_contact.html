@@ -1,0 +1,35 @@
+{% load i18n %}
+
+<section class="contact-display">
+  <div class="row my-2">
+    <div class="col-12">
+      <h2>{% trans "Contacts" %}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">{{ module.title }}</h4>
+          <address>
+            {% if module.name %}
+              {{module.name}} <br/>
+            {% endif %}
+            {% if module.address %}
+              {{module.address|linebreaksbr }} <br/>
+            {% endif %}
+            {% if module.phone%}
+              Tel: {{module.phone}} <br/>
+            {% endif %}
+            {% if module.email %}
+              Email: {{module.email}} <br/>
+            {% endif %}
+          </address>
+          {% if module.extra %}
+            <p> {{ module.extra|linebreaks }} </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

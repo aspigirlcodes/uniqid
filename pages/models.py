@@ -10,6 +10,7 @@ MODULES = (
     ("communicationmethodsmodule", _("Communication methods module")),
     ("dodontmodule", _("Do's and Don'ts module")),
     ("medicationmodule", _("Medication module")),
+    ("contactmodule", _("Contact module")),
     ("freetextmodule", _("Free text module")),
     ("freelistmodule", _("Free list module")),
     ("freepicturemodule", _("Free picture module"))
@@ -28,6 +29,7 @@ class Page(models.Model):
                 self.communicationmethodsmodule_set.all(),
             'dodontmodule': self.dodontmodule_set.all(),
             'medicationmodule': self.medicationmodule_set.all(),
+            'contactmodule': self.contactmodule_set.all(),
             'freetextmodule': self.freetextmodule_set.all(),
             'freelistmodule': self.freelistmodule_set.all(),
             'freepicturemodule': self.freepicturemodule_set.all(),
@@ -243,6 +245,28 @@ class MedicationIntake(models.Model):
                                 max_length=255, default="", blank=True)
     medication = models.ForeignKey(MedicationItem,
                                    verbose_name=_("medication"))
+
+
+class ContactModule(Module):
+    template = "pages/_contact.html"
+
+    title = models.CharField(verbose_name=_("Contact title"),
+                             max_length=255, default="", blank=True,
+                             help_text=_("Choose a descriptive title for the "
+                                         "contact. A good title may include "
+                                         "the role of this contact, "
+                                         "or the situation in which they "
+                                         "can be contacted."))
+    name = models.CharField(verbose_name=_("Name"),
+                            max_length=255, default="", blank=True)
+    address = models.TextField(verbose_name=_("Address"), default="",
+                               blank=True)
+    phone = models.CharField(verbose_name=_("Phone number"),
+                             max_length=255, default="", blank=True)
+    email = models.EmailField(verbose_name=_("Email address"), default="",
+                              blank=True)
+    extra = models.TextField(verbose_name=_("Extra comment"), default="",
+                             blank=True)
 
 
 class FreeTextModule(Module):
