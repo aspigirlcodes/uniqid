@@ -55,11 +55,11 @@
         </div>
       </div>
   	  {{ picture_formset.management_form }}
+      <div class="card p-3 my-3 bg-light">
       {% for form in picture_formset %}
-
-        <fieldset class="row">
+        <fieldset id="id_modulepicture_set-{{forloop.counter0}}" class="row">
           <div class="col-12">
-            <legend>Image:</legend>
+            <legend>Image {{forloop.counter}}:</legend>
           </div>
           <div class="col-12">
             {% if form.non_field_errors %}
@@ -128,8 +128,13 @@
           </div>
         </div>
         </fieldset>
-
       {% endfor %}
+      <div class="row my-2">
+        <div class="col text-right">
+          <button type="button" id="id_modulepicture_set" onclick="add_formset(this)" class="btn btn-success">{% trans "Add another image" %}</button>
+        </div>
+      </div>
+      </div>
       <div class="row">
         <div class="col">
           <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
@@ -142,3 +147,40 @@
   </div>
 </section>
 {% endblock content %}
+{% block scripts %}
+<script>
+  function add_formset(element){
+    var total_forms_input = $("#"+element.id+"-TOTAL_FORMS");
+    var current_num = Number(total_forms_input.val());
+    var current_index = current_num - 1;
+    var next_num = current_num + 1;
+    var fieldset = $("fieldset#"+element.id+"-"+current_index.toString());
+    var new_fieldset = fieldset.clone(true);
+    // update all the id's
+    new_fieldset.find("[id*="+current_index.toString()+"], [name*="+current_index.toString()+"], [for*="+current_index.toString()+"]").add(new_fieldset).each(function(){
+      replace_number(this, 'id', current_index, current_num)
+      replace_number(this, "name", current_index, current_num)
+      replace_number(this, "for", current_index, current_num)
+    });
+    new_fieldset.find("legend").text(function () {
+      return $(this).text().replace(current_num.toString(), next_num.toString());
+    });
+    // reset all the inputs
+    new_fieldset.find(':input').each(function() {
+      $(this).val(this.defaultValue);
+    });
+    new_fieldset.insertAfter(fieldset);
+    // updat total forms value
+    total_forms_input.val(current_num + 1);
+  }
+
+function replace_number(element, attr, old_num, new_num){
+  var old_attr = $(element).attr(attr);
+  if(old_attr){
+    var new_attr = old_attr.replace(old_num.toString(), new_num.toString());
+    $(element).attr(attr, new_attr);
+  }
+}
+
+</script>
+{% endblock scripts %}
