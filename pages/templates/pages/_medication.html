@@ -23,12 +23,12 @@
               {% for intake in med.medicationintake_set.all %}
                 <tr>
                   {% if forloop.first %}
-                    <td rowspan="num_intake">{{med.name}}</td>
+                    <td rowspan="{{num_intake}}">{{med.name}}</td>
                   {% endif %}
                   <td>{{ intake.time }}</td>
                   <td>{{ intake.quantity }}</td>
                   {% if forloop.first %}
-                    <td rowspan="num_intake">{{ med.remarks }}</td>
+                    <td rowspan="{{num_intake}}">{{ med.remarks }}</td>
                   {% endif %}
                 </tr>
               {% endfor %}
