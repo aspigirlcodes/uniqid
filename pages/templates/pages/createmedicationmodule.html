@@ -1,6 +1,7 @@
 {% extends "pages/base.html" %}
 {% load widget_tweaks %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
 <section id="create-form" class="pb-5">
@@ -22,7 +23,7 @@
         <h2>{% trans "Medication Module" %}</h2>
       </div>
     </div>
-    <form method="post" action="" enctype="multipart/form-data">
+    <form method="post" action="">
       <div class="row">
         <div class="col-12">
           {% csrf_token %}
@@ -53,42 +54,24 @@
             {% endif %}
           </div>
         </div>
-        <div class="col-12">
-          <div class="form-group">
-            <label for="{{form.remarks.auto_id}}">
-              {{ form.remarks.label }}
-            </label>
-            {% if form.remarks.errors %}
-            {{ form.remarks|add_class:"form-control is-invalid" }}
-            <div class="invalid-feedback">
-              <ul class="list-unstyled">
-                {% for error in form.remarks.errors %}
-                <li><strong>{{ error|escape }}</strong></li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% else %}
-            {{ form.remarks|add_class:"form-control" }}
-            {% endif %}
-          </div>
-        </div>
       </div>
   	  {{ intake_formset.management_form }}
+      <div class="card p-3 my-3 bg-light">
       {% for form in intake_formset %}
-        <fieldset class="row">
+        <fieldset id="id_medicationintake_set-{{forloop.counter0}}" class="row">
           <div class="col-12">
-            <legend>Intake:</legend>
-          </div>
-          <div class="col-12">
+            <legend>Intake {{forloop.counter}}:</legend>
             {% if form.non_field_errors %}
-            <div class="alert alert-danger" role="alert">
-              <ul class="list-unstyled my-0">
-                {% for error in form.non_field_errors %}
-                <li> {{ error|escape }} </li>
-                {% endfor %}
-              </ul>
-            </div>
+              <div class="alert alert-danger" role="alert">
+                <ul class="list-unstyled my-0">
+                  {% for error in form.non_field_errors %}
+                  <li> {{ error|escape }} </li>
+                  {% endfor %}
+                </ul>
+              </div>
             {% endif %}
+          </div>
+          <div class="col-12 col-sm-6">
             <div class="form-group">
               <label for="{{form.time.auto_id}}">
                 {{ form.time.label }}
@@ -107,7 +90,7 @@
               {% endif %}
           </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 col-sm-6">
           <div class="form-group">
             <label for="{{form.quantity.auto_id}}">
               {{ form.quantity.label }}
@@ -128,6 +111,33 @@
         </div>
         </fieldset>
       {% endfor %}
+      <div class="row my-2">
+        <div class="col text-right">
+          <button type="button" id="id_medicationintake_set" onclick="add_formset(this)" class="btn btn-success">{% trans "Add another intake" %}</button>
+        </div>
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="{{form.remarks.auto_id}}">
+              {{ form.remarks.label }}
+            </label>
+            {% if form.remarks.errors %}
+            {{ form.remarks|add_class:"form-control is-invalid" }}
+            <div class="invalid-feedback">
+              <ul class="list-unstyled">
+                {% for error in form.remarks.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% else %}
+            {{ form.remarks|add_class:"form-control" }}
+            {% endif %}
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col">
           <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
@@ -140,3 +150,6 @@
   </div>
 </section>
 {% endblock content %}
+{% block scripts %}
+  <script type="text/javascript" src="{% static "js/formset.js" %}"></script>
+{% endblock scripts %}
