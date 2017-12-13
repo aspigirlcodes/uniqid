@@ -8,7 +8,8 @@ from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
 from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    FreeTextModuleForm, FreeListModuleForm,\
                    CommunicationMethodsModuleForm, PictureFormSet, \
-                   DoDontModuleForm, IntakeFormSet, SensoryModuleForm
+                   DoDontModuleForm, IntakeFormSet, SensoryModuleForm, \
+                   ContactFormSet
 
 
 class PageCreateView(CreateView):
@@ -125,8 +126,27 @@ class MedicationModuleCreateView(ModuleCreateView):
 
 class ContactModuleCreateView(ModuleCreateView):
     model = ContactModule
-    fields = ['title', 'name', 'address', 'phone', 'email', 'extra']
+    fields = []
     template_name = "pages/createcontactmodule.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['contact_formset'] = ContactFormSet(self.request.POST)
+        else:
+            context['contact_formset'] = ContactFormSet()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['contact_formset']
+        if formset.is_valid():
+            redirect_url = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return redirect_url
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
 
 class SensoryModuleCreateView(ModuleCreateView):

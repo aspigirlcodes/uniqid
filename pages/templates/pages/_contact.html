@@ -7,29 +7,31 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12 col-sm-6 col-md-3">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">{{ module.title }}</h4>
-          <address>
-            {% if module.name %}
-              {{module.name}} <br/>
+    {% for contact in module.modulecontact_set.all %}
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{ contact.title }}</h4>
+            <address>
+              {% if contact.name %}
+                {{contact.name}} <br/>
+              {% endif %}
+              {% if contact.address %}
+                {{contact.address|linebreaksbr }} <br/>
+              {% endif %}
+              {% if contact.phone%}
+                Tel: {{contact.phone}} <br/>
+              {% endif %}
+              {% if contact.email %}
+                Email: {{contact.email}} <br/>
+              {% endif %}
+            </address>
+            {% if contact.extra %}
+              <p> {{ contact.extra|linebreaks }} </p>
             {% endif %}
-            {% if module.address %}
-              {{module.address|linebreaksbr }} <br/>
-            {% endif %}
-            {% if module.phone%}
-              Tel: {{module.phone}} <br/>
-            {% endif %}
-            {% if module.email %}
-              Email: {{module.email}} <br/>
-            {% endif %}
-          </address>
-          {% if module.extra %}
-            <p> {{ module.extra|linebreaks }} </p>
-          {% endif %}
+          </div>
         </div>
       </div>
-    </div>
+    {% endfor %}
   </div>
 </section>

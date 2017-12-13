@@ -331,6 +331,8 @@ class ContactModule(Module):
                   "contacts with only a phone number or email address, as "
                   "well as postal addresses and even maps(not available yet).")
 
+
+class ModuleContact(models.Model):
     title = models.CharField(verbose_name=_("Contact title"),
                              max_length=255, default="", blank=True,
                              help_text=_("Choose a descriptive title for the "
@@ -348,6 +350,7 @@ class ContactModule(Module):
                               blank=True)
     extra = models.TextField(verbose_name=_("Extra comment"), default="",
                              blank=True)
+    module = models.ForeignKey(ContactModule, verbose_name=_("module"))
 
 
 class FreeTextModule(Module):

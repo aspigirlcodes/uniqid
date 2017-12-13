@@ -3,7 +3,7 @@ from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
 from .models import MODULES, MODULE_HELP, Page, GeneralInfoModule, \
-                    FreeTextModule, \
+                    FreeTextModule, ModuleContact, ContactModule, \
                     FreeListModule, CommunicationMethodsModule, \
                     FreePictureModule, ModulePicture, DoDontModule, \
                     MedicationItem, MedicationIntake, SensoryModule
@@ -18,6 +18,11 @@ PictureFormSet = inlineformset_factory(FreePictureModule, ModulePicture,
 IntakeFormSet = inlineformset_factory(MedicationItem, MedicationIntake,
                                       fields=['time', 'quantity'],
                                       extra=1)
+
+ContactFormSet = inlineformset_factory(ContactModule, ModuleContact,
+                                       fields=['title', 'name', 'address',
+                                               'phone', 'email', 'extra'],
+                                       extra=1)
 
 
 class PageCreateForm(ModelForm):
