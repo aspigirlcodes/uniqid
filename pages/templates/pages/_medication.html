@@ -28,7 +28,7 @@
                   <td>{{ intake.time }}</td>
                   <td>{{ intake.quantity }}</td>
                   {% if forloop.first %}
-                    <td rowspan="{{num_intake}}">{{ med.remarks }}</td>
+                    <td rowspan="{{num_intake}}">{{ med.remarks|linebreaks }}</td>
                   {% endif %}
                 </tr>
               {% endfor %}
