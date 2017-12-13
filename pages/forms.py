@@ -2,11 +2,12 @@ from django.forms import ModelForm, ChoiceField, CharField
 from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
-from .models import MODULES, Page, GeneralInfoModule, FreeTextModule, \
+from .models import MODULES, MODULE_HELP, Page, GeneralInfoModule, \
+                    FreeTextModule, \
                     FreeListModule, CommunicationMethodsModule, \
                     FreePictureModule, ModulePicture, DoDontModule, \
                     MedicationItem, MedicationIntake, SensoryModule
-from .fields import ItemTextWidget, DynamicSplitArrayField
+from .fields import ItemTextWidget, DynamicSplitArrayField, RadioWithHelpSelect
 
 
 PictureFormSet = inlineformset_factory(FreePictureModule, ModulePicture,
@@ -22,6 +23,7 @@ IntakeFormSet = inlineformset_factory(MedicationItem, MedicationIntake,
 class PageCreateForm(ModelForm):
     module = ChoiceField(label=_("Choose a module to start with"),
                          choices=MODULES,
+                         widget=RadioWithHelpSelect(help_texts=MODULE_HELP),
                          help_text=_("You can add more modules later"))
 
     class Meta:
@@ -36,6 +38,7 @@ class PageCreateForm(ModelForm):
 class AddModuleForm(ModelForm):
     module = ChoiceField(label=_("Choose another module"),
                          choices=MODULES,
+                         widget=RadioWithHelpSelect(help_texts=MODULE_HELP),
                          help_text=_("You can add more modules or go to "
                                      "the next step when you are finished"))
 

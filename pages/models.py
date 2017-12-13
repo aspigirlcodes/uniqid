@@ -5,18 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import ArrayField
 from .fields import ChoiceArrayField
 
-MODULES = (
-    ("generalinfomodule", _("General info module")),
-    ("communicationmethodsmodule", _("Communication methods module")),
-    ("dodontmodule", _("Do's and Don'ts module")),
-    ("medicationmodule", _("Medication module")),
-    ("sensorymodule", _("Sensory module")),
-    ("contactmodule", _("Contact module")),
-    ("freetextmodule", _("Free text module")),
-    ("freelistmodule", _("Free list module")),
-    ("freepicturemodule", _("Free picture module"))
-)
-
 
 class Page(models.Model):
     title = models.CharField(verbose_name=_("Page Title"), max_length=255,
@@ -80,6 +68,11 @@ class GeneralInfoModule(Module):
 
     template = "pages/_generalinfo.html"
 
+    help_text = _("With this module you can introduce yourself. "
+                  "Add a picture if you want to, state your pronouns or "
+                  "disclose your autism. As in all our modules, all of this "
+                  "is optional.")
+
     name = models.CharField(verbose_name=_("Name"), max_length=255, default="",
                             blank=True)
     identity = models.CharField(verbose_name=_("Identity"),
@@ -96,6 +89,11 @@ class GeneralInfoModule(Module):
 class CommunicationMethodsModule(Module):
 
     template = "pages/_communicationmethods.html"
+
+    help_text = _("This module lets you describe your communication "
+                  "preferences in different situations. "
+                  "In addition you can give others tips on how to communicate "
+                  "effectively with you.")
 
     SPOKEN = "01_spoken"
     WRITTEN = "02_written"
@@ -133,6 +131,10 @@ class CommunicationMethodsModule(Module):
 
 class DoDontModule(Module):
     template = "pages/_dodont.html"
+
+    help_text = _("With this module, you can provide 3 quick lists "
+                  "with things people can do, shouldn't do, or should "
+                  "ask you first.")
 
     DO_TIME = "01_do_time"
     DO_LIGHT = "02_do_light"
@@ -231,6 +233,10 @@ class DoDontModule(Module):
 class MedicationModule(Module):
     template = "pages/_medication.html"
 
+    help_text = _("Here you can create a table with your medication and when "
+                  "you take how much of it. This can be useful for doctors or "
+                  "caregivers, or just as a reminder for yourself.")
+
 
 class MedicationItem(models.Model):
     name = models.CharField(verbose_name=_("Medication name"),
@@ -251,6 +257,9 @@ class MedicationIntake(models.Model):
 
 class SensoryModule(Module):
     template = "pages/_sensory.html"
+
+    help_text = _("This module presents your sensory profile. You can also "
+                  "add other information related to sensory processing.")
 
     SENS_NONE = "00_sens_none"
     SENS_V_LOW = "01_sens_v_low"
@@ -317,6 +326,11 @@ class SensoryModule(Module):
 class ContactModule(Module):
     template = "pages/_contact.html"
 
+    help_text = _("In this module you can add all kinds of contact data. "
+                  "As always, all fields are optional, so you can add "
+                  "contacts with only a phone number or email address, as "
+                  "well as postal addresses and even maps(not available yet).")
+
     title = models.CharField(verbose_name=_("Contact title"),
                              max_length=255, default="", blank=True,
                              help_text=_("Choose a descriptive title for the "
@@ -338,6 +352,11 @@ class ContactModule(Module):
 
 class FreeTextModule(Module):
 
+    help_text = _("Here you can create a custom module containing "
+                  "text and a title. You can use it  for any text you want "
+                  "to add that doesn't have place in our pre-formulated "
+                  "modules.")
+
     template = "pages/_freetext.html"
 
     title = models.CharField(verbose_name=_("Title"),
@@ -353,6 +372,10 @@ class FreeListModule(Module):
 
     template = "pages/_freelist.html"
 
+    help_text = _("A place to add your own lists. List things you are good "
+                  "at, your hobies, questions you have prepared for a "
+                  "conversation, or anything else you want to make a list of.")
+
     title = models.CharField(verbose_name=_("Title"),
                              max_length=255, default="", blank=True)
     items = ArrayField(models.CharField(max_length=255),
@@ -364,6 +387,10 @@ class FreeListModule(Module):
 
 
 class FreePictureModule(Module):
+
+    help_text = _("Upload your own pictures and add a title and a description "
+                  "to them. Sometimes adding an ilustration, cartoon or photo "
+                  "helps to bring your message accross.")
 
     template = "pages/_freepicture.html"
 
@@ -383,3 +410,29 @@ class ModulePicture(models.Model):
                                    null=True, blank=True)
     title = models.CharField(verbose_name=_("Image title"),
                              max_length=255, default="", blank=True)
+
+
+MODULES = (
+    ("generalinfomodule", _("General info module")),
+    ("communicationmethodsmodule", _("Communication methods module")),
+    ("dodontmodule", _("Do's and Don'ts module")),
+    ("medicationmodule", _("Medication module")),
+    ("sensorymodule", _("Sensory module")),
+    ("contactmodule", _("Contact module")),
+    ("freetextmodule", _("Free text module")),
+    ("freelistmodule", _("Free list module")),
+    ("freepicturemodule", _("Free picture module"))
+)
+
+
+MODULE_HELP = {
+    "generalinfomodule": GeneralInfoModule.help_text,
+    "communicationmethodsmodule": CommunicationMethodsModule.help_text,
+    "dodontmodule": DoDontModule.help_text,
+    "medicationmodule": MedicationModule.help_text,
+    "sensorymodule": SensoryModule.help_text,
+    "contactmodule": ContactModule.help_text,
+    "freetextmodule": FreeTextModule.help_text,
+    "freelistmodule": FreeListModule.help_text,
+    "freepicturemodule": FreePictureModule.help_text
+}
