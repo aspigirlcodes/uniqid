@@ -40,3 +40,18 @@ def sensitivity_desc(value, sense):
         return _("I am much more sensitive to %(sense)s than most people.") \
                 % {'sense': sense}
     return ""
+
+
+@register.filter
+def sensitivity_img(value, sense):
+    if value == SensoryModule.SENS_V_LOW:
+        return "img/very_low_sensitive_{}.svg".format(sense)
+    if value == SensoryModule.SENS_LOW:
+        return "img/low_sensitive_{}.svg".format(sense)
+    if value == SensoryModule.SENS_MED:
+        return "img/average_sensitive_{}.svg".format(sense)
+    if value == SensoryModule.SENS_HIGH:
+        return "img/high_sensitive_{}.svg".format(sense)
+    if value == SensoryModule.SENS_V_HIGH:
+        return "img/very_high_sensitive_{}.svg".format(sense)
+    return ""

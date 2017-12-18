@@ -14,8 +14,8 @@ class Page(models.Model):
     def get_all_modules(self):
         return {
             'generalinfomodule': self.generalinfomodule_set.all(),
-            'communicationmethodsmodule':
-                self.communicationmethodsmodule_set.all(),
+            'communicationmodule':
+                self.communicationmodule_set.all(),
             'dodontmodule': self.dodontmodule_set.all(),
             'medicationmodule': self.medicationmodule_set.all(),
             'sensorymodule': self.sensorymodule_set.all(),
@@ -86,15 +86,68 @@ class GeneralInfoModule(Module):
             .format(page=str(self.page), name=self.name, id=self.identity)
 
 
-class CommunicationMethodsModule(Module):
-
-    template = "pages/_communicationmethods.html"
+class CommunicationModule(Module):
+    template = "pages/_communication.html"
 
     help_text = _("This module lets you describe your communication "
                   "preferences in different situations. "
                   "In addition you can give others tips on how to communicate "
                   "effectively with you.")
 
+    SIMPLE = "01_simple"
+    CONCRETE = "02_concrete"
+    PICTURES = "03_pictures"
+    WRITE = "04_write"
+    DETAILED = "05_detailed"
+    IMPORTANT = "06_important"
+    QUESTIONS = "07_questions"
+    PROCESSING = "08_processing"
+    NOISES = "09_noises"
+    NOT_RUDE = "10_not_rude"
+    LITERALLY = "11_literally"
+    BODY_LANGUAGE = "12_body_language"
+    HARD_FLUENT = "13_hard_fluent"
+    INVOLVED = "14_involved"
+    SITUATION = "15_situation"
+    TELEPHONE = "16_telephone"
+
+    SUGGESTIONS = (
+        (SIMPLE, _("Use simple words and short senteces.")),
+        (CONCRETE, _("Be very concrete and specific. "
+                     "Avoid very broad questions.")),
+        (PICTURES, _("Show me diagrams or pictures whenever possible.")),
+        (WRITE, _("Write down important information or instructions for me.")),
+        (DETAILED, _("Give me very detailed information.")),
+        (IMPORTANT, _("Focus only on the most important information.")),
+        (QUESTIONS, _("Be patient with me if I need to ask a lot of "
+                      "questions.")),
+        (PROCESSING, _("Give me extra time to process what you have said. "
+                       "Especially if I have to answer questions.")),
+        (NOISES, _("Do not try to talk to me while ther are other noises.")),
+        (NOT_RUDE, _("If I seem rude, I don't mean it. "
+                     "I'm just really direct.")),
+        (LITERALLY, _("I often take language too literally.")),
+        (BODY_LANGUAGE, _("I may have difficulty understanding tone of voice, "
+                          "facial expressions, or body language.")),
+        (HARD_FLUENT, _("I may have a hard time communicating, "
+                        "even if my speech sounds fluent.")),
+        (INVOLVED, _("I can be involved in decisions "
+                     "even though I have difficulty speaking.")),
+        (SITUATION, _("My ability to communicate changes a lot, "
+                      "depending on the situation.")),
+        (TELEPHONE, _("I have a hard time using the telephone."))
+    )
+
+    suggestions_choices = ChoiceArrayField(
+        models.CharField(max_length=32, choices=SUGGESTIONS),
+        verbose_name=_("Communication suggestions"), blank=True)
+    suggestions_free = ArrayField(
+        models.CharField(max_length=255),
+        verbose_name=_("Other communication suggestions"),
+        blank=True)
+
+
+class CommunicationMethods(models.Model):
     SPOKEN = "01_spoken"
     WRITTEN = "02_written"
     TEXT_AAC = "03_text_aac"
@@ -127,6 +180,7 @@ class CommunicationMethodsModule(Module):
         models.CharField(max_length=255),
         verbose_name=_("Other communication methods I might use"),
         blank=True)
+    module = models.ForeignKey(CommunicationModule, verbose_name=_("module"))
 
 
 class DoDontModule(Module):
@@ -417,7 +471,7 @@ class ModulePicture(models.Model):
 
 MODULES = (
     ("generalinfomodule", _("General info module")),
-    ("communicationmethodsmodule", _("Communication methods module")),
+    ("communicationmodule", _("Communication module")),
     ("dodontmodule", _("Do's and Don'ts module")),
     ("medicationmodule", _("Medication module")),
     ("sensorymodule", _("Sensory module")),
@@ -430,7 +484,7 @@ MODULES = (
 
 MODULE_HELP = {
     "generalinfomodule": GeneralInfoModule.help_text,
-    "communicationmethodsmodule": CommunicationMethodsModule.help_text,
+    "communicationmodule": CommunicationModule.help_text,
     "dodontmodule": DoDontModule.help_text,
     "medicationmodule": MedicationModule.help_text,
     "sensorymodule": SensoryModule.help_text,

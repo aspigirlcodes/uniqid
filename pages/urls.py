@@ -18,7 +18,7 @@ from django.conf.urls import url
 from .views import GeneralInfoModuleCreateView, PageCreateView,\
                    FreeTextModuleCreateView, SelectModuleView, PagePreview,\
                    FreeListModuleCreateView, FreePictureModuleCreateView, \
-                   CommunicationMethodsModuleCreateView, \
+                   CommunicationModuleCreateView, \
                    DoDontModuleCreateView, MedicationModuleCreateView,\
                    ContactModuleCreateView, SensoryModuleCreateView
 
@@ -31,9 +31,9 @@ urlpatterns = [
         SelectModuleView.as_view(), name="addmodule"),
     url(r'^(?P<page_id>[0-9]+)/creategeneralinfomodule/$',
         GeneralInfoModuleCreateView.as_view(), name="creategeneralinfomodule"),
-    url(r'^(?P<page_id>[0-9]+)/createcommunicationmethodsmodule/$',
-        CommunicationMethodsModuleCreateView.as_view(),
-        name="createcommunicationmethodsmodule"),
+    url(r'^(?P<page_id>[0-9]+)/createcommunicationmodule/$',
+        CommunicationModuleCreateView.as_view(),
+        name="createcommunicationmodule"),
     url(r'^(?P<page_id>[0-9]+)/createdodontmodule/$',
         DoDontModuleCreateView.as_view(), name="createdodontmodule"),
     url(r'^(?P<page_id>[0-9]+)/createmedicationmodule/$',
