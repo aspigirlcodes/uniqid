@@ -2,14 +2,14 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
-                    CommunicationMethodsModule, FreePictureModule, \
+                    CommunicationModule, FreePictureModule, \
                     DoDontModule, MedicationModule, MedicationItem, \
                     ContactModule, SensoryModule
 from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    FreeTextModuleForm, FreeListModuleForm,\
-                   CommunicationMethodsModuleForm, PictureFormSet, \
+                   CommunicationModuleForm, PictureFormSet, \
                    DoDontModuleForm, IntakeFormSet, SensoryModuleForm, \
-                   ContactFormSet
+                   ContactFormSet, CommunicationMethodsFormset
 
 
 class PageCreateView(CreateView):
@@ -69,10 +69,30 @@ class GeneralInfoModuleCreateView(ModuleCreateView):
     template_name = "pages/creategeneralinfomodule.html"
 
 
-class CommunicationMethodsModuleCreateView(ModuleCreateView):
-    model = CommunicationMethodsModule
-    form_class = CommunicationMethodsModuleForm
-    template_name = "pages/createcommunicationmethodsmodule.html"
+class CommunicationModuleCreateView(ModuleCreateView):
+    model = CommunicationModule
+    form_class = CommunicationModuleForm
+    template_name = "pages/createcommunicationmodule.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['methods_formset'] = \
+                CommunicationMethodsFormset(self.request.POST)
+        else:
+            context['methods_formset'] = CommunicationMethodsFormset()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['methods_formset']
+        if formset.is_valid():
+            redirect_url = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return redirect_url
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
 
 class DoDontModuleCreateView(ModuleCreateView):

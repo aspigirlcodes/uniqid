@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import MODULES, MODULE_HELP, Page, GeneralInfoModule, \
                     FreeTextModule, ModuleContact, ContactModule, \
-                    FreeListModule, CommunicationMethodsModule, \
+                    FreeListModule, CommunicationMethods, CommunicationModule,\
                     FreePictureModule, ModulePicture, DoDontModule, \
                     MedicationItem, MedicationIntake, SensoryModule
 from .fields import ItemTextWidget, DynamicSplitArrayField, RadioWithHelpSelect
@@ -63,7 +63,22 @@ class GeneralInfoModuleForm(ModelForm):
         fields = ['name', 'identity']
 
 
-class CommunicationMethodsModuleForm(ModelForm):
+class CommunicationModuleForm(ModelForm):
+    suggestions_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("Other communication suggestions"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+
+    class Meta:
+        model = CommunicationModule
+        fields = ['suggestions_choices', 'suggestions_free']
+
+
+class CommunicationMethodsForm(ModelForm):
     me_to_you_free = DynamicSplitArrayField(
         CharField(required=False, widget=ItemTextWidget),
         label=_("Other communication methods I might use"),
@@ -82,9 +97,14 @@ class CommunicationMethodsModuleForm(ModelForm):
                     "more items. Empty lines will be ignored."))
 
     class Meta:
-        model = CommunicationMethodsModule
+        model = CommunicationMethods
         fields = ['situation', 'me_to_you_choices', 'me_to_you_free',
                   'you_to_me_choices', 'you_to_me_free']
+
+
+CommunicationMethodsFormset = inlineformset_factory(
+    CommunicationModule, CommunicationMethods, form=CommunicationMethodsForm,
+    extra=1)
 
 
 class DoDontModuleForm(ModelForm):
