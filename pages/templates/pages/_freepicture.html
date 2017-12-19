@@ -6,7 +6,9 @@
     {% for picture in module.modulepicture_set.all %}
       <div class="col-12 col-md-6">
         <div class="card">
-          <img src="{{ picture.picture.url }}" class="card-img-top">
+          {% if picture.picture %}
+            <img src="{{ picture.picture.url }}" class="card-img-top">
+          {% endif %}
           {% if picture.title or picture.description %}
             <div class="card-body">
               <h3 class="card-title">{{ picture.title }}</h4>

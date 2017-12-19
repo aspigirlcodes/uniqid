@@ -1,88 +1,59 @@
-{% extends "pages/base.html" %}
+{% extends "pages/base_createmodule.html" %}
 {% load widget_tweaks %}
 {% load i18n %}
 
-{% block content %}
-<section id="create-form" class="pb-5">
-  <div class="container">
-    <div class="row my-4">
-      <div class="col">
-          <h6 class="my-0"><small class="text-uppercase text-secondary font-weight-light">
-            {% trans "creating page" context "superscript above page title" %}</small></h6>
-          {% if page.title %}
-            <h1>{{page.title}}</h1>
-          {% else %}
-            <h1 class="text-secondary">{% trans "No Title" %}</h1>
-          {% endif %}
-        </h1>
+{% block module_name %}
+  {% trans "Free Text Module" %}
+{% endblock %}
+{% block module_form%}
+  <div class="row">
+    <div class="col-12">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        <ul class="list-unstyled my-0">
+          {% for error in form.non_field_errors %}
+          <li> {{ error|escape }} </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="form-group">
+        <label for="{{form.title.auto_id}}">
+          {{ form.title.label }}
+        </label>
+        {% if form.title.errors %}
+        {{ form.title|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.title.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.title|add_class:"form-control" }}
+        {% endif %}
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <h2>{% trans "Free Text Module" %}</h2>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.text.auto_id}}">
+          {{ form.text.label }}
+        </label>
+        {% if form.text.errors %}
+        {{ form.text|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.text.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.text|add_class:"form-control" }}
+        {% endif %}
       </div>
     </div>
-    <form action="" method="post">
-      <div class="row">
-        <div class="col-12">
-          {% csrf_token %}
-          {% if form.non_field_errors %}
-          <div class="alert alert-danger" role="alert">
-            <ul class="list-unstyled my-0">
-              {% for error in form.non_field_errors %}
-              <li> {{ error|escape }} </li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endif %}
-          <div class="form-group">
-            <label for="{{form.title.auto_id}}">
-              {{ form.title.label }}
-            </label>
-            {% if form.title.errors %}
-            {{ form.title|add_class:"form-control is-invalid" }}
-            <div class="invalid-feedback">
-              <ul class="list-unstyled">
-                {% for error in form.title.errors %}
-                <li><strong>{{ error|escape }}</strong></li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% else %}
-            {{ form.title|add_class:"form-control" }}
-            {% endif %}
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="form-group">
-            <label for="{{form.text.auto_id}}">
-              {{ form.text.label }}
-            </label>
-            {% if form.text.errors %}
-            {{ form.text|add_class:"form-control is-invalid" }}
-            <div class="invalid-feedback">
-              <ul class="list-unstyled">
-                {% for error in form.text.errors %}
-                <li><strong>{{ error|escape }}</strong></li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% else %}
-            {{ form.text|add_class:"form-control" }}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
-        </div>
-        <div class="col text-right">
-          <button type="submit" value="submit_add_more" class="btn btn-primary">{% trans "Save" context "Button" %}</button>
-        </div>
-        </div>
-      </div>
-    </form>
   </div>
-</section>
-{% endblock content %}
+{% endblock module_form %}

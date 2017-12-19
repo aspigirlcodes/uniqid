@@ -1,93 +1,76 @@
-{% extends "pages/base.html" %}
+{% extends "pages/base_createmodule.html" %}
 {% load widget_tweaks %}
 {% load i18n %}
 {% load static %}
 
-{% block content %}
-<section id="create-form" class="pb-5">
-  <div class="container">
-    <div class="row my-4">
-      <div class="col">
-          <h6 class="my-0"><small class="text-uppercase text-secondary font-weight-light">
-            {% trans "creating page" context "superscript above page title" %}</small></h6>
-          {% if page.title %}
-            <h1>{{page.title}}</h1>
-          {% else %}
-            <h1 class="text-secondary">{% trans "No Title" %}</h1>
-          {% endif %}
-        </h1>
+{% block module_name %}
+  {% trans "Medication Module" %}
+{% endblock %}
+{% block module_form %}
+  <div class="row">
+    <div class="col-12">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        <ul class="list-unstyled my-0">
+          {% for error in form.non_field_errors %}
+          <li> {{ error|escape }} </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="form-group">
+        <label for="{{form.name.auto_id}}">
+          {{ form.name.label }}
+        </label>
+        {% if form.name.errors %}
+        {{ form.name|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.name.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.name|add_class:"form-control" }}
+        {% endif %}
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <h2>{% trans "Medication Module" %}</h2>
-      </div>
-    </div>
-    <form method="post" action="">
-      <div class="row">
+  </div>
+  {{ intake_formset.management_form }}
+  <div class="card p-3 my-3 bg-light">
+    {% for form in intake_formset %}
+      <fieldset id="id_medicationintake_set-{{forloop.counter0}}" class="row">
         <div class="col-12">
-          {% csrf_token %}
+          <legend>Intake {{forloop.counter}}:</legend>
           {% if form.non_field_errors %}
-          <div class="alert alert-danger" role="alert">
-            <ul class="list-unstyled my-0">
-              {% for error in form.non_field_errors %}
-              <li> {{ error|escape }} </li>
-              {% endfor %}
-            </ul>
-          </div>
+            <div class="alert alert-danger" role="alert">
+              <ul class="list-unstyled my-0">
+                {% for error in form.non_field_errors %}
+                <li> {{ error|escape }} </li>
+                {% endfor %}
+              </ul>
+            </div>
           {% endif %}
+        </div>
+        <div class="col-12 col-sm-6">
           <div class="form-group">
-            <label for="{{form.name.auto_id}}">
-              {{ form.name.label }}
+            <label for="{{form.time.auto_id}}">
+              {{ form.time.label }}
             </label>
-            {% if form.name.errors %}
-            {{ form.name|add_class:"form-control is-invalid" }}
+            {% if form.time.errors %}
+            {{ form.time|add_class:"form-control is-invalid" }}
             <div class="invalid-feedback">
               <ul class="list-unstyled">
-                {% for error in form.name.errors %}
+                {% for error in form.time.errors %}
                 <li><strong>{{ error|escape }}</strong></li>
                 {% endfor %}
               </ul>
             </div>
             {% else %}
-            {{ form.name|add_class:"form-control" }}
+            {{ form.time|add_class:"form-control" }}
             {% endif %}
-          </div>
-        </div>
-      </div>
-  	  {{ intake_formset.management_form }}
-      <div class="card p-3 my-3 bg-light">
-      {% for form in intake_formset %}
-        <fieldset id="id_medicationintake_set-{{forloop.counter0}}" class="row">
-          <div class="col-12">
-            <legend>Intake {{forloop.counter}}:</legend>
-            {% if form.non_field_errors %}
-              <div class="alert alert-danger" role="alert">
-                <ul class="list-unstyled my-0">
-                  {% for error in form.non_field_errors %}
-                  <li> {{ error|escape }} </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            {% endif %}
-          </div>
-          <div class="col-12 col-sm-6">
-            <div class="form-group">
-              <label for="{{form.time.auto_id}}">
-                {{ form.time.label }}
-              </label>
-              {% if form.time.errors %}
-              {{ form.time|add_class:"form-control is-invalid" }}
-              <div class="invalid-feedback">
-                <ul class="list-unstyled">
-                  {% for error in form.time.errors %}
-                  <li><strong>{{ error|escape }}</strong></li>
-                  {% endfor %}
-                </ul>
-              </div>
-              {% else %}
-              {{ form.time|add_class:"form-control" }}
-              {% endif %}
           </div>
         </div>
         <div class="col-12 col-sm-6">
@@ -109,47 +92,33 @@
             {% endif %}
           </div>
         </div>
-        </fieldset>
-      {% endfor %}
-      <div class="row my-2">
-        <div class="col text-right">
-          <button type="button" id="id_medicationintake_set" onclick="add_formset(this)" class="btn btn-success">{% trans "Add another intake" %}</button>
-        </div>
+      </fieldset>
+    {% endfor %}
+    <div class="row my-2">
+      <div class="col text-right">
+        <button type="button" id="id_medicationintake_set" onclick="add_formset(this)" class="btn btn-success">{% trans "Add another intake" %}</button>
       </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="form-group">
-            <label for="{{form.remarks.auto_id}}">
-              {{ form.remarks.label }}
-            </label>
-            {% if form.remarks.errors %}
-            {{ form.remarks|add_class:"form-control is-invalid" }}
-            <div class="invalid-feedback">
-              <ul class="list-unstyled">
-                {% for error in form.remarks.errors %}
-                <li><strong>{{ error|escape }}</strong></li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% else %}
-            {{ form.remarks|add_class:"form-control" }}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
-        </div>
-        <div class="col text-right">
-          <button type="submit" value="submit_add_more" class="btn btn-primary">{% trans "Save" context "Button" %}</button>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
-</section>
-{% endblock content %}
-{% block scripts %}
-  <script type="text/javascript" src="{% static "js/formset.js" %}"></script>
-{% endblock scripts %}
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.remarks.auto_id}}">
+          {{ form.remarks.label }}
+        </label>
+        {% if form.remarks.errors %}
+        {{ form.remarks|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.remarks.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.remarks|add_class:"form-control" }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock module_form %}
