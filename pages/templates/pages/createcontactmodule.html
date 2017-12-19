@@ -1,192 +1,165 @@
-{% extends "pages/base.html" %}
+{% extends "pages/base_createmodule.html" %}
 {% load widget_tweaks %}
 {% load i18n %}
 {% load static %}
 
-{% block content %}
-<section id="create-form" class="pb-5">
-  <div class="container">
-    <div class="row my-4">
-      <div class="col">
-          <h6 class="my-0"><small class="text-uppercase text-secondary font-weight-light">
-            {% trans "creating page" context "superscript above page title" %}</small></h6>
-          {% if page.title %}
-            <h1>{{page.title}}</h1>
-          {% else %}
-            <h1 class="text-secondary">{% trans "No Title" %}</h1>
-          {% endif %}
-        </h1>
-      </div>
+{% block module_name %}
+  {% trans "Contact Module" %}
+{% endblock %}
+{% block module_form %}
+  <div class="row">
+    <div class="col-12">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          <ul class="list-unstyled my-0">
+            {% for error in form.non_field_errors %}
+              <li> {{ error|escape }} </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
     </div>
-    <div class="row">
-      <div class="col">
-        <h2>{% trans "Contact Module" %}</h2>
-      </div>
-    </div>
-    <form action="" method="post">
-      <div class="row">
+  </div>
+  {{ contact_formset.management_form }}
+  <div class="card p-3 my-3 bg-light">
+    {% for form in contact_formset %}
+      <fieldset id="id_modulecontact_set-{{forloop.counter0}}" class="row">
         <div class="col-12">
-          {% csrf_token %}
+          <legend>Contact {{forloop.counter}}:</legend>
+        </div>
+        <div class="col-12">
           {% if form.non_field_errors %}
             <div class="alert alert-danger" role="alert">
               <ul class="list-unstyled my-0">
                 {% for error in form.non_field_errors %}
-                <li> {{ error|escape }} </li>
+                  <li> {{ error|escape }} </li>
                 {% endfor %}
               </ul>
             </div>
           {% endif %}
-          {{ contact_formset.management_form }}
-          <div class="card p-3 my-3 bg-light">
-            {% for form in contact_formset %}
-              <fieldset id="id_modulecontact_set-{{forloop.counter0}}" class="row">
-                <div class="col-12">
-                  <legend>Contact {{forloop.counter}}:</legend>
-                </div>
-                <div class="col-12">
-                  {% if form.non_field_errors %}
-                  <div class="alert alert-danger" role="alert">
-                    <ul class="list-unstyled my-0">
-                      {% for error in form.non_field_errors %}
-                        <li> {{ error|escape }} </li>
-                      {% endfor %}
-                    </ul>
-                  </div>
-                {% endif %}
-                <div class="form-group">
-                  <label for="{{form.title.auto_id}}">
-                    {{ form.title.label }}
-                  </label>
-                  {% if form.title.errors %}
-                  {{ form.title|add_class:"form-control is-invalid" }}
-                  <div class="invalid-feedback">
-                    <ul class="list-unstyled">
-                      {% for error in form.title.errors %}
-                      <li><strong>{{ error|escape }}</strong></li>
-                      {% endfor %}
-                    </ul>
-                  </div>
-                  {% else %}
-                  {{ form.title|add_class:"form-control" }}
-                  {% endif %}
-                </div>
+          <div class="form-group">
+            <label for="{{form.title.auto_id}}">
+              {{ form.title.label }}
+            </label>
+            {% if form.title.errors %}
+              {{ form.title|add_class:"form-control is-invalid" }}
+              <div class="invalid-feedback">
+                <ul class="list-unstyled">
+                  {% for error in form.title.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                  {% endfor %}
+                </ul>
               </div>
-              <div class="col-12">
-                <div class="form-group">
-                  <label for="{{form.name.auto_id}}">
-                    {{ form.name.label }}
-                  </label>
-                  {% if form.name.errors %}
-                  {{ form.name|add_class:"form-control is-invalid" }}
-                  <div class="invalid-feedback">
-                    <ul class="list-unstyled">
-                      {% for error in form.name.errors %}
-                      <li><strong>{{ error|escape }}</strong></li>
-                      {% endfor %}
-                    </ul>
-                  </div>
-                  {% else %}
-                  {{ form.name|add_class:"form-control" }}
-                  {% endif %}
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group">
-                  <label for="{{form.address.auto_id}}">
-                    {{ form.address.label }}
-                  </label>
-                  {% if form.address.errors %}
-                  {{ form.address|add_class:"form-control is-invalid" }}
-                  <div class="invalid-feedback">
-                    <ul class="list-unstyled">
-                      {% for error in form.address.errors %}
-                      <li><strong>{{ error|escape }}</strong></li>
-                      {% endfor %}
-                    </ul>
-                  </div>
-                  {% else %}
-                  {{ form.address|add_class:"form-control" }}
-                  {% endif %}
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group">
-                  <label for="{{form.phone.auto_id}}">
-                    {{ form.phone.label }}
-                  </label>
-                  {% if form.phone.errors %}
-                  {{ form.phone|add_class:"form-control is-invalid" }}
-                  <div class="invalid-feedback">
-                    <ul class="list-unstyled">
-                      {% for error in form.phone.errors %}
-                      <li><strong>{{ error|escape }}</strong></li>
-                      {% endfor %}
-                    </ul>
-                  </div>
-                  {% else %}
-                  {{ form.phone|add_class:"form-control" }}
-                  {% endif %}
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group">
-                  <label for="{{form.email.auto_id}}">
-                    {{ form.email.label }}
-                  </label>
-                  {% if form.email.errors %}
-                    {{ form.email|add_class:"form-control is-invalid" }}
-                    <div class="invalid-feedback">
-                      <ul class="list-unstyled">
-                        {% for error in form.email.errors %}
-                          <li><strong>{{ error|escape }}</strong></li>
-                        {% endfor %}
-                      </ul>
-                    </div>
-                  {% else %}
-                    {{ form.email|add_class:"form-control" }}
-                  {% endif %}
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group">
-                  <label for="{{form.extra.auto_id}}">
-                    {{ form.extra.label }}
-                  </label>
-                  {% if form.extra.errors %}
-                  {{ form.extra|add_class:"form-control is-invalid" }}
-                  <div class="invalid-feedback">
-                    <ul class="list-unstyled">
-                      {% for error in form.extra.errors %}
-                      <li><strong>{{ error|escape }}</strong></li>
-                      {% endfor %}
-                    </ul>
-                  </div>
-                  {% else %}
-                  {{ form.extra|add_class:"form-control" }}
-                  {% endif %}
-                </div>
-              </div>
-          </fieldset>
-        {% endfor %}
-        <div class="row my-2">
-          <div class="col text-right">
-            <button type="button" id="id_modulecontact_set" onclick="add_formset(this)" class="btn btn-success">{% trans "Add another contact" %}</button>
+            {% else %}
+              {{ form.title|add_class:"form-control"|attr:"aria-describedby:title-help" }}
+              <p id="title-help" class="form-text text-muted">
+                {{ form.title.help_text }}
+              </p>
+            {% endif %}
           </div>
         </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="{{form.name.auto_id}}">
+              {{ form.name.label }}
+            </label>
+            {% if form.name.errors %}
+              {{ form.name|add_class:"form-control is-invalid" }}
+              <div class="invalid-feedback">
+                <ul class="list-unstyled">
+                  {% for error in form.name.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% else %}
+              {{ form.name|add_class:"form-control" }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="{{form.address.auto_id}}">
+              {{ form.address.label }}
+            </label>
+            {% if form.address.errors %}
+              {{ form.address|add_class:"form-control is-invalid" }}
+              <div class="invalid-feedback">
+                <ul class="list-unstyled">
+                  {% for error in form.address.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% else %}
+              {{ form.address|add_class:"form-control" }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="{{form.phone.auto_id}}">
+              {{ form.phone.label }}
+            </label>
+            {% if form.phone.errors %}
+              {{ form.phone|add_class:"form-control is-invalid" }}
+              <div class="invalid-feedback">
+                <ul class="list-unstyled">
+                  {% for error in form.phone.errors %}
+                  <li><strong>{{ error|escape }}</strong></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% else %}
+              {{ form.phone|add_class:"form-control" }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="{{form.email.auto_id}}">
+              {{ form.email.label }}
+            </label>
+            {% if form.email.errors %}
+              {{ form.email|add_class:"form-control is-invalid" }}
+              <div class="invalid-feedback">
+                <ul class="list-unstyled">
+                  {% for error in form.email.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% else %}
+              {{ form.email|add_class:"form-control" }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="{{form.extra.auto_id}}">
+              {{ form.extra.label }}
+            </label>
+            {% if form.extra.errors %}
+              {{ form.extra|add_class:"form-control is-invalid" }}
+              <div class="invalid-feedback">
+                <ul class="list-unstyled">
+                  {% for error in form.extra.errors %}
+                    <li><strong>{{ error|escape }}</strong></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% else %}
+              {{ form.extra|add_class:"form-control" }}
+            {% endif %}
+          </div>
+        </div>
+      </fieldset>
+    {% endfor %}
+    <div class="row my-2">
+      <div class="col text-right">
+        <button type="button" id="id_modulecontact_set" onclick="add_formset(this)" class="btn btn-success">{% trans "Add another contact" %}</button>
       </div>
-      <div class="row">
-        <div class="col">
-          <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
-        </div>
-        <div class="col text-right">
-          <button type="submit" value="submit_add_more" class="btn btn-primary">{% trans "Save" context "Button" %}</button>
-        </div>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
-</section>
-{% endblock content %}
-{% block scripts %}
-  <script type="text/javascript" src="{% static "js/formset.js" %}"></script>
-{% endblock scripts %}
+{% endblock module_form %}
