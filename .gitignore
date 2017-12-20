@@ -4,4 +4,5 @@ __pycache__
 uniqid/settings_local.py
 logs/
 uniqid-env/
-static/
+/static/
+/media/

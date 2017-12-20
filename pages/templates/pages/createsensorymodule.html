@@ -1,0 +1,138 @@
+light{% extends "pages/base_createmodule.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block module_name %}
+  {% trans "Sensory Module" %}
+{% endblock module_name %}
+{% block module_form %}
+  <div class="row">
+    <div class="col-12">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        <ul class="list-unstyled my-0">
+          {% for error in form.non_field_errors %}
+          <li> {{ error|escape }} </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="form-group">
+        <label for="{{form.sound.auto_id}}">
+          {{ form.sound.label }}
+        </label>
+        {% if form.sound.errors %}
+        {{ form.sound|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.sound.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.sound|add_class:"form-control" }}
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.light.auto_id}}">
+          {{ form.light.label }}
+        </label>
+        {% if form.light.errors %}
+        {{ form.light|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.light.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.light|add_class:"form-control" }}
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.smell.auto_id}}">
+          {{ form.smell.label }}
+        </label>
+        {% if form.smell.errors %}
+        {{ form.smell|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.smell.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.smell|add_class:"form-control" }}
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.temperature.auto_id}}">
+          {{ form.temperature.label }}
+        </label>
+        {% if form.temperature.errors %}
+        {{ form.temperature|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.temperature.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.temperature|add_class:"form-control" }}
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.extra_choices.auto_id}}">
+          {{ form.extra_choices.label }}
+        </label>
+        {% if form.extra_choices.errors %}
+        {{ form.extra_choices|add_class:"is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.extra_choices.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.extra_choices|attr:"aria-describedby:extra_choices-help" }}
+        <p id="extra_choices-help" class="form-text text-muted">
+          {{ form.extra_choices.help_text }}
+        </p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.extra_free.auto_id}}">
+          {{ form.extra_free.label }}
+        </label>
+        {% if form.extra_free.errors %}
+        {{ form.extra_free|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.extra_free.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.extra_free|add_class:"form-control" }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock module_form %}

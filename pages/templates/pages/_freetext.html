@@ -1,14 +1,18 @@
 
 <section class="freetext-display">
-  <div class="row p-5 border border-dark">
+  <div class="row">
     {% if module.title %}
-    <div class="col-12">
+    <div class="col-12 my-2">
       <h2> {{ module.title }} </h2>
     </div>
     {% endif %}
     {% if module.text %}
     <div class="col-12">
-      {{ module.text|linebreaks}}
+      <div class="card">
+        <div class="card-body">
+          {{ module.text|linebreaks }}
+        </div>
+      </div>
     </div>
     {% endif %}
   </div>

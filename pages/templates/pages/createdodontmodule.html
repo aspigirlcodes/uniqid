@@ -1,0 +1,153 @@
+{% extends "pages/base_createmodule.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block module_name %}
+  {% trans "Do's and Don'ts module" %}
+{% endblock %}
+{% block module_form %}
+  <div class="row">
+    <div class="col-12">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          <ul class="list-unstyled my-0">
+            {% for error in form.non_field_errors %}
+              <li> {{ error|escape }} </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      <div class="form-group">
+        <label for="{{form.do_choices.auto_id}}">
+          {{ form.do_choices.label }}
+        </label>
+        {% if form.do_choices.errors %}
+          {{ form.do_choices|add_class:"is-invalid" }}
+          <div class="invalid-feedback">
+            <ul class="list-unstyled">
+              {% for error in form.do_choices.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          {{ form.do_choices|attr:"aria-describedby:do_choices-help" }}
+          <p id="do_choices-help" class="form-text text-muted">
+            {{ form.do_choices.help_text }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.do_free.auto_id}}">
+          {{ form.do_free.label }}
+        </label>
+        {% if form.do_free.errors %}
+          {{ form.do_free|add_class:"form-control is-invalid" }}
+          <div class="invalid-feedback">
+            <ul class="list-unstyled">
+              {% for error in form.do_free.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          {{ form.do_free|attr:"aria-describedby:do_free-help"|add_class:"form-control" }}
+          <p id="do_free-help" class="form-text text-muted">
+            {{ form.do_free.help_text }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.ask_choices.auto_id}}">
+          {{ form.ask_choices.label }}
+        </label>
+        {% if form.ask_choices.errors %}
+          {{ form.ask_choices|add_class:"is-invalid" }}
+          <div class="invalid-feedback">
+            <ul class="list-unstyled">
+              {% for error in form.ask_choices.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          {{ form.ask_choices|attr:"aria-describedby:ask_choices-help" }}
+          <p id="ask_choices-help" class="form-text text-muted">
+            {{ form.ask_choices.help_text }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.ask_free.auto_id}}">
+          {{ form.ask_free.label }}
+        </label>
+        {% if form.ask_free.errors %}
+          {{ form.ask_free|add_class:"form-control is-invalid" }}
+          <div class="invalid-feedback">
+            <ul class="list-unstyled">
+              {% for error in form.ask_free.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          {{ form.ask_free|attr:"aria-describedby:ask_free-help"|add_class:"form-control" }}
+          <p id="ask_free-help" class="form-text text-muted">
+            {{ form.ask_free.help_text }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.dont_choices.auto_id}}">
+          {{ form.dont_choices.label }}
+        </label>
+        {% if form.dont_choices.errors %}
+          {{ form.dont_choices|add_class:"is-invalid" }}
+          <div class="invalid-feedback">
+            <ul class="list-unstyled">
+              {% for error in form.dont_choices.errors %}
+              <li><strong>{{ error|escape }}</strong></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          {{ form.dont_choices|attr:"aria-describedby:dont_choices-help" }}
+          <p id="dont_choices-help" class="form-text text-muted">
+            {{ form.dont_choices.help_text }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.dont_free.auto_id}}">
+          {{ form.dont_free.label }}
+        </label>
+        {% if form.dont_free.errors %}
+          {{ form.dont_free|add_class:"form-control is-invalid" }}
+          <div class="invalid-feedback">
+            <ul class="list-unstyled">
+              {% for error in form.dont_free.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          {{ form.dont_free|attr:"aria-describedby:dont_free-help"|add_class:"form-control" }}
+          <p id="dont_free-help" class="form-text text-muted">
+            {{ form.dont_free.help_text }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock module_form %}
