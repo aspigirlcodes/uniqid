@@ -39,3 +39,7 @@ label .form-text{
 .form-check-label{
   font-weight: normal;
 }
+
+.invalid-feedback{
+  display: block;
+}

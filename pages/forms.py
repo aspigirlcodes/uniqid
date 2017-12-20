@@ -1,4 +1,4 @@
-from django.forms import ModelForm, ChoiceField, CharField
+from django.forms import ModelForm, ChoiceField, CharField, ValidationError
 from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
@@ -43,6 +43,7 @@ class PageCreateForm(ModelForm):
 class AddModuleForm(ModelForm):
     module = ChoiceField(label=_("Choose another module"),
                          choices=MODULES,
+                         required=False,
                          widget=RadioWithHelpSelect(help_texts=MODULE_HELP),
                          help_text=_("You can add more modules or go to "
                                      "the next step when you are finished"))
@@ -51,10 +52,12 @@ class AddModuleForm(ModelForm):
         model = Page
         fields = ['title']
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     raise ValidationError("You have forgotten about Fred!")
-    #     return cleaned_data
+    def clean_module(self):
+        module = self.cleaned_data['module']
+        if 'submit_module' in self.data.keys() and not module:
+            raise ValidationError(_("You have to choose a module."),
+                                  code="required")
+        return module
 
 
 class GeneralInfoModuleForm(ModelForm):

@@ -179,7 +179,7 @@ class RadioWithHelpSelect(RadioSelect):
 
     def __init__(self, help_texts=None, attrs=None, choices=()):
         self.help_texts = help_texts if help_texts else {}
-        super().__init__(attrs)
+        super().__init__(attrs, choices)
 
     def optgroups(self, name, value, attrs=None):
         """Return a list of optgroups for this widget."""
