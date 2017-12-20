@@ -1,0 +1,55 @@
+{% extends "pages/base.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<section id="create-form" class="pb-5">
+  <div class="container">
+    <div class="row my-4">
+      <div class="col">
+          <h6 class="my-0"><small class="text-uppercase text-secondary font-weight-light">
+            {% trans "creating page" context "superscript above page title" %}</small></h6>
+          {% if page.title %}
+            <h1>{{page.title}}</h1>
+          {% else %}
+            <h1 class="text-secondary">{% trans "No Title" %}</h1>
+          {% endif %}
+        </h1>
+      </div>
+    </div>
+    {% block module_head %}
+    <div class="row">
+      <div class="col">
+        <h2>{% block module_name %}{% endblock %}</h2>
+      </div>
+    </div>
+    {% endblock module_head %}
+    <div class="row">
+      <div class="col">
+        <p class="text-secondary">{% trans "All fields are optional. You don't have to fill in anything you don't want." %}</p>
+      </div>
+    </div>
+    {% block form_head %}
+      <form action="" method="post">
+    {% endblock %}
+    {% block module_form %}
+    {% endblock %}
+    {% block form_foot %}
+      <div class="row">
+        <div class="col">
+          <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
+        </div>
+        <div class="col text-right">
+          <button type="submit" name="submit_add_more" class="btn btn-primary">{% trans "Save" context "Button" %}</button>
+        </div>
+      </div>
+    </form>
+    {% endblock %}
+  </div>
+</section>
+{% endblock content %}
+{% block scripts %}
+  {{ form.media.js }}
+  <script type="text/javascript" src="{% static "js/formset.js" %}"></script>
+{% endblock scripts %}

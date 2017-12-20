@@ -1,0 +1,64 @@
+{% load i18n %}
+{% load pages_tags %}
+{% load static %}
+
+<section class="sensory-display">
+  <div class="row my-2">
+    <div class="col-12">
+      <h2> {% trans "Sensory sensitivities" %} </h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          {% if module.has_sensory_profile %}
+            <h3 class="card-title">{% trans "Sensory Profile" %} </h3>
+            {% if module.sound != module.SENS_NONE %}
+            <div class="col-12">
+              <img class="img-fluid" src="{% static module.sound|sensitivity_img:"sound" %}" alt="">
+              <p class="text-center">{{ module.sound|sensitivity_desc:"sound" }}</p>
+              <hr/>
+            </div>
+            {% endif %}
+            {% if module.light != module.SENS_NONE %}
+            <div class="col-12">
+              <img class="img-fluid" src="{% static module.light|sensitivity_img:"light" %}" alt="">
+              <p class="text-center">{{ module.light|sensitivity_desc:"light" }}</p>
+              <hr/>
+            </div>
+            {% endif %}
+            {% if module.smell != module.SENS_NONE %}
+            <div class="col-12">
+              <img class="img-fluid" src="{% static module.smell|sensitivity_img:"smell" %}" alt="">
+              <p class="text-center">{{ module.smell|sensitivity_desc:"smell" }}</p>
+              <hr/>
+            </div>
+            {% endif %}
+            {% if module.temperature != module.SENS_NONE %}
+            <div class="col-12">
+              <img class="img-fluid" src="{% static module.temperature|sensitivity_img:"temperature" %}" alt="">
+              <p class="text-center">{{ module.temperature|sensitivity_desc:"temperature" }}</p>
+              <hr/>
+            </div>
+            {% endif %}
+          {% endif %}
+          {% if module.extra_choices or module.extra_free %}
+            <h3 class="card-title">{% trans "Additional Sensory Info" %} </h3>
+            <ul>
+              {% for item in module.extra_choices %}
+                <li>{{ module.EXTRAS|get_display_value:item }}</li>
+              {% endfor %}
+              {% for item in module.extra_free %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</section>

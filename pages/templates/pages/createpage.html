@@ -56,13 +56,12 @@
         </div>
       {% endif %}
       <div class="row">
-        <div class="col-12">
-          <div class="form-group">
+        <div class="col-12 col-md-6">
+          <div class="form-check">
             <label for="{{form.module.auto_id}}" class="h4">
               {{ form.module.label }}
             </label>
             {% if form.module.errors %}
-            {{ form.module|add_class:"form-control form-control-lg is-invalid" }}
             <div class="invalid-feedback">
               <ul class="list-unstyled">
                 {% for error in form.module.errors %}
@@ -70,13 +69,18 @@
                 {% endfor %}
               </ul>
             </div>
+            {{ form.module|add_class:"is-invalid" }}
             {% else %}
-            {{ form.module|attr:"aria-describedby:module-help"|add_class:"form-control form-control-lg" }}
             <p id="module-help" class="form-text text-muted">
               {{ form.module.help_text }}
             </p>
+            {{ form.module|attr:"aria-describedby:module-help" }}
             {% endif %}
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
           <div class="text-right">
             <button type="submit" name="submit_module" class="btn btn-lg btn-primary"> {% trans "Create module" context "Button" %} </button>
             {% if modules %}

@@ -1,0 +1,62 @@
+{% extends "pages/base_createmodule.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block module_name %}
+  {% trans "Free List Module" %}
+{% endblock %}
+{% block module_form %}
+  <div class="row">
+    <div class="col-12">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        <ul class="list-unstyled my-0">
+          {% for error in form.non_field_errors %}
+          <li> {{ error|escape }} </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="form-group">
+        <label for="{{form.title.auto_id}}">
+          {{ form.title.label }}
+        </label>
+        {% if form.title.errors %}
+          {{ form.title|add_class:"form-control is-invalid" }}
+          <div class="invalid-feedback">
+            <ul class="list-unstyled">
+              {% for error in form.title.errors %}
+              <li><strong>{{ error|escape }}</strong></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          {{ form.title|add_class:"form-control" }}
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.items.auto_id}}">
+          {{ form.items.label }}
+        </label>
+        {% if form.items.errors %}
+          {{ form.items|add_class:"form-control is-invalid" }}
+          <div class="invalid-feedback">
+            <ul class="list-unstyled">
+              {% for error in form.items.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          {{ form.items|attr:"aria-describedby:items-help"|add_class:"form-control" }}
+          <p id="items-help" class="form-text text-muted">
+            {{ form.items.help_text }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock module_form %}
