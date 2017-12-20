@@ -1,14 +1,34 @@
-from django.forms import ModelForm, ChoiceField, CharField
+from django.forms import ModelForm, ChoiceField, CharField, ValidationError
+from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
-from .models import MODULES, Page, GeneralInfoModule, FreeTextModule, \
-                    FreeListModule, CommunicationMethodsModule
-from .fields import ItemTextWidget, DynamicSplitArrayField
+from .models import MODULES, MODULE_HELP, Page, GeneralInfoModule, \
+                    FreeTextModule, ModuleContact, ContactModule, \
+                    FreeListModule, CommunicationMethods, CommunicationModule,\
+                    FreePictureModule, ModulePicture, DoDontModule, \
+                    MedicationItem, MedicationIntake, SensoryModule
+from .fields import ItemTextWidget, DynamicSplitArrayField, RadioWithHelpSelect
+
+
+PictureFormSet = inlineformset_factory(FreePictureModule, ModulePicture,
+                                       fields=['title', 'picture',
+                                               'description'],
+                                       extra=1)
+
+IntakeFormSet = inlineformset_factory(MedicationItem, MedicationIntake,
+                                      fields=['time', 'quantity'],
+                                      extra=1)
+
+ContactFormSet = inlineformset_factory(ContactModule, ModuleContact,
+                                       fields=['title', 'name', 'address',
+                                               'phone', 'email', 'extra'],
+                                       extra=1)
 
 
 class PageCreateForm(ModelForm):
     module = ChoiceField(label=_("Choose a module to start with"),
                          choices=MODULES,
+                         widget=RadioWithHelpSelect(help_texts=MODULE_HELP),
                          help_text=_("You can add more modules later"))
 
     class Meta:
@@ -23,6 +43,8 @@ class PageCreateForm(ModelForm):
 class AddModuleForm(ModelForm):
     module = ChoiceField(label=_("Choose another module"),
                          choices=MODULES,
+                         required=False,
+                         widget=RadioWithHelpSelect(help_texts=MODULE_HELP),
                          help_text=_("You can add more modules or go to "
                                      "the next step when you are finished"))
 
@@ -30,10 +52,12 @@ class AddModuleForm(ModelForm):
         model = Page
         fields = ['title']
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     raise ValidationError("You have forgotten about Fred!")
-    #     return cleaned_data
+    def clean_module(self):
+        module = self.cleaned_data['module']
+        if 'submit_module' in self.data.keys() and not module:
+            raise ValidationError(_("You have to choose a module."),
+                                  code="required")
+        return module
 
 
 class GeneralInfoModuleForm(ModelForm):
@@ -42,7 +66,22 @@ class GeneralInfoModuleForm(ModelForm):
         fields = ['name', 'identity']
 
 
-class CommunicationMethodsModuleForm(ModelForm):
+class CommunicationModuleForm(ModelForm):
+    suggestions_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("Other communication suggestions"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+
+    class Meta:
+        model = CommunicationModule
+        fields = ['suggestions_choices', 'suggestions_free']
+
+
+class CommunicationMethodsForm(ModelForm):
     me_to_you_free = DynamicSplitArrayField(
         CharField(required=False, widget=ItemTextWidget),
         label=_("Other communication methods I might use"),
@@ -61,9 +100,62 @@ class CommunicationMethodsModuleForm(ModelForm):
                     "more items. Empty lines will be ignored."))
 
     class Meta:
-        model = CommunicationMethodsModule
+        model = CommunicationMethods
         fields = ['situation', 'me_to_you_choices', 'me_to_you_free',
                   'you_to_me_choices', 'you_to_me_free']
+
+
+CommunicationMethodsFormset = inlineformset_factory(
+    CommunicationModule, CommunicationMethods, form=CommunicationMethodsForm,
+    extra=1)
+
+
+class DoDontModuleForm(ModelForm):
+    do_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("More things others can do"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+    ask_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("More things others should ask"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+    dont_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("More things others shouldn't do"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+
+    class Meta:
+        model = DoDontModule
+        fields = ['do_choices', 'do_free', 'ask_choices',
+                  'ask_free', 'dont_choices', 'dont_free']
+
+
+class SensoryModuleForm(ModelForm):
+    extra_free = DynamicSplitArrayField(
+        CharField(required=False, widget=ItemTextWidget),
+        label=_("More additional sensory info"),
+        required=False,
+        max_size=50,
+        remove_nulls=True,
+        help_text=_("Click the plus-sign at the end of the last item to add "
+                    "more items. Empty lines will be ignored."))
+
+    class Meta:
+        model = SensoryModule
+        fields = ['sound', 'light', 'smell',
+                  'temperature', 'extra_choices', 'extra_free']
 
 
 class FreeTextModuleForm(ModelForm):

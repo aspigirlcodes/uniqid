@@ -1,0 +1,181 @@
+{% extends "pages/base_createmodule.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load static %}
+
+{% block module_head %}
+<div class="row">
+  <div class="col">
+    <h2>{% trans "Medication module" %}</h2>
+  </div>
+</div>
+{% if module.medicationitem_set.all %}
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-bordered table-responsive-md">
+        <thead>
+          <tr>
+            <th scope="col">{% trans "What" %}</th>
+            <th scope="col">{% trans "When" %}</th>
+            <th scope="col">{% trans "Quantity" %}</th>
+            <th scope="col">{% trans "Remarks" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for med in module.medicationitem_set.all %}
+            {% with num_intake=med.medicationintake_set.all|length %}
+              {% for intake in med.medicationintake_set.all %}
+                <tr>
+                  {% if forloop.first %}
+                    <td rowspan="{{num_intake}}">{{med.name}}</td>
+                  {% endif %}
+                  <td>{{ intake.time }}</td>
+                  <td>{{ intake.quantity }}</td>
+                  {% if forloop.first %}
+                    <td rowspan="{{num_intake}}">{{ med.remarks|linebreaks }}</td>
+                  {% endif %}
+                </tr>
+              {% empty %}
+              <tr>
+                <td>{{med.name}}</td>
+                <td></td>
+                <td></td>
+                <td>{{ med.remarks|linebreaks }}</td>
+              </tr>
+              {% endfor %}
+            {% endwith %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endif %}
+{% endblock module_head %}
+{% block module_form %}
+  <div class="row">
+    <div class="col-12">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        <ul class="list-unstyled my-0">
+          {% for error in form.non_field_errors %}
+          <li> {{ error|escape }} </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="form-group">
+        <label for="{{form.name.auto_id}}">
+          {{ form.name.label }}
+        </label>
+        {% if form.name.errors %}
+        {{ form.name|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.name.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.name|add_class:"form-control" }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {{ intake_formset.management_form }}
+  <div class="card p-3 my-3 bg-light">
+    {% for form in intake_formset %}
+      <fieldset id="id_medicationintake_set-{{forloop.counter0}}" class="row">
+        <div class="col-12">
+          <legend>Intake {{forloop.counter}}:</legend>
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+              <ul class="list-unstyled my-0">
+                {% for error in form.non_field_errors %}
+                <li> {{ error|escape }} </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="form-group">
+            <label for="{{form.time.auto_id}}">
+              {{ form.time.label }}
+            </label>
+            {% if form.time.errors %}
+            {{ form.time|add_class:"form-control is-invalid" }}
+            <div class="invalid-feedback">
+              <ul class="list-unstyled">
+                {% for error in form.time.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% else %}
+            {{ form.time|add_class:"form-control" }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="form-group">
+            <label for="{{form.quantity.auto_id}}">
+              {{ form.quantity.label }}
+            </label>
+            {% if form.quantity.errors %}
+            {{ form.quantity|add_class:"form-control is-invalid" }}
+            <div class="invalid-feedback">
+              <ul class="list-unstyled">
+                {% for error in form.quantity.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% else %}
+            {{ form.quantity|add_class:"form-control" }}
+            {% endif %}
+          </div>
+        </div>
+      </fieldset>
+    {% endfor %}
+    <div class="row my-2">
+      <div class="col text-right">
+        <button type="button" id="id_medicationintake_set" onclick="add_formset(this)" class="btn btn-success">{% trans "Add another intake" %}</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.remarks.auto_id}}">
+          {{ form.remarks.label }}
+        </label>
+        {% if form.remarks.errors %}
+        {{ form.remarks|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.remarks.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.remarks|add_class:"form-control" }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock module_form %}
+{% block form_foot %}
+  <div class="row">
+    <div class="col">
+      <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
+    </div>
+    <div class="col text-right">
+      <button type="submit" name="submit_add_more" class="btn btn-success">{% trans "Save and add another medication" context "Button" %}</button>
+      <button type="submit" name="submit_finish" class="btn btn-primary">{% trans "Save and finish module" context "Button" %}</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

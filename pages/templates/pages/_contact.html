@@ -1,0 +1,37 @@
+{% load i18n %}
+
+<section class="contact-display">
+  <div class="row my-2">
+    <div class="col-12">
+      <h2>{% trans "Contacts" %}</h2>
+    </div>
+  </div>
+  <div class="row">
+    {% for contact in module.modulecontact_set.all %}
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{ contact.title }}</h4>
+            <address>
+              {% if contact.name %}
+                {{contact.name}} <br/>
+              {% endif %}
+              {% if contact.address %}
+                {{contact.address|linebreaksbr }} <br/>
+              {% endif %}
+              {% if contact.phone%}
+                Tel: {{contact.phone}} <br/>
+              {% endif %}
+              {% if contact.email %}
+                Email: {{contact.email}} <br/>
+              {% endif %}
+            </address>
+            {% if contact.extra %}
+              <p> {{ contact.extra|linebreaks }} </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>

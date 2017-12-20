@@ -17,8 +17,10 @@ from django.conf.urls import url
 # from django.views.generic import TemplateView
 from .views import GeneralInfoModuleCreateView, PageCreateView,\
                    FreeTextModuleCreateView, SelectModuleView, PagePreview,\
-                   FreeListModuleCreateView, \
-                   CommunicationMethodsModuleCreateView
+                   FreeListModuleCreateView, FreePictureModuleCreateView, \
+                   CommunicationModuleCreateView, \
+                   DoDontModuleCreateView, MedicationModuleCreateView,\
+                   ContactModuleCreateView, SensoryModuleCreateView
 
 urlpatterns = [
     url(r'^createpage/$', PageCreateView.as_view(), name="createpage"),
@@ -29,13 +31,25 @@ urlpatterns = [
         SelectModuleView.as_view(), name="addmodule"),
     url(r'^(?P<page_id>[0-9]+)/creategeneralinfomodule/$',
         GeneralInfoModuleCreateView.as_view(), name="creategeneralinfomodule"),
-    url(r'^(?P<page_id>[0-9]+)/createcommunicationmethodsmodule/$',
-        CommunicationMethodsModuleCreateView.as_view(),
-        name="createcommunicationmethodsmodule"),
+    url(r'^(?P<page_id>[0-9]+)/createcommunicationmodule/$',
+        CommunicationModuleCreateView.as_view(),
+        name="createcommunicationmodule"),
+    url(r'^(?P<page_id>[0-9]+)/createdodontmodule/$',
+        DoDontModuleCreateView.as_view(), name="createdodontmodule"),
+    url(r'^(?P<page_id>[0-9]+)/createmedicationmodule/$',
+        MedicationModuleCreateView.as_view(), name="createmedicationmodule"),
+    url(r'^(?P<page_id>[0-9]+)/medicationmodule/(?P<module_id>[0-9]+)$',
+        MedicationModuleCreateView.as_view(), name="updatemedicationmodule"),
+    url(r'^(?P<page_id>[0-9]+)/createsensorymodule/$',
+        SensoryModuleCreateView.as_view(), name="createsensorymodule"),
+    url(r'^(?P<page_id>[0-9]+)/createcontactmodule/$',
+        ContactModuleCreateView.as_view(), name="createcontactmodule"),
     url(r'^(?P<page_id>[0-9]+)/createfreetextmodule/$',
         FreeTextModuleCreateView.as_view(), name="createfreetextmodule"),
     url(r'^(?P<page_id>[0-9]+)/createfreelistmodule/$',
         FreeListModuleCreateView.as_view(), name="createfreelistmodule"),
+    url(r'^(?P<page_id>[0-9]+)/createfreepicturemodule/$',
+        FreePictureModuleCreateView.as_view(), name="createfreepicturemodule"),
     url(r'^(?P<pk>[0-9]+)/preview/$',
         PagePreview.as_view(), name="pagepreview"),
 ]

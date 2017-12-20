@@ -27,3 +27,19 @@
 .input-list-item input{
   vertical-align:middle;
 }
+
+label {
+  font-weight: 700;
+}
+
+label .form-text{
+  font-weight: normal;
+}
+
+.form-check-label{
+  font-weight: normal;
+}
+
+.invalid-feedback{
+  display: block;
+}

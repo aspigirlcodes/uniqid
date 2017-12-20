@@ -2,11 +2,12 @@ import copy
 from itertools import chain
 
 from django.forms import TextInput, Field, Widget, CheckboxSelectMultiple, \
-                         TypedMultipleChoiceField
+                         TypedMultipleChoiceField, RadioSelect
 from django.contrib.postgres.utils import prefix_validation_error
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import force_text
 
 
 class ItemTextWidget(TextInput):
@@ -149,7 +150,8 @@ class ArraySelectMultiple(CheckboxSelectMultiple):
             attrs = {}
         classes = attrs.get('class', None)
         if classes:
-            attrs["class"] = classes + " form-check-input"
+            if "form-check-input" not in classes:
+                attrs["class"] = classes + " form-check-input"
         else:
             attrs["class"] = "form-check-input"
         return super().create_option(name, value, label, selected, index,
@@ -169,3 +171,78 @@ class ChoiceArrayField(ArrayField):
         # as we don't care for it.
         # pylint:disable=bad-super-call
         return super(ArrayField, self).formfield(**defaults)
+
+
+class RadioWithHelpSelect(RadioSelect):
+    template_name = 'widgets/bs_checkbox_select.html'
+    option_template_name = 'widgets/radio_option_with_help.html'
+
+    def __init__(self, help_texts=None, attrs=None, choices=()):
+        self.help_texts = help_texts if help_texts else {}
+        super().__init__(attrs, choices)
+
+    def optgroups(self, name, value, attrs=None):
+        """Return a list of optgroups for this widget."""
+        groups = []
+        has_selected = False
+
+        for index, (option_value, option_label) in \
+                enumerate(chain(self.choices)):
+            if option_value is None:
+                option_value = ''
+
+            subgroup = []
+            if isinstance(option_label, (list, tuple)):
+                group_name = option_value
+                subindex = 0
+                choices = option_label
+            else:
+                group_name = None
+                subindex = None
+                choices = [(option_value, option_label)]
+            groups.append((group_name, subgroup, index))
+
+            for subvalue, sublabel in choices:
+                sub_help = self.help_texts.get(subvalue, None)
+                selected = (
+                    force_text(subvalue) in value and
+                    (has_selected is False or self.allow_multiple_selected)
+                )
+                if selected is True and has_selected is False:
+                    has_selected = True
+                subgroup.append(self.create_option(
+                    name, subvalue, sublabel, sub_help, selected, index,
+                    subindex=subindex, attrs=attrs,
+                ))
+                if subindex is not None:
+                    subindex += 1
+        return groups
+
+    def create_option(self, name, value, label, help_text, selected, index,
+                      subindex=None, attrs=None):
+        index = str(index) if subindex is None else "%s_%s" % (index, subindex)
+        if attrs is None:
+            attrs = {}
+        option_attrs = self.build_attrs(self.attrs, attrs) \
+            if self.option_inherits_attrs else {}
+        classes = option_attrs.get('class', None)
+        if classes:
+            if "form-check-input" not in classes:
+                option_attrs["class"] = classes + " form-check-input"
+        else:
+            option_attrs["class"] = "form-check-input"
+        if selected:
+            option_attrs.update(self.checked_attribute)
+        if 'id' in option_attrs:
+            option_attrs['id'] = self.id_for_label(option_attrs['id'], index)
+        return {
+            'name': name,
+            'value': value,
+            'label': label,
+            'help_text': help_text,
+            'selected': selected,
+            'index': index,
+            'attrs': option_attrs,
+            'type': self.input_type,
+            'template_name': self.option_template_name,
+        }

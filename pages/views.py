@@ -2,10 +2,14 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
-                    CommunicationMethodsModule
+                    CommunicationModule, FreePictureModule, \
+                    DoDontModule, MedicationModule, MedicationItem, \
+                    ContactModule, SensoryModule
 from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    FreeTextModuleForm, FreeListModuleForm,\
-                   CommunicationMethodsModuleForm
+                   CommunicationModuleForm, PictureFormSet, \
+                   DoDontModuleForm, IntakeFormSet, SensoryModuleForm, \
+                   ContactFormSet, CommunicationMethodsFormset
 
 
 class PageCreateView(CreateView):
@@ -65,10 +69,116 @@ class GeneralInfoModuleCreateView(ModuleCreateView):
     template_name = "pages/creategeneralinfomodule.html"
 
 
-class CommunicationMethodsModuleCreateView(ModuleCreateView):
-    model = CommunicationMethodsModule
-    form_class = CommunicationMethodsModuleForm
-    template_name = "pages/createcommunicationmethodsmodule.html"
+class CommunicationModuleCreateView(ModuleCreateView):
+    model = CommunicationModule
+    form_class = CommunicationModuleForm
+    template_name = "pages/createcommunicationmodule.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['methods_formset'] = \
+                CommunicationMethodsFormset(self.request.POST)
+        else:
+            context['methods_formset'] = CommunicationMethodsFormset()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['methods_formset']
+        if formset.is_valid():
+            redirect_url = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return redirect_url
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+
+class DoDontModuleCreateView(ModuleCreateView):
+    model = DoDontModule
+    form_class = DoDontModuleForm
+    template_name = "pages/createdodontmodule.html"
+
+
+class MedicationModuleCreateView(ModuleCreateView):
+    model = MedicationItem
+    fields = ['name', 'remarks']
+    template_name = "pages/createmedicationmodule.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        module_id = self.kwargs.get('module_id', None)
+        if module_id:
+            self.module = MedicationModule.objects.get(id=module_id)
+            context['module'] = self.module
+        else:
+            self.module = None
+        if self.request.POST:
+            context['intake_formset'] = IntakeFormSet(self.request.POST)
+        else:
+            context['intake_formset'] = IntakeFormSet()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['intake_formset']
+        if formset.is_valid():
+            # create module if it doesn't exist yet
+            if not self.module:
+                self.module = MedicationModule.objects.create(
+                    page=self.page, position=self.page.module_num + 1)
+                self.page.module_num += 1
+                self.page.save()
+            # save MedicationItem
+            self.object = form.save(commit=False)
+            self.object.module = self.module
+            self.object.save()
+            # save intakes
+            formset.instance = self.object
+            formset.save()
+            # redirect
+            print(self.request.POST)
+            if "submit_add_more" in self.request.POST:
+                print("add more")
+                url = reverse("pages:updatemedicationmodule",
+                              args=[self.page.id, self.module.id])
+            else:
+                url = reverse("pages:addmodule", args=[self.page.id, ])
+            return HttpResponseRedirect(url)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+
+class ContactModuleCreateView(ModuleCreateView):
+    model = ContactModule
+    fields = []
+    template_name = "pages/createcontactmodule.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['contact_formset'] = ContactFormSet(self.request.POST)
+        else:
+            context['contact_formset'] = ContactFormSet()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['contact_formset']
+        if formset.is_valid():
+            redirect_url = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return redirect_url
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+
+class SensoryModuleCreateView(ModuleCreateView):
+    model = SensoryModule
+    form_class = SensoryModuleForm
+    template_name = "pages/createsensorymodule.html"
 
 
 class FreeTextModuleCreateView(ModuleCreateView):
@@ -81,6 +191,32 @@ class FreeListModuleCreateView(ModuleCreateView):
     model = FreeListModule
     form_class = FreeListModuleForm
     template_name = "pages/createfreelistmodule.html"
+
+
+class FreePictureModuleCreateView(ModuleCreateView):
+    model = FreePictureModule
+    template_name = "pages/createfreepicturemodule.html"
+    fields = ['title']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['picture_formset'] = PictureFormSet(self.request.POST,
+                                                        self.request.FILES)
+        else:
+            context['picture_formset'] = PictureFormSet()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['picture_formset']
+        if formset.is_valid():
+            redirect_url = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return redirect_url
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
 
 
 class PagePreview(DetailView):

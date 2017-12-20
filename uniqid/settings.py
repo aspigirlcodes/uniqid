@@ -126,5 +126,8 @@ LOCALE_PATHS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 if os.path.exists(os.path.join(BASE_DIR, 'uniqid/settings_local.py')):
     from .settings_local import *

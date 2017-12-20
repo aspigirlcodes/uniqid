@@ -1,0 +1,24 @@
+<section class="free-image">
+  <div class="row my-2">
+    <div class="col-12">
+      <h2>{{ module.title }}</h2>
+    </div>
+    {% for picture in module.modulepicture_set.all %}
+      <div class="col-12 col-md-6">
+        <div class="card">
+          {% if picture.picture %}
+            <img src="{{ picture.picture.url }}" class="card-img-top">
+          {% endif %}
+          {% if picture.title or picture.description %}
+            <div class="card-body">
+              <h3 class="card-title">{{ picture.title }}</h4>
+              <p class="card-text">
+                {{ picture.description|linebreaks }}
+              </p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
