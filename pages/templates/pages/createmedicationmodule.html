@@ -3,9 +3,54 @@
 {% load i18n %}
 {% load static %}
 
-{% block module_name %}
-  {% trans "Medication Module" %}
-{% endblock %}
+{% block module_head %}
+<div class="row">
+  <div class="col">
+    <h2>{% trans "Medication module" %}</h2>
+  </div>
+</div>
+{% if module.medicationitem_set.all %}
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-bordered table-responsive-md">
+        <thead>
+          <tr>
+            <th scope="col">{% trans "What" %}</th>
+            <th scope="col">{% trans "When" %}</th>
+            <th scope="col">{% trans "Quantity" %}</th>
+            <th scope="col">{% trans "Remarks" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for med in module.medicationitem_set.all %}
+            {% with num_intake=med.medicationintake_set.all|length %}
+              {% for intake in med.medicationintake_set.all %}
+                <tr>
+                  {% if forloop.first %}
+                    <td rowspan="{{num_intake}}">{{med.name}}</td>
+                  {% endif %}
+                  <td>{{ intake.time }}</td>
+                  <td>{{ intake.quantity }}</td>
+                  {% if forloop.first %}
+                    <td rowspan="{{num_intake}}">{{ med.remarks|linebreaks }}</td>
+                  {% endif %}
+                </tr>
+              {% empty %}
+              <tr>
+                <td>{{med.name}}</td>
+                <td></td>
+                <td></td>
+                <td>{{ med.remarks|linebreaks }}</td>
+              </tr>
+              {% endfor %}
+            {% endwith %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endif %}
+{% endblock module_head %}
 {% block module_form %}
   <div class="row">
     <div class="col-12">
@@ -122,3 +167,15 @@
     </div>
   </div>
 {% endblock module_form %}
+{% block form_foot %}
+  <div class="row">
+    <div class="col">
+      <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
+    </div>
+    <div class="col text-right">
+      <button type="submit" name="submit_add_more" class="btn btn-success">{% trans "Save and add another medication" context "Button" %}</button>
+      <button type="submit" name="submit_finish" class="btn btn-primary">{% trans "Save and finish module" context "Button" %}</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

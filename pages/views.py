@@ -138,7 +138,13 @@ class MedicationModuleCreateView(ModuleCreateView):
             formset.instance = self.object
             formset.save()
             # redirect
-            url = reverse("pages:addmodule", args=[self.page.id, ])
+            print(self.request.POST)
+            if "submit_add_more" in self.request.POST:
+                print("add more")
+                url = reverse("pages:updatemedicationmodule",
+                              args=[self.page.id, self.module.id])
+            else:
+                url = reverse("pages:addmodule", args=[self.page.id, ])
             return HttpResponseRedirect(url)
         else:
             return self.render_to_response(self.get_context_data(form=form))

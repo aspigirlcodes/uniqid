@@ -19,7 +19,7 @@
         </thead>
         <tbody>
           {% for med in module.medicationitem_set.all %}
-            {% with num_intake=med.medicationintake_set|length %}
+            {% with num_intake=med.medicationintake_set.all|length %}
               {% for intake in med.medicationintake_set.all %}
                 <tr>
                   {% if forloop.first %}
@@ -30,6 +30,13 @@
                   {% if forloop.first %}
                     <td rowspan="{{num_intake}}">{{ med.remarks|linebreaks }}</td>
                   {% endif %}
+                </tr>
+              {% empty %}
+                <tr>
+                  <td>{{med.name}}</td>
+                  <td></td>
+                  <td></td>
+                  <td>{{ med.remarks|linebreaks }}</td>
                 </tr>
               {% endfor %}
             {% endwith %}
