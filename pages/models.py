@@ -38,6 +38,7 @@ class Page(models.Model):
 class Module(models.Model):
     class Meta:
         abstract = True
+        ordering = ['page', 'position']
 
     page = models.ForeignKey(Page, verbose_name=_("Page"))
     position = models.IntegerField(verbose_name=_("Position"))
@@ -293,20 +294,54 @@ class MedicationModule(Module):
 
 
 class MedicationItem(models.Model):
+    class Meta:
+        ordering = ['module', 'position']
+
     name = models.CharField(verbose_name=_("Medication name"),
                             max_length=255, default="", blank=True)
     remarks = models.TextField(verbose_name=_("Remarks"), default="",
                                blank=True)
     module = models.ForeignKey(MedicationModule, verbose_name=_("module"))
+    position = models.PositiveIntegerField(default=0, blank=True,
+                                           db_index=True)
+
+    def save(self, *args, **kwargs):
+        needs_position = self._state.adding
+        if needs_position:
+            try:
+                current_max = self.module.medicationitem_set.all().aggregate(
+                    models.Max('position'))['position__max'] or 0
+
+                self.position = current_max + 1
+            except (TypeError, IndexError):
+                pass
+        super().save(*args, **kwargs)
 
 
 class MedicationIntake(models.Model):
+    class Meta:
+        ordering = ['medication', 'position']
+
     time = models.CharField(verbose_name=_("Intake time"),
                             max_length=255, default="", blank=True)
     quantity = models.CharField(verbose_name=_("Intake quantity"),
                                 max_length=255, default="", blank=True)
     medication = models.ForeignKey(MedicationItem,
                                    verbose_name=_("medication"))
+    position = models.PositiveIntegerField(default=0, blank=True,
+                                           db_index=True)
+
+    def save(self, *args, **kwargs):
+        needs_position = self._state.adding
+        if needs_position:
+            try:
+                current_max = self.medication.medicationintake_set.all().\
+                    aggregate(models.Max('position'))['position__max'] or 0
+
+                self.position = current_max + 1
+            except (TypeError, IndexError):
+                pass
+        super().save(*args, **kwargs)
 
 
 class SensoryModule(Module):
