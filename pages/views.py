@@ -63,29 +63,25 @@ class ModuleCreateView(CreateView):
         return HttpResponseRedirect(url)
 
 
-class GeneralInfoModuleCreateView(ModuleCreateView):
-    model = GeneralInfoModule
-    form_class = GeneralInfoModuleForm
-    template_name = "pages/creategeneralinfomodule.html"
-
-
-class CommunicationModuleCreateView(ModuleCreateView):
-    model = CommunicationModule
-    form_class = CommunicationModuleForm
-    template_name = "pages/createcommunicationmodule.html"
+class FormsetModuleCreateView(ModuleCreateView):
+    def __init__(self, *args, **kwargs):
+        if not hasattr(self, "formset_name"):
+            raise NotImplementedError("'formset_name' is not defined")
+        if not hasattr(self, "formset"):
+            raise NotImplementedError("'formset' is not defined")
+        super().__init__(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
-            context['methods_formset'] = \
-                CommunicationMethodsFormset(self.request.POST)
+            context[self.formset_name] = self.formset(self.request.POST)
         else:
-            context['methods_formset'] = CommunicationMethodsFormset()
+            context[self.formset_name] = self.formset()
         return context
 
     def form_valid(self, form):
         context = self.get_context_data()
-        formset = context['methods_formset']
+        formset = context[self.formset_name]
         if formset.is_valid():
             redirect_url = super().form_valid(form)
             formset.instance = self.object
@@ -93,6 +89,20 @@ class CommunicationModuleCreateView(ModuleCreateView):
             return redirect_url
         else:
             return self.render_to_response(self.get_context_data(form=form))
+
+
+class GeneralInfoModuleCreateView(ModuleCreateView):
+    model = GeneralInfoModule
+    form_class = GeneralInfoModuleForm
+    template_name = "pages/creategeneralinfomodule.html"
+
+
+class CommunicationModuleCreateView(FormsetModuleCreateView):
+    model = CommunicationModule
+    form_class = CommunicationModuleForm
+    template_name = "pages/createcommunicationmodule.html"
+    formset_name = "methods_formset"
+    formset = CommunicationMethodsFormset
 
 
 class DoDontModuleCreateView(ModuleCreateView):
@@ -150,29 +160,12 @@ class MedicationModuleCreateView(ModuleCreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
 
-class ContactModuleCreateView(ModuleCreateView):
+class ContactModuleCreateView(FormsetModuleCreateView):
     model = ContactModule
     fields = []
     template_name = "pages/createcontactmodule.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.POST:
-            context['contact_formset'] = ContactFormSet(self.request.POST)
-        else:
-            context['contact_formset'] = ContactFormSet()
-        return context
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context['contact_formset']
-        if formset.is_valid():
-            redirect_url = super().form_valid(form)
-            formset.instance = self.object
-            formset.save()
-            return redirect_url
-        else:
-            return self.render_to_response(self.get_context_data(form=form))
+    formset_name = "contact_formset"
+    formset = ContactFormSet
 
 
 class SensoryModuleCreateView(ModuleCreateView):
@@ -193,30 +186,12 @@ class FreeListModuleCreateView(ModuleCreateView):
     template_name = "pages/createfreelistmodule.html"
 
 
-class FreePictureModuleCreateView(ModuleCreateView):
+class FreePictureModuleCreateView(FormsetModuleCreateView):
     model = FreePictureModule
     template_name = "pages/createfreepicturemodule.html"
     fields = ['title']
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.POST:
-            context['picture_formset'] = PictureFormSet(self.request.POST,
-                                                        self.request.FILES)
-        else:
-            context['picture_formset'] = PictureFormSet()
-        return context
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context['picture_formset']
-        if formset.is_valid():
-            redirect_url = super().form_valid(form)
-            formset.instance = self.object
-            formset.save()
-            return redirect_url
-        else:
-            return self.render_to_response(self.get_context_data(form=form))
+    formset_name = "picture_formset"
+    formset = PictureFormSet
 
 
 class PagePreview(DetailView):
