@@ -9,7 +9,8 @@ from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    FreeTextModuleForm, FreeListModuleForm,\
                    CommunicationModuleForm, PictureFormSet, \
                    DoDontModuleForm, IntakeFormSet, SensoryModuleForm, \
-                   ContactFormSet, CommunicationMethodsFormset
+                   ContactFormSet, CommunicationMethodsFormset, \
+                   MedicationItemForm, ContactModuleForm, FreePictureModuleForm
 
 
 class PageCreateView(CreateView):
@@ -51,14 +52,19 @@ class ModuleCreateView(CreateView):
         context['page'] = self.page
         return context
 
+    def post(self, request, *args, **kwargs):
+        #import ipdb; ipdb.set_trace()
+        return super().post(request, *args, **kwargs)
+
     def form_valid(self, form):
         self.page = Page.objects.get(id=self.kwargs.get('page_id'))
-        self.object = form.save(commit=False)
-        self.object.page = self.page
-        self.object.position = self.page.module_num + 1
-        self.object.save()
-        self.page.module_num += 1
-        self.page.save()
+        if (not form.is_empty()) or hasattr(self, "formset"):
+            self.object = form.save(commit=False)
+            self.object.page = self.page
+            self.object.position = self.page.module_num + 1
+            self.object.save()
+            self.page.module_num += 1
+            self.page.save()
         url = reverse("pages:addmodule", args=[self.page.id, ])
         return HttpResponseRedirect(url)
 
@@ -74,7 +80,11 @@ class FormsetModuleCreateView(ModuleCreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
-            context[self.formset_name] = self.formset(self.request.POST)
+            if self.request.FILES:
+                context[self.formset_name] = self.formset(self.request.POST,
+                                                          self.request.FILES)
+            else:
+                context[self.formset_name] = self.formset(self.request.POST)
         else:
             context[self.formset_name] = self.formset()
         return context
@@ -83,9 +93,11 @@ class FormsetModuleCreateView(ModuleCreateView):
         context = self.get_context_data()
         formset = context[self.formset_name]
         if formset.is_valid():
+            # this saves the form, adds self.object, and returns redirect url
             redirect_url = super().form_valid(form)
             formset.instance = self.object
-            formset.save()
+            if (not formset.save()) and form.is_empty():
+                self.object.delete()
             return redirect_url
         else:
             return self.render_to_response(self.get_context_data(form=form))
@@ -113,7 +125,7 @@ class DoDontModuleCreateView(ModuleCreateView):
 
 class MedicationModuleCreateView(ModuleCreateView):
     model = MedicationItem
-    fields = ['name', 'remarks']
+    form_class = MedicationItemForm
     template_name = "pages/createmedicationmodule.html"
 
     def get_context_data(self, **kwargs):
@@ -146,11 +158,13 @@ class MedicationModuleCreateView(ModuleCreateView):
             self.object.save()
             # save intakes
             formset.instance = self.object
-            formset.save()
+            if (not formset.save()) and form.is_empty():
+                self.object.delete()
+                if "submit_add_more" not in self.request.POST and \
+                        not self.module.medicationitem_set.exists():
+                    self.module.delete()
             # redirect
-            print(self.request.POST)
             if "submit_add_more" in self.request.POST:
-                print("add more")
                 url = reverse("pages:updatemedicationmodule",
                               args=[self.page.id, self.module.id])
             else:
@@ -162,7 +176,7 @@ class MedicationModuleCreateView(ModuleCreateView):
 
 class ContactModuleCreateView(FormsetModuleCreateView):
     model = ContactModule
-    fields = []
+    form_class = ContactModuleForm
     template_name = "pages/createcontactmodule.html"
     formset_name = "contact_formset"
     formset = ContactFormSet
@@ -189,7 +203,7 @@ class FreeListModuleCreateView(ModuleCreateView):
 class FreePictureModuleCreateView(FormsetModuleCreateView):
     model = FreePictureModule
     template_name = "pages/createfreepicturemodule.html"
-    fields = ['title']
+    form_class = FreePictureModuleForm
     formset_name = "picture_formset"
     formset = PictureFormSet
 
