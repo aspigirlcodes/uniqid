@@ -49,6 +49,10 @@ class Module(models.Model):
 
 
 class GeneralInfoModule(Module):
+
+    class Meta:
+        verbose_name = _("General info module")
+
     ID_AUTISTIC = "01_autistic"
     ID_HAVE_AUT = "02_have_aut"
     ID_SPECTRUM = "03_spectrum"
@@ -88,7 +92,13 @@ class GeneralInfoModule(Module):
 
 
 class CommunicationModule(Module):
+
+    class Meta:
+        verbose_name = _("Communication module")
+
     template = "pages/_communication.html"
+
+    title = _("Communication")
 
     help_text = _("This module lets you describe your communication "
                   "preferences in different situations. "
@@ -149,6 +159,7 @@ class CommunicationModule(Module):
 
 
 class CommunicationMethods(models.Model):
+
     SPOKEN = "01_spoken"
     WRITTEN = "02_written"
     TEXT_AAC = "03_text_aac"
@@ -185,7 +196,12 @@ class CommunicationMethods(models.Model):
 
 
 class DoDontModule(Module):
+    class Meta:
+        verbose_name = _("Do's and Don'ts module")
+
     template = "pages/_dodont.html"
+
+    title = _("Do's and Don'ts")
 
     help_text = _("With this module, you can provide 3 quick lists "
                   "with things people can do, shouldn't do, or should "
@@ -286,7 +302,12 @@ class DoDontModule(Module):
 
 
 class MedicationModule(Module):
+    class Meta:
+        verbose_name = _("Medication module")
+
     template = "pages/_medication.html"
+
+    title = _("Medication")
 
     help_text = _("Here you can create a table with your medication and when "
                   "you take how much of it. This can be useful for doctors or "
@@ -345,7 +366,12 @@ class MedicationIntake(models.Model):
 
 
 class SensoryModule(Module):
+    class Meta:
+        verbose_name = _("Sensory module")
+
     template = "pages/_sensory.html"
+
+    title = _("Sensory sensitivities")
 
     help_text = _("This module presents your sensory profile. You can also "
                   "add other information related to sensory processing.")
@@ -413,7 +439,12 @@ class SensoryModule(Module):
 
 
 class ContactModule(Module):
+    class Meta:
+        verbose_name = _("Contact module")
+
     template = "pages/_contact.html"
+
+    title = _("Contacts")
 
     help_text = _("In this module you can add all kinds of contact data. "
                   "As always, all fields are optional, so you can add "
@@ -443,6 +474,8 @@ class ModuleContact(models.Model):
 
 
 class FreeTextModule(Module):
+    class Meta:
+        verbose_name = _("Free text module")
 
     help_text = _("Here you can create a custom module containing "
                   "text and a title. You can use it  for any text you want "
@@ -461,6 +494,8 @@ class FreeTextModule(Module):
 
 
 class FreeListModule(Module):
+    class Meta:
+        verbose_name = _("Free list module")
 
     template = "pages/_freelist.html"
 
@@ -479,6 +514,8 @@ class FreeListModule(Module):
 
 
 class FreePictureModule(Module):
+    class Meta:
+        verbose_name = _("Free picture module")
 
     help_text = _("Upload your own pictures and add a title and a description "
                   "to them. Sometimes adding an ilustration, cartoon or photo "
@@ -505,15 +542,15 @@ class ModulePicture(models.Model):
 
 
 MODULES = (
-    ("generalinfomodule", _("General info module")),
-    ("communicationmodule", _("Communication module")),
-    ("dodontmodule", _("Do's and Don'ts module")),
-    ("medicationmodule", _("Medication module")),
-    ("sensorymodule", _("Sensory module")),
-    ("contactmodule", _("Contact module")),
-    ("freetextmodule", _("Free text module")),
-    ("freelistmodule", _("Free list module")),
-    ("freepicturemodule", _("Free picture module"))
+    ("generalinfomodule", GeneralInfoModule._meta.verbose_name),
+    ("communicationmodule", CommunicationModule._meta.verbose_name),
+    ("dodontmodule", DoDontModule._meta.verbose_name),
+    ("medicationmodule", MedicationModule._meta.verbose_name),
+    ("sensorymodule", SensoryModule._meta.verbose_name),
+    ("contactmodule", ContactModule._meta.verbose_name),
+    ("freetextmodule", FreeTextModule._meta.verbose_name),
+    ("freelistmodule", FreeListModule._meta.verbose_name),
+    ("freepicturemodule", FreePictureModule._meta.verbose_name)
 )
 
 
