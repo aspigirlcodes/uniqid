@@ -60,13 +60,18 @@ class AddModuleForm(ModelForm):
         return module
 
 
-class GeneralInfoModuleForm(ModelForm):
+class ModuleMixin(object):
+    def is_empty(self):
+        return not any(self.cleaned_data.values())
+
+
+class GeneralInfoModuleForm(ModuleMixin, ModelForm):
     class Meta:
         model = GeneralInfoModule
         fields = ['name', 'identity']
 
 
-class CommunicationModuleForm(ModelForm):
+class CommunicationModuleForm(ModuleMixin, ModelForm):
     suggestions_free = DynamicSplitArrayField(
         CharField(required=False, widget=ItemTextWidget),
         label=_("Other communication suggestions"),
@@ -81,7 +86,7 @@ class CommunicationModuleForm(ModelForm):
         fields = ['suggestions_choices', 'suggestions_free']
 
 
-class CommunicationMethodsForm(ModelForm):
+class CommunicationMethodsForm(ModuleMixin, ModelForm):
     me_to_you_free = DynamicSplitArrayField(
         CharField(required=False, widget=ItemTextWidget),
         label=_("Other communication methods I might use"),
@@ -110,7 +115,7 @@ CommunicationMethodsFormset = inlineformset_factory(
     extra=1)
 
 
-class DoDontModuleForm(ModelForm):
+class DoDontModuleForm(ModuleMixin, ModelForm):
     do_free = DynamicSplitArrayField(
         CharField(required=False, widget=ItemTextWidget),
         label=_("More things others can do"),
@@ -142,7 +147,19 @@ class DoDontModuleForm(ModelForm):
                   'ask_free', 'dont_choices', 'dont_free']
 
 
-class SensoryModuleForm(ModelForm):
+class MedicationItemForm(ModuleMixin, ModelForm):
+    class Meta:
+        model = MedicationItem
+        fields = ['name', 'remarks']
+
+
+class ContactModuleForm(ModuleMixin, ModelForm):
+    class Meta:
+        model = ContactModule
+        fields = []
+
+
+class SensoryModuleForm(ModuleMixin, ModelForm):
     extra_free = DynamicSplitArrayField(
         CharField(required=False, widget=ItemTextWidget),
         label=_("More additional sensory info"),
@@ -158,13 +175,13 @@ class SensoryModuleForm(ModelForm):
                   'temperature', 'extra_choices', 'extra_free']
 
 
-class FreeTextModuleForm(ModelForm):
+class FreeTextModuleForm(ModuleMixin, ModelForm):
     class Meta:
         model = FreeTextModule
         fields = ['title', 'text']
 
 
-class FreeListModuleForm(ModelForm):
+class FreeListModuleForm(ModuleMixin, ModelForm):
     items = DynamicSplitArrayField(CharField(required=False,
                                              widget=ItemTextWidget),
                                    label=_("Items"),
@@ -182,3 +199,9 @@ class FreeListModuleForm(ModelForm):
 
     def __init(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class FreePictureModuleForm(ModuleMixin, ModelForm):
+    class Meta:
+        model = FreePictureModule
+        fields = ['title']
