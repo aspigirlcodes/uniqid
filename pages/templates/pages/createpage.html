@@ -68,10 +68,11 @@
                   <div class="card-body">
                     {% include module.template %}
                   </div>
-                  <div class="card-footer text-right">
-                    <div class="btn btn-success">{% trans "Edit" %}</div>
-                    <div class="btn btn-danger">{% trans "Delete" %}</div>
-                  </div>
+
+                </div>
+                <div class="card-footer text-right">
+                  <a href="#" class="btn btn-success">{% trans "Edit" %}</a>
+                  <a href="{% url module.delete_url_name object.id module.id %}" class="btn btn-danger">{% trans "Delete" %}</a>
                 </div>
               </div>
             </div>

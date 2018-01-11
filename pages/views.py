@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
@@ -52,10 +52,6 @@ class ModuleCreateView(CreateView):
         context['page'] = self.page
         return context
 
-    def post(self, request, *args, **kwargs):
-        #import ipdb; ipdb.set_trace()
-        return super().post(request, *args, **kwargs)
-
     def form_valid(self, form):
         self.page = Page.objects.get(id=self.kwargs.get('page_id'))
         if (not form.is_empty()) or hasattr(self, "formset"):
@@ -103,10 +99,22 @@ class FormsetModuleCreateView(ModuleCreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
 
+class ModuleDeleteView(DeleteView):
+    template_name = "pages/deletemodule.html"
+
+    def get_success_url(self):
+        page_id = self.kwargs.get('page_id')
+        return reverse("pages:addmodule", args=[page_id, ])
+
+
 class GeneralInfoModuleCreateView(ModuleCreateView):
     model = GeneralInfoModule
     form_class = GeneralInfoModuleForm
     template_name = "pages/creategeneralinfomodule.html"
+
+
+class GeneralInfoModuleDeleteView(ModuleDeleteView):
+    model = GeneralInfoModule
 
 
 class CommunicationModuleCreateView(FormsetModuleCreateView):
@@ -117,10 +125,18 @@ class CommunicationModuleCreateView(FormsetModuleCreateView):
     formset = CommunicationMethodsFormset
 
 
+class CommunicationModuleDeleteView(ModuleDeleteView):
+    model = CommunicationModule
+
+
 class DoDontModuleCreateView(ModuleCreateView):
     model = DoDontModule
     form_class = DoDontModuleForm
     template_name = "pages/createdodontmodule.html"
+
+
+class DoDontModuleDeleteView(ModuleDeleteView):
+    model = DoDontModule
 
 
 class MedicationModuleCreateView(ModuleCreateView):
@@ -174,6 +190,10 @@ class MedicationModuleCreateView(ModuleCreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
 
+class MedicationModuleDeleteView(ModuleDeleteView):
+    model = MedicationModule
+
+
 class ContactModuleCreateView(FormsetModuleCreateView):
     model = ContactModule
     form_class = ContactModuleForm
@@ -182,10 +202,18 @@ class ContactModuleCreateView(FormsetModuleCreateView):
     formset = ContactFormSet
 
 
+class ContactModuleDeleteView(ModuleDeleteView):
+    model = ContactModule
+
+
 class SensoryModuleCreateView(ModuleCreateView):
     model = SensoryModule
     form_class = SensoryModuleForm
     template_name = "pages/createsensorymodule.html"
+
+
+class SensoryModuleDeleteView(ModuleDeleteView):
+    model = SensoryModule
 
 
 class FreeTextModuleCreateView(ModuleCreateView):
@@ -194,10 +222,18 @@ class FreeTextModuleCreateView(ModuleCreateView):
     template_name = "pages/createfreetextmodule.html"
 
 
+class FreeTextModuleDeleteView(ModuleDeleteView):
+    model = FreeTextModule
+
+
 class FreeListModuleCreateView(ModuleCreateView):
     model = FreeListModule
     form_class = FreeListModuleForm
     template_name = "pages/createfreelistmodule.html"
+
+
+class FreeListModuleDeleteView(ModuleDeleteView):
+    model = FreeListModule
 
 
 class FreePictureModuleCreateView(FormsetModuleCreateView):
@@ -206,6 +242,10 @@ class FreePictureModuleCreateView(FormsetModuleCreateView):
     form_class = FreePictureModuleForm
     formset_name = "picture_formset"
     formset = PictureFormSet
+
+
+class FreePictureModuleDeleteView(ModuleDeleteView):
+    model = FreePictureModule
 
 
 class PagePreview(DetailView):

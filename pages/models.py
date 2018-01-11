@@ -40,12 +40,17 @@ class Module(models.Model):
         abstract = True
         ordering = ['page', 'position']
 
-    page = models.ForeignKey(Page, verbose_name=_("Page"))
+    page = models.ForeignKey(Page, verbose_name=_("Page"),
+                             on_delete=models.CASCADE)
     position = models.IntegerField(verbose_name=_("Position"))
 
     @property
     def type(self):
         return self.__class__.__name__
+
+    @property
+    def delete_url_name(self):
+        return "pages:delete{}".format(self.type.lower())
 
 
 class GeneralInfoModule(Module):
@@ -192,7 +197,8 @@ class CommunicationMethods(models.Model):
         models.CharField(max_length=255),
         verbose_name=_("Other communication methods I might use"),
         blank=True)
-    module = models.ForeignKey(CommunicationModule, verbose_name=_("module"))
+    module = models.ForeignKey(CommunicationModule, verbose_name=_("module"),
+                               on_delete=models.CASCADE)
 
 
 class DoDontModule(Module):
@@ -322,7 +328,8 @@ class MedicationItem(models.Model):
                             max_length=255, default="", blank=True)
     remarks = models.TextField(verbose_name=_("Remarks"), default="",
                                blank=True)
-    module = models.ForeignKey(MedicationModule, verbose_name=_("module"))
+    module = models.ForeignKey(MedicationModule, verbose_name=_("module"),
+                               on_delete=models.CASCADE)
     position = models.PositiveIntegerField(default=0, blank=True,
                                            db_index=True)
 
@@ -348,7 +355,8 @@ class MedicationIntake(models.Model):
     quantity = models.CharField(verbose_name=_("Intake quantity"),
                                 max_length=255, default="", blank=True)
     medication = models.ForeignKey(MedicationItem,
-                                   verbose_name=_("medication"))
+                                   verbose_name=_("medication"),
+                                   on_delete=models.CASCADE)
     position = models.PositiveIntegerField(default=0, blank=True,
                                            db_index=True)
 
@@ -470,7 +478,8 @@ class ModuleContact(models.Model):
                               blank=True)
     extra = models.TextField(verbose_name=_("Extra comment"), default="",
                              blank=True)
-    module = models.ForeignKey(ContactModule, verbose_name=_("module"))
+    module = models.ForeignKey(ContactModule, verbose_name=_("module"),
+                               on_delete=models.CASCADE)
 
 
 class FreeTextModule(Module):
@@ -532,7 +541,8 @@ class FreePictureModule(Module):
 
 
 class ModulePicture(models.Model):
-    module = models.ForeignKey(FreePictureModule, verbose_name=_("module"))
+    module = models.ForeignKey(FreePictureModule, verbose_name=_("module"),
+                               on_delete=models.CASCADE)
     picture = models.ImageField(verbose_name=_("Image"), blank=True,
                                 null=True)
     description = models.TextField(verbose_name=_("Image description"),
