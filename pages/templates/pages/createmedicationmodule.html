@@ -98,6 +98,9 @@
               </ul>
             </div>
           {% endif %}
+          {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+          {% endfor %}
         </div>
         <div class="col-12 col-sm-6">
           <div class="form-group">
@@ -170,11 +173,19 @@
 {% block form_foot %}
   <div class="row">
     <div class="col">
-      <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
+      {% if form_context == "create" %}
+        <a href="{% url 'pages:addmodule' page.id %}" class="btn btn-danger">{% trans "Back" context "Button" %}</a>
+      {% else %}
+        <a href="{% url 'pages:medicationmoduledetail' module.id %}" class="btn btn-danger">{% trans "Back" context "Button" %}</a>
+      {% endif %}
     </div>
     <div class="col text-right">
-      <button type="submit" name="submit_add_more" class="btn btn-success">{% trans "Save and add another medication" context "Button" %}</button>
-      <button type="submit" name="submit_finish" class="btn btn-primary">{% trans "Save and finish module" context "Button" %}</button>
+      {% if form_context == "create" %}
+        <button type="submit" name="submit_add_more" class="btn btn-success">{% trans "Save and add another medication" context "Button" %}</button>
+        <button type="submit" name="submit_finish" class="btn btn-primary">{% trans "Save and finish module" context "Button" %}</button>
+      {% else %}
+        <button type="submit" name="submit" class="btn btn-success">{% trans "Save changes" context "Button" %}</button>
+      {% endif %}
     </div>
   </div>
 </form>

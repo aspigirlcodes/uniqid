@@ -38,7 +38,7 @@
     {% block form_foot %}
       <div class="row">
         <div class="col">
-          <a href={% url 'pages:addmodule' page.id %} class="btn btn-danger">{% trans "Back" context "Button" %}</a>
+          <a href="{% url 'pages:addmodule' page.id %}" class="btn btn-danger">{% trans "Back" context "Button" %}</a>
         </div>
         <div class="col text-right">
           <button type="submit" name="submit_add_more" class="btn btn-primary">{% trans "Save" context "Button" %}</button>

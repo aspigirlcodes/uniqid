@@ -52,6 +52,10 @@ class Module(models.Model):
     def delete_url_name(self):
         return "pages:delete{}".format(self.type.lower())
 
+    @property
+    def edit_url_name(self):
+        return "pages:update{}".format(self.type.lower())
+
 
 class GeneralInfoModule(Module):
 
@@ -318,6 +322,10 @@ class MedicationModule(Module):
     help_text = _("Here you can create a table with your medication and when "
                   "you take how much of it. This can be useful for doctors or "
                   "caregivers, or just as a reminder for yourself.")
+
+    @property
+    def edit_url_name(self):
+        return "pages:medicationmoduledetail"
 
 
 class MedicationItem(models.Model):

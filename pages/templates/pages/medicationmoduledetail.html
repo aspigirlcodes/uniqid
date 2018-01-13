@@ -1,0 +1,73 @@
+{% extends "pages/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section id="page" class="pb-5">
+  <div class="container">
+    <div class="container">
+      <div class="row my-3">
+        <div class="col-12">
+          <h1>{% trans "Edit Medication module" %}</h1>
+        </div>
+      </div>
+      {% with module=object %}
+        <div class="col-12">
+          <table class="table table-bordered table-responsive-md">
+            <thead>
+              <tr>
+                <th scope="col">{% trans "What" %}</th>
+                <th scope="col">{% trans "When" %}</th>
+                <th scope="col">{% trans "Quantity" %}</th>
+                <th scope="col">{% trans "Remarks" %}</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for med in module.medicationitem_set.all %}
+                {% with num_intake=med.medicationintake_set.all|length %}
+                  {% for intake in med.medicationintake_set.all %}
+                    <tr>
+                      {% if forloop.first %}
+                        <td rowspan="{{num_intake}}">{{med.name}}</td>
+                      {% endif %}
+                      <td>{{ intake.time }}</td>
+                      <td>{{ intake.quantity }}</td>
+                      {% if forloop.first %}
+                        <td rowspan="{{num_intake}}">{{ med.remarks|linebreaks }}</td>
+                        <td rowspan="{{num_intake}}">
+                          <a href="{% url 'pages:updatemedicationmodule' med.id %}" class="btn btn-success">Edit</a>
+                          <a href="{% url 'pages:deletemedicationitem' med.id %}" class="btn btn-danger">Delete</a>
+                        </td>
+                      {% endif %}
+                    </tr>
+                  {% empty %}
+                  <tr>
+                    <td>{{med.name}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{ med.remarks|linebreaks }}</td>
+                    <td>
+                      <a href="{% url 'pages:updatemedicationmodule' med.id %}" class="btn btn-success">Edit</a>
+                      <a href="{% url 'pages:deletemedicationitem' med.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                {% endwith %}
+              {% endfor %}
+            </tbody>
+          </table>
+
+        </div>
+        <div class="row">
+          <div class="col">
+            <a href="{% url 'pages:addmodule' object.page.id %}" class="btn btn-danger">{% trans "Back" context "Button" %}</a>
+          </div>
+          <div class="col text-right">
+            <a href="{% url 'pages:createmoremedicationmodule' object.page.id object.id %}" class="btn btn-success">{% trans "Add new medication" context "Button" %}</a>
+            <a href="{% url object.delete_url_name object.id %}" class="btn btn-danger">{% trans "Delete module" %}</a>
+          </div>
+        </div>
+      {% endwith %}
+  </div>
+</section>
+{% endblock content %}
