@@ -58,6 +58,9 @@
             </ul>
           </div>
           {% endif %}
+          {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+          {% endfor %}    
           <div class="form-group">
             <label for="{{form.title.auto_id}}">
               {{ form.title.label }}

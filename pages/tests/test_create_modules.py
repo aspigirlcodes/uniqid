@@ -147,7 +147,7 @@ class CreateDoDontModuleTestCase(TestCase):
         self.assertEqual(module.ask_free, ['dsafdaf', 'safdasf'])
 
     def test_create_empty(self):
-        url = reverse('pages:creategeneralinfomodule',
+        url = reverse('pages:createdodontmodule',
                       args=[str(self.page.id)])
         response = self.client.post(url,
                                     {'ask_free_0': '',
@@ -204,7 +204,7 @@ class CreateMedicationModuleTestCase(TestCase):
              'remarks': 'bla',
              'submit_add_more': ''})
         module = self.page.medicationmodule_set.first()
-        update_url = reverse("pages:updatemedicationmodule",
+        update_url = reverse("pages:createmoremedicationmodule",
                              args=[self.page.id, module.id])
         self.assertRedirects(response, update_url)
         self.assertEqual(module.medicationitem_set.count(), 1)
@@ -248,7 +248,7 @@ class CreateMedicationModuleTestCase(TestCase):
              'submit_add_more': ''})
         self.assertEqual(self.page.medicationmodule_set.count(), 1)
         module = self.page.medicationmodule_set.first()
-        update_url = reverse("pages:updatemedicationmodule",
+        update_url = reverse("pages:createmoremedicationmodule",
                              args=[self.page.id, module.id])
         self.assertRedirects(response, update_url)
         self.assertEqual(module.medicationitem_set.count(), 0)

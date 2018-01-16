@@ -15,6 +15,11 @@ def get_display_value(choices, request_key):
     return ""
 
 
+@register.filter
+def verbose_name(obj):
+    return obj._meta.verbose_name
+
+
 # need to be there for senses to be translatable
 pgettext_lazy("sensitivity description", "sound")
 pgettext_lazy("sensitivity description", "light")

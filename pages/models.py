@@ -11,25 +11,41 @@ class Page(models.Model):
                              default="", blank=True)
     module_num = models.PositiveIntegerField(default=0, blank=True)
 
-    def get_all_modules(self):
-        return {
-            'generalinfomodule': self.generalinfomodule_set.all(),
-            'communicationmodule':
-                self.communicationmodule_set.all(),
-            'dodontmodule': self.dodontmodule_set.all(),
-            'medicationmodule': self.medicationmodule_set.all(),
-            'sensorymodule': self.sensorymodule_set.all(),
-            'contactmodule': self.contactmodule_set.all(),
-            'freetextmodule': self.freetextmodule_set.all(),
-            'freelistmodule': self.freelistmodule_set.all(),
-            'freepicturemodule': self.freepicturemodule_set.all(),
-        }
+    def get_all_modules(self, **kwargs):
+        return [
+            self.generalinfomodule_set.filter(**kwargs),
+            self.communicationmodule_set.filter(**kwargs),
+            self.dodontmodule_set.filter(**kwargs),
+            self.medicationmodule_set.filter(**kwargs),
+            self.sensorymodule_set.filter(**kwargs),
+            self.contactmodule_set.filter(**kwargs),
+            self.freetextmodule_set.filter(**kwargs),
+            self.freelistmodule_set.filter(**kwargs),
+            self.freepicturemodule_set.filter(**kwargs),
+        ]
 
     def get_all_modules_sorted(self):
-        module_dict = self.get_all_modules()
+        modules = self.get_all_modules()
         return sorted(
-            chain(*module_dict.values()),
+            chain(*modules),
             key=attrgetter('position'))
+
+    def module_deleted(self, position):
+        """
+            Handle cleanup when a module is deleted.
+
+            Count down the pages module number.
+            Count down the position of all the modules
+            comming after this module.
+        """
+        modules = self.get_all_modules(position__gt=position)
+        for module_q in modules:
+            module_q.select_for_update()
+            for module in module_q:
+                module.position = module.position - 1
+                module.save()
+        self.module_num = self.module_num - 1
+        self.save()
 
     def __str__(self):
         return self.title
@@ -40,15 +56,28 @@ class Module(models.Model):
         abstract = True
         ordering = ['page', 'position']
 
-    page = models.ForeignKey(Page, verbose_name=_("Page"))
+    page = models.ForeignKey(Page, verbose_name=_("Page"),
+                             on_delete=models.CASCADE)
     position = models.IntegerField(verbose_name=_("Position"))
 
     @property
     def type(self):
         return self.__class__.__name__
 
+    @property
+    def delete_url_name(self):
+        return "pages:delete{}".format(self.type.lower())
+
+    @property
+    def edit_url_name(self):
+        return "pages:update{}".format(self.type.lower())
+
 
 class GeneralInfoModule(Module):
+
+    class Meta:
+        verbose_name = _("General info module")
+
     ID_AUTISTIC = "01_autistic"
     ID_HAVE_AUT = "02_have_aut"
     ID_SPECTRUM = "03_spectrum"
@@ -88,7 +117,13 @@ class GeneralInfoModule(Module):
 
 
 class CommunicationModule(Module):
+
+    class Meta:
+        verbose_name = _("Communication module")
+
     template = "pages/_communication.html"
+
+    title = _("Communication")
 
     help_text = _("This module lets you describe your communication "
                   "preferences in different situations. "
@@ -141,14 +176,15 @@ class CommunicationModule(Module):
 
     suggestions_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=SUGGESTIONS),
-        verbose_name=_("Communication suggestions"), blank=True)
+        verbose_name=_("Communication suggestions"), default=list, blank=True)
     suggestions_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("Other communication suggestions"),
-        blank=True)
+        blank=True, default=list)
 
 
 class CommunicationMethods(models.Model):
+
     SPOKEN = "01_spoken"
     WRITTEN = "02_written"
     TEXT_AAC = "03_text_aac"
@@ -169,23 +205,29 @@ class CommunicationMethods(models.Model):
                                  max_length=255, default="", blank=True)
     you_to_me_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=METHODS),
-        verbose_name=_("You can use"), blank=True)
+        verbose_name=_("You can use"), blank=True, default=list)
     you_to_me_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("Other communication methods you can use"),
-        blank=True)
+        blank=True, default=list)
     me_to_you_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=METHODS),
-        verbose_name=_("I will use"), blank=True)
+        verbose_name=_("I will use"), blank=True, default=list)
     me_to_you_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("Other communication methods I might use"),
-        blank=True)
-    module = models.ForeignKey(CommunicationModule, verbose_name=_("module"))
+        blank=True, default=list)
+    module = models.ForeignKey(CommunicationModule, verbose_name=_("module"),
+                               on_delete=models.CASCADE)
 
 
 class DoDontModule(Module):
+    class Meta:
+        verbose_name = _("Do's and Don'ts module")
+
     template = "pages/_dodont.html"
+
+    title = _("Do's and Don'ts")
 
     help_text = _("With this module, you can provide 3 quick lists "
                   "with things people can do, shouldn't do, or should "
@@ -264,33 +306,45 @@ class DoDontModule(Module):
 
     do_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=DOS),
-        verbose_name=_("Things others can do to help you"), blank=True)
+        verbose_name=_("Things others can do to help you"), blank=True,
+        default=list)
     do_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("More things others can do"),
-        blank=True)
+        blank=True, default=list)
     ask_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=ASKS),
-        verbose_name=_("Things people should ask you about"), blank=True)
+        verbose_name=_("Things people should ask you about"), blank=True,
+        default=list)
     ask_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("More things others should ask"),
-        blank=True)
+        blank=True, default=list)
     dont_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=DONTS),
-        verbose_name=_("Things others should not do"), blank=True)
+        verbose_name=_("Things others should not do"), blank=True,
+        default=list)
     dont_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("More things others shouldn't do"),
-        blank=True)
+        blank=True, default=list)
 
 
 class MedicationModule(Module):
+    class Meta:
+        verbose_name = _("Medication module")
+
     template = "pages/_medication.html"
+
+    title = _("Medication")
 
     help_text = _("Here you can create a table with your medication and when "
                   "you take how much of it. This can be useful for doctors or "
                   "caregivers, or just as a reminder for yourself.")
+
+    @property
+    def edit_url_name(self):
+        return "pages:medicationmoduledetail"
 
 
 class MedicationItem(models.Model):
@@ -301,7 +355,8 @@ class MedicationItem(models.Model):
                             max_length=255, default="", blank=True)
     remarks = models.TextField(verbose_name=_("Remarks"), default="",
                                blank=True)
-    module = models.ForeignKey(MedicationModule, verbose_name=_("module"))
+    module = models.ForeignKey(MedicationModule, verbose_name=_("module"),
+                               on_delete=models.CASCADE)
     position = models.PositiveIntegerField(default=0, blank=True,
                                            db_index=True)
 
@@ -327,7 +382,8 @@ class MedicationIntake(models.Model):
     quantity = models.CharField(verbose_name=_("Intake quantity"),
                                 max_length=255, default="", blank=True)
     medication = models.ForeignKey(MedicationItem,
-                                   verbose_name=_("medication"))
+                                   verbose_name=_("medication"),
+                                   on_delete=models.CASCADE)
     position = models.PositiveIntegerField(default=0, blank=True,
                                            db_index=True)
 
@@ -345,7 +401,12 @@ class MedicationIntake(models.Model):
 
 
 class SensoryModule(Module):
+    class Meta:
+        verbose_name = _("Sensory module")
+
     template = "pages/_sensory.html"
+
+    title = _("Sensory sensitivities")
 
     help_text = _("This module presents your sensory profile. You can also "
                   "add other information related to sensory processing.")
@@ -398,11 +459,11 @@ class SensoryModule(Module):
         default=SENS_NONE)
     extra_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=EXTRAS),
-        verbose_name=_("Additional sensory info"), blank=True)
+        verbose_name=_("Additional sensory info"), blank=True, default=list)
     extra_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("More additional sensory info"),
-        blank=True)
+        blank=True, default=list)
 
     @property
     def has_sensory_profile(self):
@@ -413,7 +474,12 @@ class SensoryModule(Module):
 
 
 class ContactModule(Module):
+    class Meta:
+        verbose_name = _("Contact module")
+
     template = "pages/_contact.html"
+
+    title = _("Contacts")
 
     help_text = _("In this module you can add all kinds of contact data. "
                   "As always, all fields are optional, so you can add "
@@ -439,10 +505,13 @@ class ModuleContact(models.Model):
                               blank=True)
     extra = models.TextField(verbose_name=_("Extra comment"), default="",
                              blank=True)
-    module = models.ForeignKey(ContactModule, verbose_name=_("module"))
+    module = models.ForeignKey(ContactModule, verbose_name=_("module"),
+                               on_delete=models.CASCADE)
 
 
 class FreeTextModule(Module):
+    class Meta:
+        verbose_name = _("Free text module")
 
     help_text = _("Here you can create a custom module containing "
                   "text and a title. You can use it  for any text you want "
@@ -461,6 +530,8 @@ class FreeTextModule(Module):
 
 
 class FreeListModule(Module):
+    class Meta:
+        verbose_name = _("Free list module")
 
     template = "pages/_freelist.html"
 
@@ -471,7 +542,7 @@ class FreeListModule(Module):
     title = models.CharField(verbose_name=_("Title"),
                              max_length=255, default="", blank=True)
     items = ArrayField(models.CharField(max_length=255),
-                       verbose_name=_("Items"), blank=True)
+                       verbose_name=_("Items"), blank=True, default=list)
 
     def __str__(self):
         return "{page} Freelistmodule: {title}"\
@@ -479,6 +550,8 @@ class FreeListModule(Module):
 
 
 class FreePictureModule(Module):
+    class Meta:
+        verbose_name = _("Free picture module")
 
     help_text = _("Upload your own pictures and add a title and a description "
                   "to them. Sometimes adding an ilustration, cartoon or photo "
@@ -495,7 +568,8 @@ class FreePictureModule(Module):
 
 
 class ModulePicture(models.Model):
-    module = models.ForeignKey(FreePictureModule, verbose_name=_("module"))
+    module = models.ForeignKey(FreePictureModule, verbose_name=_("module"),
+                               on_delete=models.CASCADE)
     picture = models.ImageField(verbose_name=_("Image"), blank=True,
                                 null=True)
     description = models.TextField(verbose_name=_("Image description"),
@@ -505,15 +579,15 @@ class ModulePicture(models.Model):
 
 
 MODULES = (
-    ("generalinfomodule", _("General info module")),
-    ("communicationmodule", _("Communication module")),
-    ("dodontmodule", _("Do's and Don'ts module")),
-    ("medicationmodule", _("Medication module")),
-    ("sensorymodule", _("Sensory module")),
-    ("contactmodule", _("Contact module")),
-    ("freetextmodule", _("Free text module")),
-    ("freelistmodule", _("Free list module")),
-    ("freepicturemodule", _("Free picture module"))
+    ("generalinfomodule", GeneralInfoModule._meta.verbose_name),
+    ("communicationmodule", CommunicationModule._meta.verbose_name),
+    ("dodontmodule", DoDontModule._meta.verbose_name),
+    ("medicationmodule", MedicationModule._meta.verbose_name),
+    ("sensorymodule", SensoryModule._meta.verbose_name),
+    ("contactmodule", ContactModule._meta.verbose_name),
+    ("freetextmodule", FreeTextModule._meta.verbose_name),
+    ("freelistmodule", FreeListModule._meta.verbose_name),
+    ("freepicturemodule", FreePictureModule._meta.verbose_name)
 )
 
 
