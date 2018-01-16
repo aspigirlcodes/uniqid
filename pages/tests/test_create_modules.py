@@ -147,7 +147,7 @@ class CreateDoDontModuleTestCase(TestCase):
         self.assertEqual(module.ask_free, ['dsafdaf', 'safdasf'])
 
     def test_create_empty(self):
-        url = reverse('pages:creategeneralinfomodule',
+        url = reverse('pages:createdodontmodule',
                       args=[str(self.page.id)])
         response = self.client.post(url,
                                     {'ask_free_0': '',

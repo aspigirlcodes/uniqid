@@ -155,6 +155,17 @@ class ModuleDeleteView(DeleteView):
         page_id = self.object.page.id
         return reverse("pages:addmodule", args=[page_id, ])
 
+    def delete(self, request, *args, **kwargs):
+        """
+        Calls the delete() method on the fetched object and then
+        redirects to the success URL.
+        """
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.page.module_deleted(self.object.position)
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
+
 
 class GeneralInfoModuleCreateView(ModuleCreateView):
     model = GeneralInfoModule
@@ -286,6 +297,7 @@ class MedicationModuleUpdateView(UpdateView):
         context = self.get_context_data()
         formset = context['intake_formset']
         if formset.is_valid():
+            self.object = form.save()
             # save intakes
             formset.instance = self.object
             if (not formset.save()) and form.is_empty():

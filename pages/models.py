@@ -11,25 +11,41 @@ class Page(models.Model):
                              default="", blank=True)
     module_num = models.PositiveIntegerField(default=0, blank=True)
 
-    def get_all_modules(self):
-        return {
-            'generalinfomodule': self.generalinfomodule_set.all(),
-            'communicationmodule':
-                self.communicationmodule_set.all(),
-            'dodontmodule': self.dodontmodule_set.all(),
-            'medicationmodule': self.medicationmodule_set.all(),
-            'sensorymodule': self.sensorymodule_set.all(),
-            'contactmodule': self.contactmodule_set.all(),
-            'freetextmodule': self.freetextmodule_set.all(),
-            'freelistmodule': self.freelistmodule_set.all(),
-            'freepicturemodule': self.freepicturemodule_set.all(),
-        }
+    def get_all_modules(self, **kwargs):
+        return [
+            self.generalinfomodule_set.filter(**kwargs),
+            self.communicationmodule_set.filter(**kwargs),
+            self.dodontmodule_set.filter(**kwargs),
+            self.medicationmodule_set.filter(**kwargs),
+            self.sensorymodule_set.filter(**kwargs),
+            self.contactmodule_set.filter(**kwargs),
+            self.freetextmodule_set.filter(**kwargs),
+            self.freelistmodule_set.filter(**kwargs),
+            self.freepicturemodule_set.filter(**kwargs),
+        ]
 
     def get_all_modules_sorted(self):
-        module_dict = self.get_all_modules()
+        modules = self.get_all_modules()
         return sorted(
-            chain(*module_dict.values()),
+            chain(*modules),
             key=attrgetter('position'))
+
+    def module_deleted(self, position):
+        """
+            Handle cleanup when a module is deleted.
+
+            Count down the pages module number.
+            Count down the position of all the modules
+            comming after this module.
+        """
+        modules = self.get_all_modules(position__gt=position)
+        for module_q in modules:
+            module_q.select_for_update()
+            for module in module_q:
+                module.position = module.position - 1
+                module.save()
+        self.module_num = self.module_num - 1
+        self.save()
 
     def __str__(self):
         return self.title
@@ -160,11 +176,11 @@ class CommunicationModule(Module):
 
     suggestions_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=SUGGESTIONS),
-        verbose_name=_("Communication suggestions"), blank=True)
+        verbose_name=_("Communication suggestions"), default=list, blank=True)
     suggestions_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("Other communication suggestions"),
-        blank=True)
+        blank=True, default=list)
 
 
 class CommunicationMethods(models.Model):
@@ -189,18 +205,18 @@ class CommunicationMethods(models.Model):
                                  max_length=255, default="", blank=True)
     you_to_me_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=METHODS),
-        verbose_name=_("You can use"), blank=True)
+        verbose_name=_("You can use"), blank=True, default=list)
     you_to_me_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("Other communication methods you can use"),
-        blank=True)
+        blank=True, default=list)
     me_to_you_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=METHODS),
-        verbose_name=_("I will use"), blank=True)
+        verbose_name=_("I will use"), blank=True, default=list)
     me_to_you_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("Other communication methods I might use"),
-        blank=True)
+        blank=True, default=list)
     module = models.ForeignKey(CommunicationModule, verbose_name=_("module"),
                                on_delete=models.CASCADE)
 
@@ -290,25 +306,28 @@ class DoDontModule(Module):
 
     do_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=DOS),
-        verbose_name=_("Things others can do to help you"), blank=True)
+        verbose_name=_("Things others can do to help you"), blank=True,
+        default=list)
     do_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("More things others can do"),
-        blank=True)
+        blank=True, default=list)
     ask_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=ASKS),
-        verbose_name=_("Things people should ask you about"), blank=True)
+        verbose_name=_("Things people should ask you about"), blank=True,
+        default=list)
     ask_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("More things others should ask"),
-        blank=True)
+        blank=True, default=list)
     dont_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=DONTS),
-        verbose_name=_("Things others should not do"), blank=True)
+        verbose_name=_("Things others should not do"), blank=True,
+        default=list)
     dont_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("More things others shouldn't do"),
-        blank=True)
+        blank=True, default=list)
 
 
 class MedicationModule(Module):
@@ -440,11 +459,11 @@ class SensoryModule(Module):
         default=SENS_NONE)
     extra_choices = ChoiceArrayField(
         models.CharField(max_length=32, choices=EXTRAS),
-        verbose_name=_("Additional sensory info"), blank=True)
+        verbose_name=_("Additional sensory info"), blank=True, default=list)
     extra_free = ArrayField(
         models.CharField(max_length=255),
         verbose_name=_("More additional sensory info"),
-        blank=True)
+        blank=True, default=list)
 
     @property
     def has_sensory_profile(self):
@@ -523,7 +542,7 @@ class FreeListModule(Module):
     title = models.CharField(verbose_name=_("Title"),
                              max_length=255, default="", blank=True)
     items = ArrayField(models.CharField(max_length=255),
-                       verbose_name=_("Items"), blank=True)
+                       verbose_name=_("Items"), blank=True, default=list)
 
     def __str__(self):
         return "{page} Freelistmodule: {title}"\
