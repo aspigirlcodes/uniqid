@@ -92,7 +92,7 @@ class GeneralInfoModule(Module):
         (ID_SPECTRUM, _("I am on the autism spectrum")),
         (ID_ASD, _("I have an autism spectrum disorder")),
         (ID_NEURODIV, _("I am neurodivergent")),
-        (ID_ASP_SYN, _("I have aspergers syndrome")),
+        (ID_ASP_SYN, _("I have Asperger syndrome")),
         (ID_ASPIE, _("I am an aspie")),
     )
 
@@ -148,7 +148,7 @@ class CommunicationModule(Module):
     TELEPHONE = "16_telephone"
 
     SUGGESTIONS = (
-        (SIMPLE, _("Use simple words and short senteces.")),
+        (SIMPLE, _("Use simple words and short sentences.")),
         (CONCRETE, _("Be very concrete and specific. "
                      "Avoid very broad questions.")),
         (PICTURES, _("Show me diagrams or pictures whenever possible.")),
@@ -159,7 +159,7 @@ class CommunicationModule(Module):
                       "questions.")),
         (PROCESSING, _("Give me extra time to process what you have said. "
                        "Especially if I have to answer questions.")),
-        (NOISES, _("Do not try to talk to me while ther are other noises.")),
+        (NOISES, _("Do not try to talk to me while there are other noises.")),
         (NOT_RUDE, _("If I seem rude, I don't mean it. "
                      "I'm just really direct.")),
         (LITERALLY, _("I often take language too literally.")),
@@ -197,7 +197,7 @@ class CommunicationMethods(models.Model):
         (WRITTEN, _("Written language")),
         (TEXT_AAC, _("Text based alternative to speech")),
         (PIC_AAC, _("Picture based alternative to speech")),
-        (OFF_SIGN, _("Official signlanguage")),
+        (OFF_SIGN, _("Official sign-language")),
         (OTHER_SIGN, _("Other signs, gestures or behaviours"))
     )
 
@@ -282,9 +282,9 @@ class DoDontModule(Module):
 
     ASKS = (
         (ASK_TOUCH, _("Ask before you touch me")),
-        (ASK_STUFF, _("Ask befor touching my stuff")),
+        (ASK_STUFF, _("Ask before touching my stuff")),
         (ASK_READY, _("Ask me if I am ready to go (and where we go to) "
-                      "befor you take me to a new place")),
+                      "before you take me to a new place")),
         (ASK_COMMUNICATE, _("Ask me about what method of communication "
                             "I want to use")),
         (ASK_TALK, _("Ask me if I want to talk or socialize "
@@ -294,7 +294,7 @@ class DoDontModule(Module):
     DONTS = (
         (DONT_TOUCH, _("Don't touch me without permission")),
         (DONT_EYE, _("Don't force me to make eye contact")),
-        (DONT_QUESTIONS, _("Don't ask me to many questions")),
+        (DONT_QUESTIONS, _("Don't ask me too many questions")),
         (DONT_CLOSE, _("Do not sit or stand close to me "
                        "unless it is necessary")),
         (DONT_CHITCHAT, _("Avoid chitchat")),
@@ -536,7 +536,7 @@ class FreeListModule(Module):
     template = "pages/_freelist.html"
 
     help_text = _("A place to add your own lists. List things you are good "
-                  "at, your hobies, questions you have prepared for a "
+                  "at, your hobbies, questions you have prepared for a "
                   "conversation, or anything else you want to make a list of.")
 
     title = models.CharField(verbose_name=_("Title"),
@@ -554,7 +554,7 @@ class FreePictureModule(Module):
         verbose_name = _("Free picture module")
 
     help_text = _("Upload your own pictures and add a title and a description "
-                  "to them. Sometimes adding an ilustration, cartoon or photo "
+                  "to them. Sometimes adding an illustration, cartoon or photo "
                   "helps to bring your message accross.")
 
     template = "pages/_freepicture.html"
