@@ -30,7 +30,8 @@ from .views import GeneralInfoModuleCreateView, PageCreateView,\
                    SensoryModuleUpdateView, ContactModuleUpdateView, \
                    FreeTextModuleUpdateView, FreeListModuleUpdateView, \
                    FreePictureModuleUpdateView, MedicationModuleUpdateView, \
-                   MedicationModuleDetailView, MedicationItemDeleteView
+                   MedicationModuleDetailView, MedicationItemDeleteView, \
+                   ModuleSortView
 
 urlpatterns = [
     url(r'^createpage/$', PageCreateView.as_view(), name="createpage"),
@@ -113,6 +114,8 @@ urlpatterns = [
     url(r'^deletefreepicturemodule/(?P<pk>[0-9]+)/$',
         FreePictureModuleDeleteView.as_view(), name="deletefreepicturemodule"),
 
+    url(r'^(?P<pk>[0-9]+)/sortmodules/$', ModuleSortView.as_view(),
+        name="sortmodules"),
     url(r'^(?P<pk>[0-9]+)/preview/$',
         PagePreview.as_view(), name="pagepreview"),
 ]

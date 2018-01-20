@@ -1,0 +1,105 @@
+{% extends "pages/base.html" %}
+{% load widget_tweaks %}
+{% load pages_tags %}
+{% load i18n %}
+
+{% block content %}
+<section id="create-form" class="pb-5">
+  <div class="container">
+    <div class="row my-4">
+      <div class="col">
+          <h6 class="my-0"><small class="text-uppercase text-secondary font-weight-light">
+            {% trans "creating page" context "superscript above page title" %}</small></h6>
+          {% if page.title %}
+            <h1>{{page.title}}</h1>
+          {% else %}
+            <h1 class="text-secondary">{% trans "No Title" %}</h1>
+          {% endif %}
+        </h1>
+      </div>
+    </div>
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="row mt-4">
+        {% if form.non_field_errors %}
+        <div class="col-12">
+          <div class="alert alert-danger" role="alert">
+            <ul class="list-unstyled my-0">
+              {% for error in form.non_field_errors %}
+              <li> {{ error|escape }} </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="row my-3 justify-content-between">
+        <div class="col-12 col-sm-auto">
+          <h4>{% trans "Sort Modules:" %} </h4>
+        </div>
+        <div class="col-12 col-sm-auto text-right">
+          <a href="{% url "pages:sortmodules" object.id %}" class="btn btn-link">reset positions</a>
+        </div>
+      </div>
+      <div class="row my-3" id="accordion" role="tablist">
+        {% for module in modules %}
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header" role="tab" id="heading-{{forloop.counter}}">
+                <h5 class="mb-0">
+                  <a class="collapsed"
+                     data-toggle="collapse"
+                     href="#module-preview-{{forloop.counter}}"
+                     role="button"
+                     aria-expanded="false"
+                     aria-controls="module-preview-{{forloop.counter}}">
+                    {{ module|verbose_name }}{% if module.title %}: {{ module.title }}{% endif %}
+                  </a>
+                </h5>
+              </div>
+              <div id="module-preview-{{forloop.counter}}"
+                   class="collapse" role="tabpanel"
+                   aria-labelledby="heading-{{forloop.counter}}" data-parent="#accordion">
+                <div class="card-body">
+                  {% include module.template %}
+                </div>
+              </div>
+              <div class="card-footer text-right">
+                {% with field=form|get_position_field:forloop.counter %}
+                  <div class="form-group row mb-0 justify-content-end">
+                    <label class="col-6 col-sm-4 col-md-3 col-lg-2" for="{{field.auto_id}}">
+                      {{ field.label }}
+                    </label>
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                      {% if field.errors %}
+                      {{ field|add_class:"form-control form-control is-invalid" }}
+                      <div class="invalid-feedback">
+                        <ul class="list-unstyled mb-0">
+                          {% for error in field.errors %}
+                          <li><strong>{{ error|escape }}</strong></li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                      {% else %}
+                      {{ field|add_class:"form-control form-control" }}
+                      {% endif %}
+                   </div>
+                  </div>
+                {% endwith %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="row">
+        <div class="col">
+          <a href="{% url 'pages:addmodule' page.id %}" class="btn btn-danger">{% trans "Back" context "Button" %}</a>
+        </div>
+        <div class="col text-right">
+          <button type="submit" name="submit_next" class="btn btn-lg btn-success"> {%trans "Save and finish" context "Button" %}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock content %}

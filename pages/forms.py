@@ -1,4 +1,5 @@
-from django.forms import ModelForm, ChoiceField, CharField, ValidationError
+from django.forms import ModelForm, ChoiceField, CharField, ValidationError, \
+                         IntegerField
 from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
@@ -197,11 +198,33 @@ class FreeListModuleForm(ModuleMixin, ModelForm):
         model = FreeListModule
         fields = ['title', 'items']
 
-    def __init(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
 
 class FreePictureModuleForm(ModuleMixin, ModelForm):
     class Meta:
         model = FreePictureModule
         fields = ['title']
+
+
+class ModuleSortForm(ModelForm):
+    class Meta:
+        model = Page
+        fields = []
+
+    def __init__(self, *args, **kwargs):
+        self.page = kwargs['instance']
+        super().__init__(*args, **kwargs)
+        for index in range(1, self.page.module_num+1):
+            field_name = "position_{}".format(index)
+            self.fields[field_name] = IntegerField(
+                label=_("position"), min_value=1,
+                max_value=self.page.module_num,
+                initial=index)
+
+    def clean(self, *args, **kwargs):
+        cleaned_data = super().clean(*args, **kwargs)
+        if len(cleaned_data) == self.page.module_num and \
+                not set(cleaned_data.values()) == \
+                set(range(1, self.page.module_num + 1)):
+            raise(ValidationError(_("You can use each position only once."),
+                                  code="double_value"))
+        return cleaned_data

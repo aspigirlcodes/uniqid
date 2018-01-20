@@ -10,7 +10,8 @@ from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    CommunicationModuleForm, PictureFormSet, \
                    DoDontModuleForm, IntakeFormSet, SensoryModuleForm, \
                    ContactFormSet, CommunicationMethodsFormset, \
-                   MedicationItemForm, ContactModuleForm, FreePictureModuleForm
+                   MedicationItemForm, ContactModuleForm, \
+                   FreePictureModuleForm, ModuleSortForm
 
 
 class PageCreateView(CreateView):
@@ -38,7 +39,7 @@ class SelectModuleView(UpdateView):
     def form_valid(self, form):
         self.object = form.save()
         if "submit_next" in self.request.POST:
-            url = reverse("pages:pagepreview", args=[self.object.id, ])
+            url = reverse("pages:sortmodules", args=[self.object.id, ])
         else:
             url_name = "pages:create" + form.cleaned_data['module']
             url = reverse(url_name, args=[self.object.id, ])
@@ -409,6 +410,30 @@ class FreePictureModuleUpdateView(FormsetModuleUpdateView):
 
 class FreePictureModuleDeleteView(ModuleDeleteView):
     model = FreePictureModule
+
+
+class ModuleSortView(UpdateView):
+    model = Page
+    template_name = "pages/sortmodules.html"
+    form_class = ModuleSortForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['modules'] = self.object.get_all_modules_sorted()
+        return context
+
+    def form_valid(self, form):
+        if form.has_changed():
+            for index, module in \
+                    enumerate(self.object.get_all_modules_sorted()):
+                new_position = form.cleaned_data.get(
+                    "position_{}".format(index + 1))
+                if new_position is not module.position:
+                    module.position = new_position
+                    module.save()
+        page_id = self.object.id
+        return HttpResponseRedirect(
+            reverse("pages:pagepreview", args=[page_id, ]))
 
 
 class PagePreview(DetailView):
