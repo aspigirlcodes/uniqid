@@ -42,12 +42,10 @@ class PageCreateForm(ModelForm):
 
 
 class AddModuleForm(ModelForm):
-    module = ChoiceField(label=_("Choose another module"),
+    module = ChoiceField(label=_("Or choose another module"),
                          choices=MODULES,
                          required=False,
-                         widget=RadioWithHelpSelect(help_texts=MODULE_HELP),
-                         help_text=_("You can add more modules or go to "
-                                     "the next step when you are finished"))
+                         widget=RadioWithHelpSelect(help_texts=MODULE_HELP))
 
     class Meta:
         model = Page
