@@ -1,4 +1,5 @@
-from django.forms import ModelForm, ChoiceField, CharField, ValidationError
+from django.forms import ModelForm, ChoiceField, CharField, ValidationError, \
+                         IntegerField
 from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
@@ -41,12 +42,10 @@ class PageCreateForm(ModelForm):
 
 
 class AddModuleForm(ModelForm):
-    module = ChoiceField(label=_("Choose another module"),
+    module = ChoiceField(label=_("Or choose another module"),
                          choices=MODULES,
                          required=False,
-                         widget=RadioWithHelpSelect(help_texts=MODULE_HELP),
-                         help_text=_("You can add more modules or go to "
-                                     "the next step when you are finished"))
+                         widget=RadioWithHelpSelect(help_texts=MODULE_HELP))
 
     class Meta:
         model = Page
@@ -60,13 +59,18 @@ class AddModuleForm(ModelForm):
         return module
 
 
-class GeneralInfoModuleForm(ModelForm):
+class ModuleMixin(object):
+    def is_empty(self):
+        return not any(self.cleaned_data.values())
+
+
+class GeneralInfoModuleForm(ModuleMixin, ModelForm):
     class Meta:
         model = GeneralInfoModule
         fields = ['name', 'identity']
 
 
-class CommunicationModuleForm(ModelForm):
+class CommunicationModuleForm(ModuleMixin, ModelForm):
     suggestions_free = DynamicSplitArrayField(
         CharField(required=False, widget=ItemTextWidget),
         label=_("Other communication suggestions"),
@@ -81,7 +85,7 @@ class CommunicationModuleForm(ModelForm):
         fields = ['suggestions_choices', 'suggestions_free']
 
 
-class CommunicationMethodsForm(ModelForm):
+class CommunicationMethodsForm(ModuleMixin, ModelForm):
     me_to_you_free = DynamicSplitArrayField(
         CharField(required=False, widget=ItemTextWidget),
         label=_("Other communication methods I might use"),
@@ -110,7 +114,7 @@ CommunicationMethodsFormset = inlineformset_factory(
     extra=1)
 
 
-class DoDontModuleForm(ModelForm):
+class DoDontModuleForm(ModuleMixin, ModelForm):
     do_free = DynamicSplitArrayField(
         CharField(required=False, widget=ItemTextWidget),
         label=_("More things others can do"),
@@ -142,7 +146,19 @@ class DoDontModuleForm(ModelForm):
                   'ask_free', 'dont_choices', 'dont_free']
 
 
-class SensoryModuleForm(ModelForm):
+class MedicationItemForm(ModuleMixin, ModelForm):
+    class Meta:
+        model = MedicationItem
+        fields = ['name', 'remarks']
+
+
+class ContactModuleForm(ModuleMixin, ModelForm):
+    class Meta:
+        model = ContactModule
+        fields = []
+
+
+class SensoryModuleForm(ModuleMixin, ModelForm):
     extra_free = DynamicSplitArrayField(
         CharField(required=False, widget=ItemTextWidget),
         label=_("More additional sensory info"),
@@ -158,13 +174,13 @@ class SensoryModuleForm(ModelForm):
                   'temperature', 'extra_choices', 'extra_free']
 
 
-class FreeTextModuleForm(ModelForm):
+class FreeTextModuleForm(ModuleMixin, ModelForm):
     class Meta:
         model = FreeTextModule
         fields = ['title', 'text']
 
 
-class FreeListModuleForm(ModelForm):
+class FreeListModuleForm(ModuleMixin, ModelForm):
     items = DynamicSplitArrayField(CharField(required=False,
                                              widget=ItemTextWidget),
                                    label=_("Items"),
@@ -180,5 +196,33 @@ class FreeListModuleForm(ModelForm):
         model = FreeListModule
         fields = ['title', 'items']
 
-    def __init(self, *args, **kwargs):
+
+class FreePictureModuleForm(ModuleMixin, ModelForm):
+    class Meta:
+        model = FreePictureModule
+        fields = ['title']
+
+
+class ModuleSortForm(ModelForm):
+    class Meta:
+        model = Page
+        fields = []
+
+    def __init__(self, *args, **kwargs):
+        self.page = kwargs['instance']
         super().__init__(*args, **kwargs)
+        for index in range(1, self.page.module_num+1):
+            field_name = "position_{}".format(index)
+            self.fields[field_name] = IntegerField(
+                label=_("position"), min_value=1,
+                max_value=self.page.module_num,
+                initial=index)
+
+    def clean(self, *args, **kwargs):
+        cleaned_data = super().clean(*args, **kwargs)
+        if len(cleaned_data) == self.page.module_num and \
+                not set(cleaned_data.values()) == \
+                set(range(1, self.page.module_num + 1)):
+            raise(ValidationError(_("You can use each position only once."),
+                                  code="double_value"))
+        return cleaned_data

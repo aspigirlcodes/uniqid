@@ -1,5 +1,6 @@
 {% extends "pages/base.html" %}
 {% load widget_tweaks %}
+{% load pages_tags %}
 {% load i18n %}
 
 {% block content %}
@@ -40,24 +41,67 @@
         </div>
       </div>
       {% if modules %}
-        <div class="row my-3 justify-content-center">
+        <div class="row my-3">
           <div class="col-12">
-            <h4>{% trans "You allready have the following modules:" %} </h4>
+            <h4>{% trans "You already have the following modules:" %} </h4>
           </div>
-          <div class="col-11">
-              {% for module in modules %}
-                  {% if module.template %}
+          <div class="col-12">
+            <p class="mb-0">
+              {% blocktrans trimmed %}
+              We've listed them in the order you added them here. You can arrange them in the order you want in the next step.
+              {% endblocktrans %}
+            </p>
+          </div>
+        </div>
+        <div class="row my-3" id="accordion" role="tablist">
+          {% for module in modules %}
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header" role="tab" id="heading-{{forloop.counter}}">
+                  <h5 class="mb-0">
+                    <a class="collapsed"
+                       data-toggle="collapse"
+                       href="#module-preview-{{forloop.counter}}"
+                       role="button"
+                       aria-expanded="false"
+                       aria-controls="module-preview-{{forloop.counter}}">
+                      {{ module|verbose_name }}{% if module.title %}: {{ module.title }}{% endif %}
+                    </a>
+                  </h5>
+                </div>
+                <div id="module-preview-{{forloop.counter}}"
+                     class="collapse" role="tabpanel"
+                     aria-labelledby="heading-{{forloop.counter}}" data-parent="#accordion">
+                  <div class="card-body">
                     {% include module.template %}
-                  {% else %}
-                    <p>{{module}} </p>
-                  {% endif %}
-              {% endfor %}
+                  </div>
+                </div>
+                <div class="card-footer text-right">
+                  <a href="{% url module.edit_url_name module.id %}" class="btn btn-success">{% trans "Edit" %}</a>
+                  <a href="{% url module.delete_url_name module.id %}" class="btn btn-danger">{% trans "Delete" %}</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="row justify-content-between align-items-center">
+          <div class="col-xs-12 col-sm">
+            <p>
+              {% blocktrans trimmed %}
+              When you are finished adding information, you can arrange your modules in the order you want in the next step.
+              {% endblocktrans %}
+            </p>
+          </div>
+          <div class="col-xs-12 col-sm-auto">
+            <div class="text-right">
+              <button type="submit" name="submit_next" class="btn btn-lg btn-success"> {%trans "Next step: Arrange modules" context "Button" %}</button>
+            </div>
           </div>
         </div>
       {% endif %}
       <div class="row">
         <div class="col-12 col-md-6">
-          <div class="form-check">
+          <div class="form-check pl-0">
             <label for="{{form.module.auto_id}}" class="h4">
               {{ form.module.label }}
             </label>
@@ -83,9 +127,6 @@
         <div class="col-12">
           <div class="text-right">
             <button type="submit" name="submit_module" class="btn btn-lg btn-primary"> {% trans "Create module" context "Button" %} </button>
-            {% if modules %}
-                <button type="submit" name="submit_next" class="btn btn-lg btn-success"> {%trans "Next step: Arrange modules" context "Button" %}</button>
-            {% endif %}
           </div>
         </div>
       </div>

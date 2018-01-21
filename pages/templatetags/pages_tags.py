@@ -15,6 +15,11 @@ def get_display_value(choices, request_key):
     return ""
 
 
+@register.filter
+def verbose_name(obj):
+    return obj._meta.verbose_name
+
+
 # need to be there for senses to be translatable
 pgettext_lazy("sensitivity description", "sound")
 pgettext_lazy("sensitivity description", "light")
@@ -55,3 +60,9 @@ def sensitivity_img(value, sense):
     if value == SensoryModule.SENS_V_HIGH:
         return "img/very_high_sensitive_{}.svg".format(sense)
     return ""
+
+
+@register.filter
+def get_position_field(form, position):
+    return_val = form.visible_fields()[position - 1]
+    return return_val

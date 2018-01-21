@@ -30,9 +30,13 @@ class DynamicSplitArrayWidget(Widget):
         return self.widget.is_hidden
 
     def value_from_datadict(self, data, files, name):
-        return [self.widget.value_from_datadict(data, files,
-                                                '%s_%s' % (name, index))
-                for index in range(self.max_size)]
+        values = []
+        for index in range(self.max_size):
+            value = self.widget.value_from_datadict(data, files,
+                                                    '%s_%s' % (name, index))
+            if value:
+                values.append(value)
+        return values or None
 
     def value_omitted_from_data(self, data, files, name):
         return all(
@@ -111,6 +115,8 @@ class DynamicSplitArrayField(Field):
     def clean(self, value):
         cleaned_data = []
         errors = []
+        if not value:
+            value = []
         if not any(value) and self.required:
             raise ValidationError(self.error_messages['required'])
         max_size = min(self.max_size, len(value))
