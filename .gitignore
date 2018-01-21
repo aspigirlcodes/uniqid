@@ -6,3 +6,5 @@ logs/
 uniqid-env/
 /static/
 /media/
+/pages/static/css/offline/
+/pages/static/js/offline/

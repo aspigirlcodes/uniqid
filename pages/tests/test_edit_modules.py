@@ -350,3 +350,23 @@ class CreateFreePictureModuleTestCase(TestCase):
         self.assertEqual(ModulePicture.objects.count(), 0)
         self.page.refresh_from_db()
         self.assertEqual(self.page.module_num, 0)
+
+
+class PositionupdateTestCase(TestCase):
+    def setUp(self):
+        self.page = Page.objects.create(title="testpage", module_num=2)
+        self.module1 = FreePictureModule.objects.create(page=self.page,
+                                                        position=1,
+                                                        title="bla")
+        self.module2 = FreeTextModule.objects.create(page=self.page,
+                                                     position=2,
+                                                     title="blabla")
+
+    def test_delete_first_module(self):
+        url = reverse('pages:deletefreepicturemodule',
+                      args=[str(self.module1.id)])
+        self.client.post(url, {'delete': ''})
+        self.page.refresh_from_db()
+        self.module2.refresh_from_db()
+        self.assertEqual(self.page.module_num, 1)
+        self.assertEqual(self.module2.position, 1)

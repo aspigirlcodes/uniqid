@@ -60,3 +60,9 @@ def sensitivity_img(value, sense):
     if value == SensoryModule.SENS_V_HIGH:
         return "img/very_high_sensitive_{}.svg".format(sense)
     return ""
+
+
+@register.filter
+def get_position_field(form, position):
+    return_val = form.visible_fields()[position - 1]
+    return return_val

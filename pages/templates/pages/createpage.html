@@ -43,7 +43,14 @@
       {% if modules %}
         <div class="row my-3">
           <div class="col-12">
-            <h4>{% trans "You allready have the following modules:" %} </h4>
+            <h4>{% trans "You already have the following modules:" %} </h4>
+          </div>
+          <div class="col-12">
+            <p class="mb-0">
+              {% blocktrans trimmed %}
+              We've listed them in the order you added them here. You can arrange them in the order you want in the next step.
+              {% endblocktrans %}
+            </p>
           </div>
         </div>
         <div class="row my-3" id="accordion" role="tablist">
@@ -68,7 +75,6 @@
                   <div class="card-body">
                     {% include module.template %}
                   </div>
-
                 </div>
                 <div class="card-footer text-right">
                   <a href="{% url module.edit_url_name module.id %}" class="btn btn-success">{% trans "Edit" %}</a>
@@ -78,10 +84,24 @@
             </div>
           {% endfor %}
         </div>
+        <div class="row justify-content-between align-items-center">
+          <div class="col-xs-12 col-sm">
+            <p>
+              {% blocktrans trimmed %}
+              When you are finished adding information, you can arrange your modules in the order you want in the next step.
+              {% endblocktrans %}
+            </p>
+          </div>
+          <div class="col-xs-12 col-sm-auto">
+            <div class="text-right">
+              <button type="submit" name="submit_next" class="btn btn-lg btn-success"> {%trans "Next step: Arrange modules" context "Button" %}</button>
+            </div>
+          </div>
+        </div>
       {% endif %}
       <div class="row">
         <div class="col-12 col-md-6">
-          <div class="form-check">
+          <div class="form-check pl-0">
             <label for="{{form.module.auto_id}}" class="h4">
               {{ form.module.label }}
             </label>
@@ -107,9 +127,6 @@
         <div class="col-12">
           <div class="text-right">
             <button type="submit" name="submit_module" class="btn btn-lg btn-primary"> {% trans "Create module" context "Button" %} </button>
-            {% if modules %}
-                <button type="submit" name="submit_next" class="btn btn-lg btn-success"> {%trans "Next step: Arrange modules" context "Button" %}</button>
-            {% endif %}
           </div>
         </div>
       </div>
