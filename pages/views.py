@@ -20,7 +20,9 @@ class PageCreateView(CreateView):
     template_name = "pages/createpage.html"
 
     def form_valid(self, form):
-        self.object = form.save()
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
         url_name = "pages:create" + form.cleaned_data['module']
         url = reverse(url_name, args=[self.object.id, ])
         return HttpResponseRedirect(url)

@@ -1,0 +1,6 @@
+{% load i18n %}
+
+Hi,
+Someone asked for password reset for email {{ email }}.
+Follow the link below to set a new password:
+{{ protocol}}://{{ domain }}{% url "users:setpw" uidb64=uid token=token %}

@@ -1,6 +1,26 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.contrib.auth import get_user_model
+
 from ..models import Page, GeneralInfoModule, CommunicationModule, DoDontModule
+
+
+class CreatePageTestCase(TestCase):
+
+    def test_create_with_user(self):
+        user = get_user_model().objects.create_user("testuser",
+                                                    password="test")
+        self.client.login(username="testuser", password="test")
+        url = reverse('pages:createpage')
+        response = self.client.post(url,
+                                    {'title': 'testpage',
+                                     'module': 'generalinfomodule',
+                                     'submit': ''})
+        self.assertEqual(Page.objects.all().count(), 1)
+        page = Page.objects.first()
+        self.assertRedirects(response, reverse("pages:creategeneralinfomodule",
+                                               args=[page.id, ]))
+        self.assertEqual(page.user, user)
 
 
 class SortModulesTestCase(TestCase):

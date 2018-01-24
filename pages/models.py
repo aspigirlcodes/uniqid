@@ -1,8 +1,11 @@
 from itertools import chain
 from operator import attrgetter
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import ArrayField
+from django.conf import settings
+
 from .fields import ChoiceArrayField
 
 
@@ -10,6 +13,10 @@ class Page(models.Model):
     title = models.CharField(verbose_name=_("Page Title"), max_length=255,
                              default="", blank=True)
     module_num = models.PositiveIntegerField(default=0, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             verbose_name=_("User"),
+                             on_delete=models.CASCADE,
+                             blank=True, null=True)
 
     def get_all_modules(self, **kwargs):
         return [
@@ -554,8 +561,8 @@ class FreePictureModule(Module):
         verbose_name = _("Free picture module")
 
     help_text = _("Upload your own pictures and add a title and a description "
-                  "to them. Sometimes adding an illustration, cartoon or photo "
-                  "helps to bring your message accross.")
+                  "to them. Sometimes adding an illustration, cartoon or "
+                  "photo helps to bring your message accross.")
 
     template = "pages/_freepicture.html"
 
