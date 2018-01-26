@@ -15,13 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from .views import PasswordResetConfirmView
+from .views import PasswordResetConfirmView, RegisterView
+from .forms import default_token_generator, EmailAuthenticationForm
 # from django.views.generic import TemplateView
 
 
 urlpatterns = [
     url(r'^login/$',
-        auth_views.LoginView.as_view(template_name='users/login.html'),
+        auth_views.LoginView.as_view(
+            template_name='users/login.html',
+            authentication_form=EmailAuthenticationForm),
         name="login"),
     url(r'^logout/$',
         auth_views.LogoutView.as_view(), name="logout"),
@@ -30,6 +33,7 @@ urlpatterns = [
             template_name='users/pwreset.html',
             email_template_name="users/email_pwreset.html",
             subject_template_name="users/subject_pwreset.txt",
+            token_generator=default_token_generator,
             success_url="/users/emailsent/"),
         name="pwreset"),
     url(r'^emailsent/$',
@@ -39,7 +43,16 @@ urlpatterns = [
         "(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         PasswordResetConfirmView.as_view(
             template_name="users/pwset.html",
+            token_generator=default_token_generator,
             success_url="/users/login/"
         ),
-        name="setpw")
+        name="setpw"),
+    url(r'^register/$',
+        RegisterView.as_view(
+            template_name='users/register.html',
+            email_template_name="users/email_register.html",
+            subject_template_name="users/subject_register.txt",
+            token_generator=default_token_generator,
+            success_url="/pages/createpage/"),
+        name="register"),
 ]

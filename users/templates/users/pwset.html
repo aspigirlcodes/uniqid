@@ -10,7 +10,11 @@
       {% if validlink %}
         <div class="card">
           <div class="card-header">
-            <h1> {% trans "Change password" context "title" %} </h1>
+            {% if ispwchange %}
+              <h1> {% trans "Change password" context "title" %} </h1>
+            {% else %}
+              <h1> {% trans "Set password" context "title" %} </h1>
+            {% endif %}
           </div>
           <div class="card-body">
             <form method="post">
@@ -42,7 +46,13 @@
                   {{ form.new_password2|add_class:"form-control" }}
                 </div>
                 <div class="col-12 text-right">
-                  <button type="submit" class="btn btn-success">{% trans "Change password" context "button" %}</button>
+                  <button type="submit" class="btn btn-success">
+                    {% if ispwchange %}
+                      {% trans "Change password" context "button" %}
+                    {% else %}
+                      {% trans "Set password" context "button" %}
+                    {% endif %}
+                  </button>
                 </div>
               </div>
             </form>
@@ -52,8 +62,8 @@
         <div class="alert alert-danger">
           {% url "users:pwreset" as reseturl %}
           {% blocktrans %}
-          The password reset link was invalid, possibly because it has already been used.
-          Please <a href="{{reseturl}}" class="alert-link">request a new password reset</a>.
+          The link you used was invalid, possibly because it has already been used, or because it has expired.
+          Please <a href="{{reseturl}}" class="alert-link">request a new link</a>.
           {% endblocktrans %}
         </div>
       {% endif %}
