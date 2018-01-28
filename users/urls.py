@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from .views import PasswordResetConfirmView, RegisterView
+from .views import PasswordResetConfirmView, RegisterView, PasswordChangeView
 from .forms import default_token_generator, EmailAuthenticationForm
 # from django.views.generic import TemplateView
 
@@ -35,7 +35,7 @@ urlpatterns = [
             subject_template_name="users/subject_pwreset.txt",
             token_generator=default_token_generator,
             success_url="/users/emailsent/"),
-        name="pwreset"),
+        name="resetpw"),
     url(r'^emailsent/$',
         auth_views.LoginView.as_view(template_name='users/emailsent.html'),
         name="emailsent"),
@@ -55,4 +55,10 @@ urlpatterns = [
             token_generator=default_token_generator,
             success_url="/pages/createpage/"),
         name="register"),
+    url(r'^changepassword/$',
+        PasswordChangeView.as_view(
+            template_name='users/pwchange.html',
+            login_url="/users/login/",
+            success_url="/"),
+        name="changepw")
 ]

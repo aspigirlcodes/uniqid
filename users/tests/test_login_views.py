@@ -21,7 +21,7 @@ class PasswordResetTestCase(MessageTestMixin, TestCase):
         self.user.profile.save()
 
     def test_existing_email(self):
-        url = reverse("users:pwreset")
+        url = reverse("users:resetpw")
         response = self.client.post(url,
                                     {'email': self.user.email, 'submit': ''})
         self.assertRedirects(response, reverse("users:emailsent"))
@@ -33,7 +33,7 @@ class PasswordResetTestCase(MessageTestMixin, TestCase):
         # print(mail.outbox[0].body)
 
     def test_unknown_email(self):
-        url = reverse("users:pwreset")
+        url = reverse("users:resetpw")
         response = self.client.post(url,
                                     {'email': "bla@bla.bla", 'submit': ''})
         self.assertRedirects(response, reverse("users:emailsent"))
@@ -74,7 +74,7 @@ class RegistrationTestCase(MessageTestMixin, TestCase):
     def test_new_email(self):
         url = reverse("users:register")
         response = self.client.post(url,
-                                    {'email': "bla@bla.bla"})
+                                    {'email': "bla@bla.bla"}, follow=True)
         self.assertRedirects(response, reverse("pages:createpage"))
         # Test that one message has been sent.
         self.assertEqual(len(mail.outbox), 1)
@@ -84,6 +84,10 @@ class RegistrationTestCase(MessageTestMixin, TestCase):
                          'Finalize your registration')
         user = UserModel.objects.get(username="bla@bla.bla")
         self.assertEqual(user.email, "bla@bla.bla")
+        message = self.getmessage(response)
+        self.assertEqual(message.tags, "success")
+        self.assertIn("You can now start creating your page.",
+                      message.message)
 
     def test_register_unconfirmed_email(self):
         user = UserModel.objects.create_user(username="bla@bla.bla",
@@ -178,3 +182,35 @@ class LoginTestCase(TestCase):
                                      "password": "test"})
         self.assertFormError(response, "form", "username",
                              "Enter a valid email address.")
+
+
+class PasswordChangeTestCase(MessageTestMixin, TestCase):
+    def setUp(self):
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+
+    def test_access_with_nonconfirmed_email(self):
+        self.client.login(username=self.user.username, password="test")
+        url = reverse("users:changepw")
+        response = self.client.get(url)
+        self.assertRedirects(response, reverse("users:login") +
+                             "?next=/users/changepassword/")
+
+    def test_confirmed_email(self):
+        self.user.profile.email_confirmed = True
+        self.user.profile.save()
+        self.client.login(username=self.user.username, password="test")
+        url = reverse("users:changepw")
+        response = self.client.post(url,
+                                    {'old_password': 'test',
+                                     'new_password1': "blablabla",
+                                     'new_password2': "blablabla"},
+                                    follow=True)
+        self.assertRedirects(response, reverse("home:home"))
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password("blablabla"))
+        message = self.getmessage(response)
+        self.assertEqual(message.tags, "success")
+        self.assertIn("Your password was changed successfully.",
+                      message.message)

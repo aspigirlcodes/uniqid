@@ -25,17 +25,20 @@
               <div class="form-group col-12">
                 {{ form.email.label_tag }}
                 {% if form.email.errors %}
-                {{ form.email|add_class:"form-control form-control-lg is-invalid" }}
-                <div class="invalid-feedback">
-                  <ul class="list-unstyled">
-                    {% for error in form.email.errors %}
-                    <li><strong>{{ error|escape }}</strong></li>
-                    {% endfor %}
-                  </ul>
-                </div>
+                  {{ form.email|add_class:"form-control is-invalid" }}
+                  <div class="invalid-feedback">
+                    <ul class="list-unstyled">
+                      {% for error in form.email.errors %}
+                      <li><strong>{{ error|escape }}</strong></li>
+                      {% endfor %}
+                    </ul>
+                  </div>
                 {% else %}
-                {{ form.email|add_class:"form-control" }}
+                  {{ form.email|add_class:"form-control" }}
                 {% endif %}
+              </div>
+              <div class="col-12">
+                <p>{% trans "Already have an account?" %} <a href="{% url "users:login" %}">{% trans "Log in." %}</a></p>
               </div>
               <div class="col-12 text-right">
                 <button type="submit" class="btn btn-success"> {% trans "Submit" %}</button>

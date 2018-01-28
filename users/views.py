@@ -1,9 +1,22 @@
 from django.contrib.auth import views as auth_views
 from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from .forms import RegisterForm, SetPasswordConfirmForm
+
+
+class PasswordChangeView(UserPassesTestMixin, auth_views.PasswordChangeView):
+    def test_func(self):
+        if self.request.user.is_authenticated():
+            return self.request.user.profile.email_confirmed
+        return False
+
+    def form_valid(self, form):
+        messages.success(self.request,
+                         _("Your password was changed successfully."))
+        return super().form_valid(form)
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
@@ -27,7 +40,7 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
         return super().form_valid(form)
 
 
-class RegisterView(auth_views.PasswordResetView):
+class RegisterView(UserPassesTestMixin, auth_views.PasswordResetView):
     form_class = RegisterForm
 
     def form_valid(self, form):
@@ -43,7 +56,13 @@ class RegisterView(auth_views.PasswordResetView):
         }
         created = form.save(**opts)
         if created:
-            # todo add message
+            messages.success(self.request,
+                             _("You can now start creating your page. "
+                               "We've sent you an email to confirm your "
+                               "account in case you want to keep using it."))
             return HttpResponseRedirect(reverse("pages:createpage"))
         else:
             return HttpResponseRedirect(reverse("users:emailsent"))
+
+    def test_func(self):
+        return not self.request.user.is_authenticated()

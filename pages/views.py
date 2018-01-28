@@ -1,6 +1,8 @@
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import UserPassesTestMixin, \
+                                       LoginRequiredMixin
 from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
                     CommunicationModule, FreePictureModule, \
                     DoDontModule, MedicationModule, MedicationItem, \
@@ -14,7 +16,12 @@ from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    FreePictureModuleForm, ModuleSortForm
 
 
-class PageCreateView(CreateView):
+class PageCreateAccessMixin(LoginRequiredMixin):
+    def handle_no_permission(self):
+        return HttpResponseRedirect(reverse("users:register"))
+
+
+class PageCreateView(PageCreateAccessMixin, CreateView):
     model = Page
     form_class = PageCreateForm
     template_name = "pages/createpage.html"
@@ -28,7 +35,7 @@ class PageCreateView(CreateView):
         return HttpResponseRedirect(url)
 
 
-class SelectModuleView(UpdateView):
+class SelectModuleView(UserPassesTestMixin, UpdateView):
     model = Page
     form_class = AddModuleForm
     template_name = "pages/createpage.html"
@@ -47,8 +54,11 @@ class SelectModuleView(UpdateView):
             url = reverse(url_name, args=[self.object.id, ])
         return HttpResponseRedirect(url)
 
+    def test_func(self):
+        return self.request.user == self.get_object().user
 
-class ModuleCreateView(CreateView):
+
+class ModuleCreateView(UserPassesTestMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         self.page = Page.objects.get(id=self.kwargs.get('page_id'))
@@ -67,6 +77,10 @@ class ModuleCreateView(CreateView):
             self.page.save()
         url = reverse("pages:addmodule", args=[self.page.id, ])
         return HttpResponseRedirect(url)
+
+    def test_func(self):
+        page = Page.objects.get(id=self.kwargs.get('page_id'))
+        return self.request.user == page.user
 
 
 class FormsetModuleCreateView(ModuleCreateView):
@@ -103,7 +117,7 @@ class FormsetModuleCreateView(ModuleCreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
 
-class ModuleUpdateView(UpdateView):
+class ModuleUpdateView(UserPassesTestMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page'] = self.object.page
@@ -113,6 +127,10 @@ class ModuleUpdateView(UpdateView):
     def get_success_url(self):
         page_id = self.object.page.id
         return reverse("pages:addmodule", args=[page_id, ])
+
+    def test_func(self):
+        page = self.get_object().page
+        return self.request.user == page.user
 
 
 class FormsetModuleUpdateView(ModuleUpdateView):
@@ -151,7 +169,7 @@ class FormsetModuleUpdateView(ModuleUpdateView):
             return self.render_to_response(self.get_context_data(form=form))
 
 
-class ModuleDeleteView(DeleteView):
+class ModuleDeleteView(UserPassesTestMixin, DeleteView):
     template_name = "pages/deletemodule.html"
 
     def get_success_url(self):
@@ -168,6 +186,10 @@ class ModuleDeleteView(DeleteView):
         self.object.page.module_deleted(self.object.position)
         self.object.delete()
         return HttpResponseRedirect(success_url)
+
+    def test_func(self):
+        page = self.get_object().page
+        return self.request.user == page.user
 
 
 class GeneralInfoModuleCreateView(ModuleCreateView):
@@ -273,12 +295,16 @@ class MedicationModuleCreateView(ModuleCreateView):
             return self.render_to_response(self.get_context_data(form=form))
 
 
-class MedicationModuleDetailView(DetailView):
+class MedicationModuleDetailView(UserPassesTestMixin, DetailView):
     model = MedicationModule
     template_name = "pages/medicationmoduledetail.html"
 
+    def test_func(self):
+        page = self.get_object().page
+        return self.request.user == page.user
 
-class MedicationModuleUpdateView(UpdateView):
+
+class MedicationModuleUpdateView(UserPassesTestMixin, UpdateView):
     model = MedicationItem
     form_class = MedicationItemForm
     template_name = "pages/createmedicationmodule.html"
@@ -312,14 +338,22 @@ class MedicationModuleUpdateView(UpdateView):
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
+    def test_func(self):
+        page = self.get_object().module.page
+        return self.request.user == page.user
 
-class MedicationItemDeleteView(DeleteView):
+
+class MedicationItemDeleteView(UserPassesTestMixin, DeleteView):
     model = MedicationItem
     template_name = "pages/deletemedicationitem.html"
 
     def get_success_url(self):
         module_id = self.object.module.id
         return reverse("pages:medicationmoduledetail", args=[module_id, ])
+
+    def test_func(self):
+        page = self.get_object().module.page
+        return self.request.user == page.user
 
 
 class MedicationModuleDeleteView(ModuleDeleteView):
@@ -414,7 +448,7 @@ class FreePictureModuleDeleteView(ModuleDeleteView):
     model = FreePictureModule
 
 
-class ModuleSortView(UpdateView):
+class ModuleSortView(UserPassesTestMixin, UpdateView):
     model = Page
     template_name = "pages/sortmodules.html"
     form_class = ModuleSortForm
@@ -437,8 +471,11 @@ class ModuleSortView(UpdateView):
         return HttpResponseRedirect(
             reverse("pages:pagepreview", args=[page_id, ]))
 
+    def test_func(self):
+        return self.request.user == self.get_object().user
 
-class PagePreview(DetailView):
+
+class PagePreview(UserPassesTestMixin, DetailView):
     model = Page
     template_name = "pages/page_preview.html"
 
@@ -446,3 +483,6 @@ class PagePreview(DetailView):
         context = super().get_context_data(**kwargs)
         context['modules'] = self.object.get_all_modules_sorted()
         return context
+
+    def test_func(self):
+        return self.request.user == self.get_object().user

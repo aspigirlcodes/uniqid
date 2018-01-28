@@ -30,7 +30,7 @@
                 <div class="col-12">
                   <div class=" alert alert-danger">
                     {% blocktrans trimmed %}
-                      Your username and password didn't match. Please try again.
+                      Your email and password didn't match. Please try again.
                     {% endblocktrans %}
                   </div>
                 </div>
@@ -45,7 +45,7 @@
                 {{ form.password|add_class:"form-control" }}
               </div>
               <div class="col-12">
-                <p><a href="#">{% trans "Register" %}</a> | <a href="{% url "users:pwreset" %}">{% trans "Forgot password" %}</a></p>
+                <p><a href="{% url "users:register" %}">{% trans "Register" %}</a> | <a href="{% url "users:resetpw" %}">{% trans "Forgot password" %}</a></p>
               </div>
               <div class="col-12 text-right">
                 <input type="submit" value="login" class="btn btn-success" />

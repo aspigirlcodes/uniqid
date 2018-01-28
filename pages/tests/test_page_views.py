@@ -4,12 +4,14 @@ from django.contrib.auth import get_user_model
 
 from ..models import Page, GeneralInfoModule, CommunicationModule, DoDontModule
 
+UserModel = get_user_model()
+
 
 class CreatePageTestCase(TestCase):
 
     def test_create_with_user(self):
-        user = get_user_model().objects.create_user("testuser",
-                                                    password="test")
+        user = UserModel.objects.create_user("testuser",
+                                             password="test")
         self.client.login(username="testuser", password="test")
         url = reverse('pages:createpage')
         response = self.client.post(url,
@@ -25,7 +27,13 @@ class CreatePageTestCase(TestCase):
 
 class SortModulesTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage", module_num=3)
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=3)
         self.module1 = GeneralInfoModule.objects.create(page=self.page,
                                                         name="sara",
                                                         position=1)

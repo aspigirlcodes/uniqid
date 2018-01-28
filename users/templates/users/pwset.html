@@ -60,7 +60,7 @@
         </div>
       {% else %}
         <div class="alert alert-danger">
-          {% url "users:pwreset" as reseturl %}
+          {% url "users:resetpw" as reseturl %}
           {% blocktrans %}
           The link you used was invalid, possibly because it has already been used, or because it has expired.
           Please <a href="{{reseturl}}" class="alert-link">request a new link</a>.

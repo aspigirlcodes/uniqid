@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm, \
-                                      AuthenticationForm
-from django.contrib.auth import get_user_model
+                                      AuthenticationForm, UsernameField
+from django.contrib.auth import get_user_model, login
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.sites.shortcuts import get_current_site
@@ -8,6 +8,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils import six
 from django.core.validators import EmailValidator
 from django.utils.translation import ugettext_lazy as _
+from django.forms.widgets import EmailInput
 
 UserModel = get_user_model()
 
@@ -59,6 +60,7 @@ class RegisterForm(PasswordResetForm):
         else:
             user = UserModel.objects.create_user(username=email,
                                                  email=email)
+            login(request, user)
             created = True
         if not user.profile.email_confirmed:
             if not domain_override:
@@ -96,6 +98,11 @@ class SetPasswordConfirmForm(SetPasswordForm):
 
 
 class EmailAuthenticationForm(AuthenticationForm):
+    username = UsernameField(
+        max_length=254,
+        widget=EmailInput(attrs={'autofocus': True}),
+    )
+
     def __init__(self, request=None, *args, **kwargs):
         super().__init__(request, *args, **kwargs)
         self.fields['username'].validators.append(EmailValidator())
