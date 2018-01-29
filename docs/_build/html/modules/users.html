@@ -1,0 +1,364 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>users package &#8212; uniqid 0.3 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="uniqid package" href="uniqid.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="users-package">
+<h1>users package<a class="headerlink" href="#users-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-users.admin">
+<span id="users-admin-module"></span><h2>users.admin module<a class="headerlink" href="#module-users.admin" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-users.apps">
+<span id="users-apps-module"></span><h2>users.apps module<a class="headerlink" href="#module-users.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="users.apps.UsersConfig">
+<em class="property">class </em><code class="descname">UsersConfig</code><span class="sig-paren">(</span><em>app_name</em>, <em>app_module</em><span class="sig-paren">)</span><a class="headerlink" href="#users.apps.UsersConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="attribute">
+<dt id="users.apps.UsersConfig.name">
+<code class="descname">name</code><em class="property"> = 'users'</em><a class="headerlink" href="#users.apps.UsersConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-users.forms">
+<span id="users-forms-module"></span><h2>users.forms module<a class="headerlink" href="#module-users.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="users.forms.TokenGenerator">
+<em class="property">class </em><code class="descname">TokenGenerator</code><a class="headerlink" href="#users.forms.TokenGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.tokens.PasswordResetTokenGenerator</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="users.forms.RegisterForm">
+<em class="property">class </em><code class="descname">RegisterForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>field_order=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#users.forms.RegisterForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.forms.PasswordResetForm</span></code></p>
+<dl class="method">
+<dt id="users.forms.RegisterForm.get_users">
+<code class="descname">get_users</code><span class="sig-paren">(</span><em>email</em><span class="sig-paren">)</span><a class="headerlink" href="#users.forms.RegisterForm.get_users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an email, return matching user(s) who should receive a reset.</p>
+<p>This allows subclasses to more easily customize the default policies
+that prevent inactive users and users with unusable passwords from
+resetting their password.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="users.forms.RegisterForm.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>domain_override=None</em>, <em>subject_template_name='registration/password_reset_subject.txt'</em>, <em>email_template_name='registration/password_reset_email.html'</em>, <em>use_https=False</em>, <em>token_generator=&lt;users.forms.TokenGenerator object&gt;</em>, <em>from_email=None</em>, <em>request=None</em>, <em>html_email_template_name=None</em>, <em>extra_email_context=None</em><span class="sig-paren">)</span><a class="headerlink" href="#users.forms.RegisterForm.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a one-use only link for resetting password and sends to the
+user.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="users.forms.RegisterForm.base_fields">
+<code class="descname">base_fields</code><em class="property"> = {'email': &lt;django.forms.fields.EmailField object at 0x7f547a7fec88&gt;}</em><a class="headerlink" href="#users.forms.RegisterForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="users.forms.RegisterForm.declared_fields">
+<code class="descname">declared_fields</code><em class="property"> = {'email': &lt;django.forms.fields.EmailField object at 0x7f547a7fec88&gt;}</em><a class="headerlink" href="#users.forms.RegisterForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="users.forms.RegisterForm.media">
+<code class="descname">media</code><a class="headerlink" href="#users.forms.RegisterForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="users.forms.SetPasswordConfirmForm">
+<em class="property">class </em><code class="descname">SetPasswordConfirmForm</code><span class="sig-paren">(</span><em>user</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.forms.SetPasswordConfirmForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.forms.SetPasswordForm</span></code></p>
+<dl class="method">
+<dt id="users.forms.SetPasswordConfirmForm.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>commit=True</em><span class="sig-paren">)</span><a class="headerlink" href="#users.forms.SetPasswordConfirmForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="users.forms.SetPasswordConfirmForm.base_fields">
+<code class="descname">base_fields</code><em class="property"> = {'new_password1': &lt;django.forms.fields.CharField object at 0x7f547a7fef60&gt;, 'new_password2': &lt;django.forms.fields.CharField object at 0x7f547a8030b8&gt;}</em><a class="headerlink" href="#users.forms.SetPasswordConfirmForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="users.forms.SetPasswordConfirmForm.declared_fields">
+<code class="descname">declared_fields</code><em class="property"> = {'new_password1': &lt;django.forms.fields.CharField object at 0x7f547a7fef60&gt;, 'new_password2': &lt;django.forms.fields.CharField object at 0x7f547a8030b8&gt;}</em><a class="headerlink" href="#users.forms.SetPasswordConfirmForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="users.forms.SetPasswordConfirmForm.media">
+<code class="descname">media</code><a class="headerlink" href="#users.forms.SetPasswordConfirmForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="users.forms.EmailAuthenticationForm">
+<em class="property">class </em><code class="descname">EmailAuthenticationForm</code><span class="sig-paren">(</span><em>request=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.forms.EmailAuthenticationForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.forms.AuthenticationForm</span></code></p>
+<dl class="attribute">
+<dt id="users.forms.EmailAuthenticationForm.base_fields">
+<code class="descname">base_fields</code><em class="property"> = {'password': &lt;django.forms.fields.CharField object at 0x7f547a7eeb70&gt;, 'username': &lt;django.contrib.auth.forms.UsernameField object at 0x7f54797f2080&gt;}</em><a class="headerlink" href="#users.forms.EmailAuthenticationForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="users.forms.EmailAuthenticationForm.declared_fields">
+<code class="descname">declared_fields</code><em class="property"> = {'password': &lt;django.forms.fields.CharField object at 0x7f547a7eeb70&gt;, 'username': &lt;django.contrib.auth.forms.UsernameField object at 0x7f54797f2080&gt;}</em><a class="headerlink" href="#users.forms.EmailAuthenticationForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="users.forms.EmailAuthenticationForm.media">
+<code class="descname">media</code><a class="headerlink" href="#users.forms.EmailAuthenticationForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-users.models">
+<span id="users-models-module"></span><h2>users.models module<a class="headerlink" href="#module-users.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="users.models.Profile">
+<em class="property">class </em><code class="descname">Profile</code><span class="sig-paren">(</span><em>id</em>, <em>user</em>, <em>email_confirmed</em><span class="sig-paren">)</span><a class="headerlink" href="#users.models.Profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="attribute">
+<dt id="users.models.Profile.user">
+<code class="descname">user</code><a class="headerlink" href="#users.models.Profile.user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">restaurant.place</span></code> is a <code class="docutils literal"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="users.models.Profile.email_confirmed">
+<code class="descname">email_confirmed</code><a class="headerlink" href="#users.models.Profile.email_confirmed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="users.models.Profile.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#users.models.Profile.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="users.models.Profile.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#users.models.Profile.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="users.models.Profile.id">
+<code class="descname">id</code><a class="headerlink" href="#users.models.Profile.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="users.models.Profile.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#users.models.Profile.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="users.models.Profile.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#users.models.Profile.user_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="users.models.create_user_profile">
+<code class="descname">create_user_profile</code><span class="sig-paren">(</span><em>sender</em>, <em>instance</em>, <em>created</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.models.create_user_profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-users.urls">
+<span id="users-urls-module"></span><h2>users.urls module<a class="headerlink" href="#module-users.urls" title="Permalink to this headline">¶</a></h2>
+<p>users URL Configuration</p>
+<dl class="docutils">
+<dt>The <cite>urlpatterns</cite> list routes URLs to views. For more information please see:</dt>
+<dd><a class="reference external" href="https://docs.djangoproject.com/en/1.11/topics/http/urls/">https://docs.djangoproject.com/en/1.11/topics/http/urls/</a></dd>
+</dl>
+<p>Examples:
+Function views</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Add an import:  from my_app import views</li>
+<li>Add a URL to urlpatterns:  url(r’^$’, views.home, name=’home’)</li>
+</ol>
+</div></blockquote>
+<dl class="docutils">
+<dt>Class-based views</dt>
+<dd><ol class="first last arabic simple">
+<li>Add an import:  from other_app.views import Home</li>
+<li>Add a URL to urlpatterns:  url(r’^$’, Home.as_view(), name=’home’)</li>
+</ol>
+</dd>
+<dt>Including another URLconf</dt>
+<dd><ol class="first last arabic simple">
+<li>Import the include() function: from django.conf.urls import url, include</li>
+<li>Add a URL to urlpatterns:  url(r’^blog/’, include(‘blog.urls’))</li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="module-users.views">
+<span id="users-views-module"></span><h2>users.views module<a class="headerlink" href="#module-users.views" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="users.views.PasswordChangeView">
+<em class="property">class </em><code class="descname">PasswordChangeView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.PasswordChangeView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.mixins.UserPassesTestMixin</span></code>, <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.views.PasswordChangeView</span></code></p>
+<dl class="method">
+<dt id="users.views.PasswordChangeView.test_func">
+<code class="descname">test_func</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#users.views.PasswordChangeView.test_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="users.views.PasswordChangeView.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.PasswordChangeView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="users.views.PasswordResetConfirmView">
+<em class="property">class </em><code class="descname">PasswordResetConfirmView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.PasswordResetConfirmView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.views.PasswordResetConfirmView</span></code></p>
+<dl class="attribute">
+<dt id="users.views.PasswordResetConfirmView.form_class">
+<code class="descname">form_class</code><a class="headerlink" href="#users.views.PasswordResetConfirmView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">SetPasswordConfirmForm</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="users.views.PasswordResetConfirmView.get_context_data">
+<code class="descname">get_context_data</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.PasswordResetConfirmView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="users.views.PasswordResetConfirmView.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.PasswordResetConfirmView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="users.views.RegisterView">
+<em class="property">class </em><code class="descname">RegisterView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.RegisterView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.mixins.UserPassesTestMixin</span></code>, <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.views.PasswordResetView</span></code></p>
+<dl class="attribute">
+<dt id="users.views.RegisterView.form_class">
+<code class="descname">form_class</code><a class="headerlink" href="#users.views.RegisterView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">RegisterForm</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="users.views.RegisterView.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.RegisterView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="users.views.RegisterView.test_func">
+<code class="descname">test_func</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#users.views.RegisterView.test_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-users">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-users" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">&lt;no title&gt;</a><ul>
+      <li>Previous: <a href="uniqid.html" title="previous chapter">uniqid package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Sara Peeters.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/modules/users.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

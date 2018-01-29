@@ -17,11 +17,17 @@ from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
 
 
 class PageCreateAccessMixin(LoginRequiredMixin):
+    """
+    LoginRequired, but instead of redirecting to login, redirect to register.
+    """
     def handle_no_permission(self):
         return HttpResponseRedirect(reverse("users:register"))
 
 
 class PageCreateView(PageCreateAccessMixin, CreateView):
+    """
+    Allow a user to create a page and add a first module.
+    """
     model = Page
     form_class = PageCreateForm
     template_name = "pages/createpage.html"
@@ -36,6 +42,9 @@ class PageCreateView(PageCreateAccessMixin, CreateView):
 
 
 class SelectModuleView(UserPassesTestMixin, UpdateView):
+    """
+    Update page and add new modules.
+    """
     model = Page
     form_class = AddModuleForm
     template_name = "pages/createpage.html"
@@ -59,7 +68,16 @@ class SelectModuleView(UserPassesTestMixin, UpdateView):
 
 
 class ModuleCreateView(UserPassesTestMixin, CreateView):
+    """
+    Baseview for creating a module.
+    Can be subclassed by most modulecreateviews.
+    """
     def get_context_data(self, **kwargs):
+        """
+        Add the page to the context explicitly.
+        Add form_context: create to the context so that we can use
+        one template but still differentiate between create and update cases.
+        """
         context = super().get_context_data(**kwargs)
         self.page = Page.objects.get(id=self.kwargs.get('page_id'))
         context['page'] = self.page
@@ -67,6 +85,12 @@ class ModuleCreateView(UserPassesTestMixin, CreateView):
         return context
 
     def form_valid(self, form):
+        """
+        Set the page foreignkey of the newly created model.
+        Update the number of modules in the page.
+        Give the module the next available position.
+        Make sure to not create a module if the form was left empty.
+        """
         self.page = Page.objects.get(id=self.kwargs.get('page_id'))
         if (not form.is_empty()) or hasattr(self, "formset"):
             self.object = form.save(commit=False)
@@ -79,12 +103,29 @@ class ModuleCreateView(UserPassesTestMixin, CreateView):
         return HttpResponseRedirect(url)
 
     def test_func(self):
+        """
+        Access test: Only the owner of the page can create modules for it.
+        """
         page = Page.objects.get(id=self.kwargs.get('page_id'))
         return self.request.user == page.user
 
 
 class FormsetModuleCreateView(ModuleCreateView):
+    """
+    Baseview for creating a module
+    using a formset for a Foreignkey linked model.
+    Can be subclassed by modulecreateviews needing to use a formset.
+    """
+
     def __init__(self, *args, **kwargs):
+        """
+        Views need to set two attributes:
+        formset_name
+            which is what the form will be called in the
+            template context.
+        formset
+            Formset to be used.
+        """
         if not hasattr(self, "formset_name"):
             raise NotImplementedError("'formset_name' is not defined")
         if not hasattr(self, "formset"):
@@ -92,6 +133,9 @@ class FormsetModuleCreateView(ModuleCreateView):
         super().__init__(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        """
+        adds the formset to the context.
+        """
         context = super().get_context_data(**kwargs)
         if self.request.POST:
             if self.request.FILES:
@@ -104,6 +148,9 @@ class FormsetModuleCreateView(ModuleCreateView):
         return context
 
     def form_valid(self, form):
+        """
+        takes care of saving the formset.
+        """
         context = self.get_context_data()
         formset = context[self.formset_name]
         if formset.is_valid():

@@ -5,6 +5,14 @@ from django.shortcuts import redirect
 
 
 def switch_lang(request, lang):
+    """
+    Sets the language and redirects.
+
+    This view gets the requested language from a url parameter.
+    And the page to redirect to after setting the language
+    from the urls get parameters.
+    The language sessions key is stored in the requests session.
+    """
     redirect_to = request.GET.get("redirect_to", "/")
     if redirect_to == "" or not redirect_to.startswith('/'):
         redirect_to = "/"
