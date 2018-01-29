@@ -6,6 +6,18 @@
 {% block content %}
 <section id="create-form" class="pb-5">
   <div class="container">
+    {% for message in messages %}
+      <div class="alert {% if 'error' in message.tags %}alert-danger
+                        {% elif 'success' in message.tags %}alert-success
+                        {% elif 'warning' in message.tags %}alert-warning
+                        {% else %}alert-info{% endif %} my-3" role="alert">
+        {% if 'safe' in message.tags %}
+          {{ message|safe }}
+        {% else %}
+          {{ message }}
+        {% endif %}
+      </div>
+    {% endfor %}
     <form action="" method="post">
       {% csrf_token %}
       <div class="row mt-4">

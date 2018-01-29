@@ -1,3 +1,8 @@
+html, body{
+  height:100%;
+}
+
+
 #banner {
   background: linear-gradient( to right, rgba(62,68,74,0.9) , rgba(52,58,64,0.6)), url('../img/banner.jpg') 0% 0%/cover
 }
@@ -42,4 +47,13 @@ label .form-text{
 
 .invalid-feedback{
   display: block;
+}
+
+.list-unstyled-wrapper > ul{
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-nomargin-wrapper > ul{
+  margin-bottom: 0;
 }

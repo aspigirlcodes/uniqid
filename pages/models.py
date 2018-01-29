@@ -1,17 +1,34 @@
 from itertools import chain
 from operator import attrgetter
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import ArrayField
+from django.conf import settings
+
 from .fields import ChoiceArrayField
 
 
 class Page(models.Model):
+    """
+    A Page is a collection of Modules
+
+    A Page has a title and is linked to the user who created it
+    through the user field. It can contain any number of any type of modules.
+    """
     title = models.CharField(verbose_name=_("Page Title"), max_length=255,
                              default="", blank=True)
     module_num = models.PositiveIntegerField(default=0, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             verbose_name=_("User"),
+                             on_delete=models.CASCADE,
+                             blank=True, null=True)
 
     def get_all_modules(self, **kwargs):
+        """
+        Returns a list of querysets, one per :class:`Module` type.
+        Kwargs will be passed to the filter method used to get the querysets.
+        """
         return [
             self.generalinfomodule_set.filter(**kwargs),
             self.communicationmodule_set.filter(**kwargs),
@@ -25,6 +42,9 @@ class Page(models.Model):
         ]
 
     def get_all_modules_sorted(self):
+        """
+        Returns a list of modules sorted by their position field.
+        """
         modules = self.get_all_modules()
         return sorted(
             chain(*modules),
@@ -32,11 +52,11 @@ class Page(models.Model):
 
     def module_deleted(self, position):
         """
-            Handle cleanup when a module is deleted.
+        Handles cleanup when a :class:`Module` is deleted.
 
-            Count down the pages module number.
-            Count down the position of all the modules
-            comming after this module.
+        Counts down the pages module number.
+        Counts down the position of all the modules
+        comming after this module.
         """
         modules = self.get_all_modules(position__gt=position)
         for module_q in modules:
@@ -52,6 +72,10 @@ class Page(models.Model):
 
 
 class Module(models.Model):
+    """
+    Abstract baseclass modules can inherit from. It has a `ForeignKey`
+    relationship to :class:`Page` and a position field.
+    """
     class Meta:
         abstract = True
         ordering = ['page', 'position']
@@ -62,14 +86,17 @@ class Module(models.Model):
 
     @property
     def type(self):
+        """Returns the class name of an object in its original case."""
         return self.__class__.__name__
 
     @property
     def delete_url_name(self):
+        """the url name including its namespace of this models delete page."""
         return "pages:delete{}".format(self.type.lower())
 
     @property
     def edit_url_name(self):
+        """the url name including its namespace of this models update page."""
         return "pages:update{}".format(self.type.lower())
 
 
@@ -554,8 +581,8 @@ class FreePictureModule(Module):
         verbose_name = _("Free picture module")
 
     help_text = _("Upload your own pictures and add a title and a description "
-                  "to them. Sometimes adding an illustration, cartoon or photo "
-                  "helps to bring your message accross.")
+                  "to them. Sometimes adding an illustration, cartoon or "
+                  "photo helps to bring your message accross.")
 
     template = "pages/_freepicture.html"
 

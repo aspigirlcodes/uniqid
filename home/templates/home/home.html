@@ -5,6 +5,21 @@
 {% block content %}
 <section id="banner">
   <div class="container">
+    <div class="row">
+      {% for message in messages %}
+        <div class="alert {% if 'error' in message.tags %}alert-danger
+                          {% elif 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% else %}alert-info{% endif %}
+                          col-12 my-3" role="alert">
+          {% if 'safe' in message.tags %}
+            {{ message|safe }}
+          {% else %}
+            {{ message }}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
     <div class="row fill-60-viewport align-items-center">
       <div class="col-12 col-md-4">
         <h1 class="text-white">{% trans "Personalised Autism Infographics" %}</h1>

@@ -1,0 +1,32 @@
+{% extends "pages/base.html" %}
+{% load i18n %}
+{% block navbar %}
+{% endblock %}
+{% block content %}
+<div class="container-fluid h-100 bg-dark">
+  <div class="row align-items-center justify-content-center h-100">
+    <div class="col-11 col-md-6 col-lg-4">
+      <div class="card">
+        <div class="card-header">
+          <h1> {% trans "Email sent" %} </h1>
+        </div>
+        <div class="card-body">
+          <div class="row">
+              <div class="col-12">
+                <p>
+                  {% blocktrans trimmed %}
+                    We've sent you an email with details on how to reset your password.
+                    Please check your mailbox.
+                  {% endblocktrans %}
+                </p>
+              </div>
+            <div class="col-12 text-right">
+              <p><a href="{% url "home:home" %}">{% trans "Home" %}</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

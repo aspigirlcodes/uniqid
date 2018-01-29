@@ -1,0 +1,137 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Home app &#8212; uniqid 0.3 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pages app" href="pages.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="modules.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="home-app">
+<h1>Home app<a class="headerlink" href="#home-app" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The home app contains mainly static pages.
+At the moment it does not define its own models.
+The only view that is not a basic template view is the language switcher.</p>
+</div>
+<div class="section" id="module-home.urls">
+<span id="home-urls-module"></span><h2>home.urls module<a class="headerlink" href="#module-home.urls" title="Permalink to this headline">¶</a></h2>
+<p>Home app URL Configuration</p>
+<dl class="docutils">
+<dt>i18n/set-lang/&lt;lang&gt;</dt>
+<dd>Changes the language and redirects back
+to the current view. Supported languages are English and German.</dd>
+<dt>how/</dt>
+<dd>Directs to a static page with an in depth explanation of how to use
+the app. (currently empty)</dd>
+<dt>why/</dt>
+<dd>Directs to a static page with reasons why the app could be usefull.
+(currently empty)</dd>
+<dt>faq/</dt>
+<dd>Static page with frequently asked questions. (currently empty)</dd>
+<dt>about/</dt>
+<dd>Information about the project. (currently empty)</dd>
+<dt>examples/</dt>
+<dd>Some examples of what finished pages could look like.</dd>
+</dl>
+<dl class="docutils">
+<dt>/</dt>
+<dd>The homepage.</dd>
+</dl>
+</div>
+<div class="section" id="module-home.views">
+<span id="home-views-module"></span><h2>home.views module<a class="headerlink" href="#module-home.views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="home.views.switch_lang">
+<code class="descname">switch_lang</code><span class="sig-paren">(</span><em>request</em>, <em>lang</em><span class="sig-paren">)</span><a class="headerlink" href="#home.views.switch_lang" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the language and redirects.</p>
+<p>This view gets the requested language from a url parameter.
+And the page to redirect to after setting the language
+from the urls get parameters.
+The language sessions key is stored in the requests session.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">&lt;no title&gt;</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="pages.html" title="next chapter">Pages app</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Sara Peeters.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/modules/home.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

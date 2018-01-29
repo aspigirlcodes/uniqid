@@ -1,0 +1,73 @@
+{% extends "pages/base.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block navbar %}
+{% endblock %}
+{% block content %}
+<div class="container-fluid h-100 bg-dark">
+  <div class="row align-items-center justify-content-center h-100">
+    <div class="col-11 col-md-6 col-lg-4">
+      <div class="card">
+        <div class="card-header">
+          <h1> {% trans "Change password" context "title" %} </h1>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            <div class="row">
+              <div class="col-12">
+                <div id="new_password1-help" class=" alert alert-info list-nomargin-wrapper">
+                  {{ form.new_password1.help_text|safe }}
+                </div>
+              </div>
+              {% csrf_token %}
+              <div class="form-group col-12">
+                {{ form.old_password.label_tag }}
+                {% if form.old_password.errors %}
+                  {{ form.old_password|add_class:"form-control is-invalid" }}
+                  <div class="invalid-feedback">
+                    <ul class="list-unstyled">
+                      {% for error in form.old_password.errors %}
+                      <li><strong>{{ error|escape }}</strong></li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% else %}
+                  {{ form.old_password|add_class:"form-control" }}
+                {% endif %}
+              </div>
+              <div class="form-group col-12">
+                {{ form.new_password1.label_tag }}
+                {% if form.new_password2.errors %}
+                  {{ form.new_password1|attr:"aria-describedby:new_password1-help"|add_class:"form-control is-invalid" }}
+                {% else %}
+                  {{ form.new_password1|attr:"aria-describedby:new_password1-help"|add_class:"form-control" }}
+                {% endif %}
+              </div>
+              <div class="form-group col-12">
+                {{ form.new_password2.label_tag }}
+                {% if form.new_password2.errors %}
+                  {{ form.new_password2|add_class:"form-control is-invalid" }}
+                  <div class="invalid-feedback">
+                    <ul class="list-unstyled">
+                      {% for error in form.new_password2.errors %}
+                      <li><strong>{{ error|escape }}</strong></li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% else %}
+                  {{ form.new_password2|add_class:"form-control" }}
+                {% endif %}
+              </div>
+              <div class="col-12 text-right">
+                <button type="submit" class="btn btn-success">
+                  {% trans "Change password" context "button" %}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
