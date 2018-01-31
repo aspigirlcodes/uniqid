@@ -90,3 +90,27 @@ class SortModulesTestCase(TestCase):
         self.assertEqual(self.module1.position, 1)
         self.assertEqual(self.module2.position, 2)
         self.assertEqual(self.module3.position, 3)
+
+
+class PageListViewTestCase(TestCase):
+    def setUp(self):
+        self.user = UserModel.objects.create_user("test@test.tt",
+                                                  email="test@test.tt",
+                                                  password="test")
+        otheruser = UserModel.objects.create_user("otheruser@test.tt",
+                                                  email="otheruser@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page1 = Page.objects.create(title="testpage",
+                                         user=self.user)
+        self.page2 = Page.objects.create(title="testpage2",
+                                         user=self.user, is_active=False)
+        self.page3 = Page.objects.create(title="testpage3",
+                                         user=otheruser)
+
+    def test_get_queryset(self):
+        url = reverse("pages:pagelist")
+        response = self.client.get(url)
+        self.assertContains(response, self.page1)
+        self.assertNotContains(response, self.page2)
+        self.assertNotContains(response, self.page3)

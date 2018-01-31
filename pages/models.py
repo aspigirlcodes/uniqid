@@ -3,10 +3,21 @@ from operator import attrgetter
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.contrib.postgres.fields import ArrayField
 from django.conf import settings
+from django.utils import six
+from django.utils.crypto import constant_time_compare, salted_hmac
 
 from .fields import ChoiceArrayField
+
+
+class PageManager(models.Manager):
+    """Custom filter methods related to the Page model."""
+
+    def active(self):
+        """Return only active pages."""
+        return self.filter(is_active=True)
 
 
 class Page(models.Model):
@@ -16,6 +27,9 @@ class Page(models.Model):
     A Page has a title and is linked to the user who created it
     through the user field. It can contain any number of any type of modules.
     """
+
+    objects = PageManager()
+
     title = models.CharField(verbose_name=_("Page Title"), max_length=255,
                              default="", blank=True)
     module_num = models.PositiveIntegerField(default=0, blank=True)
@@ -23,6 +37,22 @@ class Page(models.Model):
                              verbose_name=_("User"),
                              on_delete=models.CASCADE,
                              blank=True, null=True)
+    created_at = models.DateTimeField(verbose_name=_("Created at"),
+                                      default=timezone.now,
+                                      blank=True)
+    is_active = models.BooleanField(verbose_name=_("Is active"),
+                                    default=True,
+                                    blank=True)
+    is_visible = models.BooleanField(verbose_name=_("Is active"),
+                                     default=False,
+                                     blank=True)
+    token = models.CharField(verbose_name=_("Token"), blank=True, default="",
+                             max_length=64)
+    token_ts = models.DateTimeField(verbose_name=_("Token created at"),
+                                    null=True,
+                                    blank=True)
+    token_count = models.PositiveIntegerField(verbose_name=_("Token Count"),
+                                              default=0, blank=True)
 
     def get_all_modules(self, **kwargs):
         """
@@ -66,6 +96,46 @@ class Page(models.Model):
                 module.save()
         self.module_num = self.module_num - 1
         self.save()
+
+    token_key_salt = "uniqid.pages.models.PageTokenGenerator"
+
+    def make_token(self):
+        """
+        Returns a token that can be used to view the page until
+        a new token is generated.
+        """
+        self.token_count = self.token_count + 1
+        self.token_ts = timezone.now()
+        self.token = self._make_token_with_timestamp()
+        self.save()
+        return self.token
+
+    def check_token(self, token):
+        """
+        Check that the token allows access to this page.
+        """
+        if not (self.token and token):
+            return False
+        if not self.is_visible:
+            return False
+        if not constant_time_compare(self.token, token):
+            return False
+        return True
+
+    def _make_token_with_timestamp(self):
+
+        hash = salted_hmac(
+            self.token_key_salt,
+            self._make_hash_value(),
+        ).hexdigest()[::2]
+        return hash
+
+    def _make_hash_value(self):
+        # Ensure results are consistent across DB backends
+        return (
+            six.text_type(self.pk) + six.text_type(self.token_count) +
+            six.text_type(self.token_ts)
+        )
 
     def __str__(self):
         return self.title

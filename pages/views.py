@@ -1,8 +1,14 @@
-from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import CreateView, DetailView, UpdateView, \
+                                 DeleteView, ListView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import UserPassesTestMixin, \
                                        LoginRequiredMixin
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
+from django.http import Http404
+from django.utils.translation import ugettext_lazy as _
+
 from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
                     CommunicationModule, FreePictureModule, \
                     DoDontModule, MedicationModule, MedicationItem, \
@@ -533,3 +539,66 @@ class PagePreview(UserPassesTestMixin, DetailView):
 
     def test_func(self):
         return self.request.user == self.get_object().user
+
+
+class PageListView(LoginRequiredMixin, ListView):
+    model = Page
+    template_name = "pages/page_list.html"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user,
+                                             is_active=True)
+
+
+class PageVisibilityView(UserPassesTestMixin, UpdateView):
+    model = Page
+    http_method_names = ['post']
+    fields = []
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.is_visible:
+            self.object.is_visible = False
+        else:
+            self.object.is_visible = True
+            # Todo: create token if no token exists
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("pages:pagelist")
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
+
+
+class PageTokenGenerationView(UserPassesTestMixin, UpdateView):
+    model = Page
+    http_method_names = ['post']
+    fields = []
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.make_token()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("pages:pagelist")
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
+
+
+class ViewPageTokenView(DetailView):
+    model = Page
+    template_name = "pages/page_view.html"
+
+    def get_object(self, queryset=None):
+        uidb64 = self.kwargs.get("uidb64")
+        token = self.kwargs.get("token")
+        page_id = force_text(urlsafe_base64_decode(uidb64))
+        page = Page.objects.active().get(pk=page_id)
+        if page.check_token(token):
+            return page
+        else:
+            raise Http404(_("No Page found matching the query"))
