@@ -551,9 +551,8 @@ class ModuleSortView(UserPassesTestMixin, UpdateView):
                                 module.position, new_position)
                     module.position = new_position
                     module.save()
-        page_id = self.object.id
         return HttpResponseRedirect(
-            reverse("pages:pagepreview", args=[page_id, ]))
+            reverse("pages:pagelistview"))
 
     def test_func(self):
         return self.request.user == self.get_object().user
