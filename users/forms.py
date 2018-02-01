@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm, \
                                       AuthenticationForm, UsernameField
 from django.contrib.auth import get_user_model, login
@@ -9,6 +10,10 @@ from django.utils import six
 from django.core.validators import EmailValidator
 from django.utils.translation import ugettext_lazy as _
 from django.forms.widgets import EmailInput
+
+
+logger = logging.getLogger('users')
+
 
 UserModel = get_user_model()
 
@@ -62,7 +67,10 @@ class RegisterForm(PasswordResetForm):
                                                  email=email)
             login(request, user)
             created = True
+            logger.info("new user created: %s", user.username)
         if not user.profile.email_confirmed:
+            logger.info("sending email with registration link to user: %s",
+                        user.username)
             if not domain_override:
                 current_site = get_current_site(request)
                 site_name = current_site.name
@@ -91,7 +99,10 @@ class RegisterForm(PasswordResetForm):
 class SetPasswordConfirmForm(SetPasswordForm):
     def save(self, commit=True):
         user = super().save(commit)
+        logger.info("password reset done for user: %s", user.username)
         if not user.profile.email_confirmed:
+            logger.info("switching user %s to email confirmed",
+                        user.username)
             user.profile.email_confirmed = True
             user.profile.save()
         return user

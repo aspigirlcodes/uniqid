@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth import views as auth_views
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -7,16 +8,21 @@ from django.http import HttpResponseRedirect
 from .forms import RegisterForm, SetPasswordConfirmForm
 
 
+logger = logging.getLogger('users')
+
+
 class PasswordChangeView(UserPassesTestMixin, auth_views.PasswordChangeView):
+    def form_valid(self, form):
+        logger.info("user %s successfully changed password",
+                    self.request.user.username)
+        messages.success(self.request,
+                         _("Your password was changed successfully."))
+        return super().form_valid(form)
+
     def test_func(self):
         if self.request.user.is_authenticated():
             return self.request.user.profile.email_confirmed
         return False
-
-    def form_valid(self, form):
-        messages.success(self.request,
-                         _("Your password was changed successfully."))
-        return super().form_valid(form)
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
@@ -30,10 +36,14 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
 
     def form_valid(self, form):
         if self.user.profile.email_confirmed:
+            logger.info("successfull passwordreset for user %s",
+                        self.user.username)
             messages.success(self.request,
                              _("Your password was changed successfully. "
                                "Please log in with your new password."))
         else:
+            logger.info("user %s successfully finished registration by "
+                        "setting their password", self.user.username)
             messages.success(self.request,
                              _("Thanks for registering. "
                                "You can now log in with your new password."))

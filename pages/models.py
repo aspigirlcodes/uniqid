@@ -1,3 +1,4 @@
+import logging
 from itertools import chain
 from operator import attrgetter
 
@@ -10,6 +11,9 @@ from django.utils import six
 from django.utils.crypto import constant_time_compare, salted_hmac
 
 from .fields import ChoiceArrayField
+
+
+logger = logging.getLogger('pages')
 
 
 class PageManager(models.Manager):
@@ -94,7 +98,11 @@ class Page(models.Model):
             for module in module_q:
                 module.position = module.position - 1
                 module.save()
+                logger.info("decreased module position of module %s (%s)"
+                            "of page %s", module.type, module.id, self.id)
         self.module_num = self.module_num - 1
+        logger.info("decreased number of modules for page %s  by one to %s",
+                    self.id, self.module_num)
         self.save()
 
     token_key_salt = "uniqid.pages.models.PageTokenGenerator"
@@ -115,10 +123,16 @@ class Page(models.Model):
         Check that the token allows access to this page.
         """
         if not (self.token and token):
+            logger.info("token (%s) or page.token(%s: %s) does not exist.",
+                        token, self.id, self.token)
             return False
         if not self.is_visible:
+            logger.info("trying to access page token view of private page %s",
+                        self.id)
             return False
         if not constant_time_compare(self.token, token):
+            logger.info("token (%s) does not equal page.token (%s)",
+                        token, self.token)
             return False
         return True
 
