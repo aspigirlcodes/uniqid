@@ -1,8 +1,15 @@
-from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+import logging
+from django.views.generic import CreateView, DetailView, UpdateView, \
+                                 DeleteView, ListView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import UserPassesTestMixin, \
                                        LoginRequiredMixin
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
+from django.http import Http404
+from django.utils.translation import ugettext_lazy as _
+
 from .models import Page, GeneralInfoModule, FreeTextModule, FreeListModule,\
                     CommunicationModule, FreePictureModule, \
                     DoDontModule, MedicationModule, MedicationItem, \
@@ -14,6 +21,9 @@ from .forms import PageCreateForm, GeneralInfoModuleForm, AddModuleForm,\
                    ContactFormSet, CommunicationMethodsFormset, \
                    MedicationItemForm, ContactModuleForm, \
                    FreePictureModuleForm, ModuleSortForm
+
+
+logger = logging.getLogger('pages')
 
 
 class PageCreateAccessMixin(LoginRequiredMixin):
@@ -36,6 +46,7 @@ class PageCreateView(PageCreateAccessMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
+        logger.info("user %s created a page", self.request.user.username)
         url_name = "pages:create" + form.cleaned_data['module']
         url = reverse(url_name, args=[self.object.id, ])
         return HttpResponseRedirect(url)
@@ -57,8 +68,13 @@ class SelectModuleView(UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save()
         if "submit_next" in self.request.POST:
+            logger.info("redirecting user %s to sort %s modules of page %s",
+                        self.request.user.username,
+                        self.object.module_num, self.object.id)
             url = reverse("pages:sortmodules", args=[self.object.id, ])
         else:
+            logger.info("redirecting user %s to add another module to page %s",
+                        self.request.user.username, self.object.id)
             url_name = "pages:create" + form.cleaned_data['module']
             url = reverse(url_name, args=[self.object.id, ])
         return HttpResponseRedirect(url)
@@ -99,6 +115,13 @@ class ModuleCreateView(UserPassesTestMixin, CreateView):
             self.object.save()
             self.page.module_num += 1
             self.page.save()
+            logger.info("user %s created %s module for page %s",
+                        self.request.user.username,
+                        self.object.type, self.object.page.id)
+        else:
+            logger.info("empty %s module for page %s by user %s not added",
+                        self.object.type, self.object.page.id,
+                        self.request.user.username,)
         url = reverse("pages:addmodule", args=[self.page.id, ])
         return HttpResponseRedirect(url)
 
@@ -159,6 +182,9 @@ class FormsetModuleCreateView(ModuleCreateView):
             formset.instance = self.object
             if (not formset.save()) and form.is_empty():
                 self.object.delete()
+                logger.info("empty %s module for page %s by user %s not added",
+                            self.object.type, self.object.page.id,
+                            self.request.user.username,)
             return redirect_url
         else:
             return self.render_to_response(self.get_context_data(form=form))
@@ -229,6 +255,10 @@ class ModuleDeleteView(UserPassesTestMixin, DeleteView):
         redirects to the success URL.
         """
         self.object = self.get_object()
+        logger.info("user %s deleted object %s from page %s",
+                    self.request.user.username,
+                    self.object.type, self.object.page.id,
+                    )
         success_url = self.get_success_url()
         self.object.page.module_deleted(self.object.position)
         self.object.delete()
@@ -326,6 +356,9 @@ class MedicationModuleCreateView(ModuleCreateView):
             self.object.save()
             # save intakes
             formset.instance = self.object
+            logger.info("user %s added item to medicationmodule for page %s",
+                        self.request.user.username,
+                        self.object.module.page.id)
             if (not formset.save()) and form.is_empty():
                 self.object.delete()
                 if "submit_add_more" not in self.request.POST and \
@@ -512,11 +545,14 @@ class ModuleSortView(UserPassesTestMixin, UpdateView):
                 new_position = form.cleaned_data.get(
                     "position_{}".format(index + 1))
                 if new_position is not module.position:
+                    logger.info("Changing position of module %s (%s) "
+                                "in page %s from %s to %s",
+                                module.type, module.id, self.object.id,
+                                module.position, new_position)
                     module.position = new_position
                     module.save()
-        page_id = self.object.id
         return HttpResponseRedirect(
-            reverse("pages:pagepreview", args=[page_id, ]))
+            reverse("pages:pagelistview"))
 
     def test_func(self):
         return self.request.user == self.get_object().user
@@ -533,3 +569,75 @@ class PagePreview(UserPassesTestMixin, DetailView):
 
     def test_func(self):
         return self.request.user == self.get_object().user
+
+
+class PageListView(LoginRequiredMixin, ListView):
+    model = Page
+    template_name = "pages/page_list.html"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user,
+                                             is_active=True)
+
+
+class PageVisibilityView(UserPassesTestMixin, UpdateView):
+    model = Page
+    http_method_names = ['post']
+    fields = []
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.is_visible:
+            self.object.is_visible = False
+            logger.info("user %s changed page %s visibility to private",
+                        self.request.user.username, self.object.id)
+        else:
+            self.object.is_visible = True
+            logger.info("user %s changed page %s visibility to visible",
+                        self.request.user.username, self.object.id)
+            # Todo: create token if no token exists
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("pages:pagelist")
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
+
+
+class PageTokenGenerationView(UserPassesTestMixin, UpdateView):
+    model = Page
+    http_method_names = ['post']
+    fields = []
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        token = self.object.make_token()
+        logger.info("user %s generated token %s for page %s ",
+                    self.request.user.username,
+                    token, self.object.id)
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("pages:pagelist")
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
+
+
+class ViewPageTokenView(DetailView):
+    model = Page
+    template_name = "pages/page_view.html"
+
+    def get_object(self, queryset=None):
+        uidb64 = self.kwargs.get("uidb64")
+        token = self.kwargs.get("token")
+        page_id = force_text(urlsafe_base64_decode(uidb64))
+        page = Page.objects.active().get(pk=page_id)
+        if page.check_token(token):
+            logger.info("Valid token link used for page %s", page_id)
+            return page
+        else:
+            logger.info("Invalid token link used for page %s", page_id)
+            raise Http404(_("No Page found matching the query"))

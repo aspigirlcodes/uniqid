@@ -1,3 +1,4 @@
+import logging
 from django.forms import ModelForm, ChoiceField, CharField, ValidationError, \
                          IntegerField
 from django.forms.models import inlineformset_factory
@@ -9,6 +10,9 @@ from .models import MODULES, MODULE_HELP, Page, GeneralInfoModule, \
                     FreePictureModule, ModulePicture, DoDontModule, \
                     MedicationItem, MedicationIntake, SensoryModule
 from .fields import ItemTextWidget, DynamicSplitArrayField, RadioWithHelpSelect
+
+
+logger = logging.getLogger('pages')
 
 
 PictureFormSet = inlineformset_factory(FreePictureModule, ModulePicture,
@@ -223,6 +227,8 @@ class ModuleSortForm(ModelForm):
         if len(cleaned_data) == self.page.module_num and \
                 not set(cleaned_data.values()) == \
                 set(range(1, self.page.module_num + 1)):
+            logger.info("sort page %s submitted with wrong positions:%s",
+                        self.page.id, cleaned_data.values().join(", "))
             raise(ValidationError(_("You can use each position only once."),
                                   code="double_value"))
         return cleaned_data

@@ -39,8 +39,8 @@ urlpatterns = [
     url(r'^emailsent/$',
         auth_views.LoginView.as_view(template_name='users/emailsent.html'),
         name="emailsent"),
-    url(r'^setpassword/(?P<uidb64>[0-9A-Za-z_\-]+)/"\
-        "(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    url(r'^setpassword/(?P<uidb64>[0-9A-Za-z_\-]+)/'
+        '(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         PasswordResetConfirmView.as_view(
             template_name="users/pwset.html",
             token_generator=default_token_generator,

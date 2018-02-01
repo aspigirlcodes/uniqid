@@ -1,6 +1,9 @@
 from django import template
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import pgettext_lazy
+from django.core.urlresolvers import reverse
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
 from ..models import SensoryModule
 
@@ -66,3 +69,11 @@ def sensitivity_img(value, sense):
 def get_position_field(form, position):
     return_val = form.visible_fields()[position - 1]
     return return_val
+
+
+@register.filter
+def tokenurl(request, page):
+    uid = urlsafe_base64_encode(force_bytes(page.pk))
+    return request.build_absolute_uri(reverse("pages:viewpage",
+                                              args=[uid,
+                                                    page.token]))
