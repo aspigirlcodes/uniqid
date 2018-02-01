@@ -1,16 +1,25 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.core.files.images import ImageFile
+from django.contrib.auth import get_user_model
 from ..models import Page, GeneralInfoModule, CommunicationModule, \
                      CommunicationMethods, MedicationItem, MedicationIntake, \
                      ModuleContact, FreeTextModule, FreeListModule, \
                      ModulePicture, DoDontModule, MedicationModule, \
                      ContactModule, FreePictureModule
 
+UserModel = get_user_model()
+
 
 class EditGeneralinfoModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage", module_num=1)
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=1)
         self.module = GeneralInfoModule.objects.create(page=self.page,
                                                        name="sara",
                                                        position=1)
@@ -41,7 +50,13 @@ class EditGeneralinfoModuleTestCase(TestCase):
 
 class EditCommunicationModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage", module_num=1)
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=1)
         self.module = CommunicationModule.objects.create(
             page=self.page, suggestions_free=["help me"], position=1)
 
@@ -83,7 +98,13 @@ class EditCommunicationModuleTestCase(TestCase):
 
 class EditDoDontModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage", module_num=1)
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=1)
         self.module = DoDontModule.objects.create(
             page=self.page, do_choices=[DoDontModule.DO_QUIET], position=1)
 
@@ -116,7 +137,13 @@ class EditDoDontModuleTestCase(TestCase):
 
 class EditMedicationModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage", module_num=1)
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=1)
         self.module = MedicationModule.objects.create(page=self.page,
                                                       position=1)
         self.item = MedicationItem.objects.create(module=self.module,
@@ -181,7 +208,13 @@ class EditMedicationModuleTestCase(TestCase):
 
 class EditContactModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage", module_num=1)
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=1)
         self.module = ContactModule.objects.create(page=self.page,
                                                    position=1)
         self.contact = ModuleContact.objects.create(module=self.module,
@@ -237,7 +270,13 @@ class EditContactModuleTestCase(TestCase):
 
 class EditFreeTextModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage", module_num=1)
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=1)
         self.module = FreeTextModule.objects.create(page=self.page,
                                                     position=1,
                                                     title="blabla")
@@ -271,7 +310,13 @@ class EditFreeTextModuleTestCase(TestCase):
 
 class EditFreeListModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage", module_num=1)
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=1)
         self.module = FreeListModule.objects.create(page=self.page,
                                                     position=1,
                                                     title="bla")
@@ -307,7 +352,13 @@ class EditFreeListModuleTestCase(TestCase):
 
 class CreateFreePictureModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage", module_num=1)
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=1)
         self.module = FreePictureModule.objects.create(page=self.page,
                                                        position=1,
                                                        title="bla")
@@ -354,7 +405,13 @@ class CreateFreePictureModuleTestCase(TestCase):
 
 class PositionupdateTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage", module_num=2)
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=2)
         self.module1 = FreePictureModule.objects.create(page=self.page,
                                                         position=1,
                                                         title="bla")

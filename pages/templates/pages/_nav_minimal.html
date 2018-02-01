@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url "home:home" %}">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      {% get_current_language as LANGUAGE_CODE %}
+      {% get_language_info for LANGUAGE_CODE as current_language %}
+      {% get_available_languages as LANGUAGES %}
+      {% get_language_info_list for LANGUAGES as languages %}
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ current_language.name_local}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          {% for language in languages %}
+            {% if language.code != LANGUAGE_CODE %}
+              <a class="dropdown-item" href="{% url 'home:switch_lang' language.code %}?redirect_to={{ request.path }}">{{ language.name_local}}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </ul>
+  </div>
+</nav>

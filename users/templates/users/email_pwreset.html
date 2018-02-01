@@ -1,0 +1,8 @@
+{% load i18n %}
+
+{% blocktrans %}
+Hi,
+Someone asked for password reset for email {{ email }}.
+Follow the link below to set a new password:
+{% endblocktrans %}
+{{ protocol}}://{{ domain }}{% url "users:setpw" uidb64=uid token=token %}

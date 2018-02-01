@@ -14,64 +14,85 @@
   <link rel="stylesheet" href="{% static "css/main.css" %}">
 </head>
 <body>
-  {% with url_name=request.resolver_match.url_name %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="{% url "home:home" %}">PAI</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  {% block navbar %}
+    {% with url_name=request.resolver_match.url_name %}
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url "home:home" %}">PAI</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item {% if url_name == 'home' %}active{% endif %}">
-            <a class="nav-link px-3" href="{% url "home:home" %}">{% trans "Home" context "Homepage" %}
-              {% if url_name == 'home' %}<span class="sr-only">(current)</span>{% endif %}</a>
-          </li>
-          <li class="nav-item {% if url_name == 'createpage' %}active{% endif %}">
-            <a class="nav-link px-3 btn btn-outline-success" href="{% url "pages:createpage" %}">{%trans "Create one!" context "action button" %}
-            {% if url_name == 'createpage' %}<span class="sr-only">(current)</span>{% endif %}</a>
-          </li>
-          <li class="nav-item {% if url_name == 'how' %}active{% endif %}">
-            <a class="nav-link px-3" href="{% url "home:how" %}">{% trans "How it works" context "menu item" %}
-            {% if url_name == 'how' %}<span class="sr-only">(current)</span>{% endif %}</a>
-          </li>
-          <li class="nav-item {% if url_name == 'examples' %}active{% endif %}">
-            <a class="nav-link px-3" href="{% url "home:examples" %}">{% trans "Examples" context "menu item" %}
-            {% if url_name == 'examples' %}<span class="sr-only">(current)</span>{% endif %}</a>
-          </li>
-          <li class="nav-item {% if url_name == 'faq' %}active{% endif %}">
-            <a class="nav-link px-3" href="{% url "home:faq" %}">{% trans "FAQ" context "menu item" %}
-            {% if url_name == 'faq' %}<span class="sr-only">(current)</span>{% endif %}</a>
-          </li>
-          <li class="nav-item {% if url_name == 'about' %}active{% endif %}">
-            <a class="nav-link px-3" href="{% url "home:about" %}">{% trans "About" context "menu item" %}
-            {% if url_name == 'about' %}<span class="sr-only">(current)</span>{% endif %}</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link px-3 disabled" href="#">{% trans "Log in" context "menu item" %}</a>
-          </li>
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_language_info for LANGUAGE_CODE as current_language %}
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as languages %}
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ current_language.name_local}}
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {% for language in languages %}
-                  {% if language.code != LANGUAGE_CODE %}
-                    <a class="dropdown-item" href="{% url 'home:switch_lang' language.code %}?redirect_to={{ request.path }}">{{ language.name_local}}</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if url_name == 'home' %}active{% endif %}">
+              <a class="nav-link px-3" href="{% url "home:home" %}">{% trans "Home" context "Homepage" %}
+                {% if url_name == 'home' %}<span class="sr-only">(current)</span>{% endif %}</a>
+            </li>
+            <li class="nav-item {% if url_name == 'createpage' %}active{% endif %}">
+              <a class="nav-link px-3 btn btn-outline-success" href="{% url "pages:createpage" %}">{%trans "Create one!" context "action button" %}
+              {% if url_name == 'createpage' %}<span class="sr-only">(current)</span>{% endif %}</a>
+            </li>
+            <li class="nav-item {% if url_name == 'how' %}active{% endif %}">
+              <a class="nav-link px-3" href="{% url "home:how" %}">{% trans "How it works" context "menu item" %}
+              {% if url_name == 'how' %}<span class="sr-only">(current)</span>{% endif %}</a>
+            </li>
+            <li class="nav-item {% if url_name == 'examples' %}active{% endif %}">
+              <a class="nav-link px-3" href="{% url "home:examples" %}">{% trans "Examples" context "menu item" %}
+              {% if url_name == 'examples' %}<span class="sr-only">(current)</span>{% endif %}</a>
+            </li>
+            <li class="nav-item {% if url_name == 'faq' %}active{% endif %}">
+              <a class="nav-link px-3" href="{% url "home:faq" %}">{% trans "FAQ" context "menu item" %}
+              {% if url_name == 'faq' %}<span class="sr-only">(current)</span>{% endif %}</a>
+            </li>
+            <li class="nav-item {% if url_name == 'about' %}active{% endif %}">
+              <a class="nav-link px-3" href="{% url "home:about" %}">{% trans "About" context "menu item" %}
+              {% if url_name == 'about' %}<span class="sr-only">(current)</span>{% endif %}</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-success" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ user.username }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% if user.profile.email_confirmed %}
+                    <a class="dropdown-item" href="{% url "users:changepw" %}">{% trans "Change Password" %}</a>
+                    <div class="dropdown-divider"></div>
                   {% endif %}
-                {% endfor %}
+                  <a class="dropdown-item" href="{% url "users:logout" %}">{% trans "Log out" %}</a>
+                </div>
+              </li>
+              <li class="nav-item {% if url_name == 'pagelist' %}active{% endif %}">
+                <a class="nav-link px-3" href="{% url "pages:pagelist" %}">{% trans "My Pages" context "menu item" %}
+                {% if url_name == 'pagelist' %}<span class="sr-only">(current)</span>{% endif %}</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link px-3" href="{% url "users:login" %}">{% trans "Log in" context "menu item" %}</a>
+              </li>
+            {% endif %}
+              {% get_current_language as LANGUAGE_CODE %}
+              {% get_language_info for LANGUAGE_CODE as current_language %}
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ current_language.name_local}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  {% for language in languages %}
+                    {% if language.code != LANGUAGE_CODE %}
+                      <a class="dropdown-item" href="{% url 'home:switch_lang' language.code %}?redirect_to={{ request.path }}">{{ language.name_local}}</a>
+                    {% endif %}
+                  {% endfor %}
+                </div>
               </div>
-            </div>
-        </ul>
-      </div>
-    </nav>
-  {% endwith %}
+          </ul>
+        </div>
+      </nav>
+    {% endwith %}
+  {% endblock navbar %}
   {% block content %}
 
   {% endblock content %}

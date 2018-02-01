@@ -1,0 +1,53 @@
+{% extends "pages/base.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block navbar %}
+{% include "pages/_nav_minimal.html" %}
+{% endblock %}
+{% block content %}
+<div class="container-fluid h-100 bg-dark">
+  <div class="row align-items-center justify-content-center h-100">
+    <div class="col-11 col-md-6 col-lg-4">
+      <div class="card">
+        <div class="card-header">
+          <h1> {% trans "Forgot Password" %} </h1>
+        </div>
+        <div class="card-body">
+          <form method="post" action="{% url "users:resetpw" %}">
+            <div class="row">
+                <div class="col-12">
+                  <p>
+                    {% blocktrans trimmed %}
+                      Please enter your email address
+                      and we'll send you instructions
+                      on how to reset your password
+                    {% endblocktrans %}
+                  </p>
+                </div>
+              {% csrf_token %}
+              <div class="form-group col-12">
+                {{ form.email.label_tag }}
+                {% if form.email.errors %}
+                  {{ form.email|add_class:"form-control is-invalid" }}
+                  <div class="invalid-feedback">
+                    <ul class="list-unstyled">
+                      {% for error in form.email.errors %}
+                      <li><strong>{{ error|escape }}</strong></li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% else %}
+                  {{ form.email|add_class:"form-control" }}
+                {% endif %}
+              </div>
+              <div class="col-12 text-right">
+                <input type="submit" value="Submit" class="btn btn-success" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

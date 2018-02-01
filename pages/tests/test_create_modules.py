@@ -1,14 +1,21 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.contrib.auth import get_user_model
 from ..models import Page, GeneralInfoModule, CommunicationModule, \
                      CommunicationMethods, MedicationItem, MedicationIntake, \
                      ModuleContact, FreeTextModule, FreeListModule, \
                      ModulePicture
 
+UserModel = get_user_model()
+
 
 class CreateGeneralinfoModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage")
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.page = Page.objects.create(title="testpage", user=self.user)
+        self.client.login(username=self.user.username, password="test")
 
     def test_create(self):
         url = reverse('pages:creategeneralinfomodule',
@@ -37,7 +44,11 @@ class CreateGeneralinfoModuleTestCase(TestCase):
 
 class CreateCommunicationModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage")
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.page = Page.objects.create(title="testpage", user=self.user)
+        self.client.login(username=self.user.username, password="test")
 
     def test_create(self):
         url = reverse('pages:createcommunicationmodule',
@@ -128,7 +139,11 @@ class CreateCommunicationModuleTestCase(TestCase):
 
 class CreateDoDontModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage")
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.page = Page.objects.create(title="testpage", user=self.user)
+        self.client.login(username=self.user.username, password="test")
 
     def test_create(self):
         url = reverse('pages:createdodontmodule',
@@ -162,7 +177,11 @@ class CreateDoDontModuleTestCase(TestCase):
 
 class CreateMedicationModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage")
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.page = Page.objects.create(title="testpage", user=self.user)
+        self.client.login(username=self.user.username, password="test")
 
     def test_create(self):
         url = reverse('pages:createmedicationmodule',
@@ -338,7 +357,11 @@ class CreateMedicationModuleTestCase(TestCase):
 
 class CreateContactModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage")
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.page = Page.objects.create(title="testpage", user=self.user)
+        self.client.login(username=self.user.username, password="test")
 
     def test_create(self):
         url = reverse('pages:createcontactmodule',
@@ -391,7 +414,11 @@ class CreateContactModuleTestCase(TestCase):
 
 class CreateFreeTextModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage")
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.page = Page.objects.create(title="testpage", user=self.user)
+        self.client.login(username=self.user.username, password="test")
 
     def test_create(self):
         url = reverse('pages:createfreetextmodule',
@@ -421,7 +448,11 @@ class CreateFreeTextModuleTestCase(TestCase):
 
 class CreateFreeListModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage")
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.page = Page.objects.create(title="testpage", user=self.user)
+        self.client.login(username=self.user.username, password="test")
 
     def test_create(self):
         url = reverse('pages:createfreelistmodule',
@@ -454,7 +485,11 @@ class CreateFreeListModuleTestCase(TestCase):
 
 class CreateFreePictureModuleTestCase(TestCase):
     def setUp(self):
-        self.page = Page.objects.create(title="testpage")
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.page = Page.objects.create(title="testpage", user=self.user)
+        self.client.login(username=self.user.username, password="test")
 
     def test_create(self):
         url = reverse('pages:createfreepicturemodule',

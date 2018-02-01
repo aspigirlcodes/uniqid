@@ -1,4 +1,4 @@
-"""uniqid URL Configuration
+"""pages URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -31,7 +31,8 @@ from .views import GeneralInfoModuleCreateView, PageCreateView,\
                    FreeTextModuleUpdateView, FreeListModuleUpdateView, \
                    FreePictureModuleUpdateView, MedicationModuleUpdateView, \
                    MedicationModuleDetailView, MedicationItemDeleteView, \
-                   ModuleSortView
+                   ModuleSortView, PageListView, PageVisibilityView, \
+                   PageTokenGenerationView, ViewPageTokenView
 
 urlpatterns = [
     url(r'^createpage/$', PageCreateView.as_view(), name="createpage"),
@@ -118,4 +119,12 @@ urlpatterns = [
         name="sortmodules"),
     url(r'^(?P<pk>[0-9]+)/preview/$',
         PagePreview.as_view(), name="pagepreview"),
+    url(r'^viewpage/(?P<uidb64>[0-9A-Za-z_\-]+)/'
+        '(?P<token>[0-9A-Za-z]{1,20})/$',
+        ViewPageTokenView.as_view(), name="viewpage"),
+    url(r'^(?P<pk>[0-9]+)/visibility/$',
+        PageVisibilityView.as_view(), name="pagevisibility"),
+    url(r'^(?P<pk>[0-9]+)/generatetoken/$',
+        PageTokenGenerationView.as_view(), name="pagegeneratetoken"),
+    url(r'^mypages/$', PageListView.as_view(), name="pagelist")
 ]

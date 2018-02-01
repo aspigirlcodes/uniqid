@@ -1,0 +1,158 @@
+{% extends "pages/base.html" %}
+{% load i18n %}
+{% load pages_tags %}
+
+{% block content %}
+<section id="page" class="pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col my-3">
+        <h1> {% trans "Your Pages" %}</h1>
+      </div>
+    </div>
+    {% if page_list %}
+    <div class="row">
+      <div class="col my-3 text-right">
+        <a href="{% url "pages:createpage" %}" class="btn btn-success">{% trans "Create a new page" %}</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <table class="table table-responsive-md">
+          <thead>
+            <tr>
+              <th scope="col">{% trans "Title" %}</th>
+              <th scope="col">{% trans "Created at" %}</th>
+              <th scope="col">{% trans "Visibility" %}</th>
+              <th scope="col">{% trans "Link" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for page in page_list %}
+              <tr>
+                <td>
+                  {% if page.title %}
+                    <p>{{ page.title }}</p>
+                  {% else %}
+                    <p class="text-secondary">{% trans "No Title" %}</p>
+                  {% endif %}
+                    <div>
+                    <a href="{% url "pages:pagepreview" page.id %}" class="btn btn-outline-secondary">{% trans "Preview" %}</a>
+                    <a href="{% url "pages:addmodule" page.id %}" class="btn btn-outline-primary">
+                      {% trans "Edit" %}
+                    </a>
+                  </div>
+                </td>
+                <td><p>{{ page.created_at|date }}</p></td>
+                <td>
+                  {% if page.is_visible %}
+                    <form action="{% url "pages:pagevisibility" page.pk %}" method="post">
+                      <p>{% trans "Visible" %} </p>
+                      {% csrf_token %}
+                      <button type="submit" name="toggle" class="btn btn-outline-primary">{% trans "Make private" %}</button>
+                    </form>
+                  {% else %}
+                    <form action="{% url "pages:pagevisibility" page.pk %}" method="post">
+                      <p>{% trans "Private" %}</p>
+                      {% csrf_token %}
+                      <button type="submit" name="toggle" class="btn btn-outline-primary">{% trans "Make visible" %}</button>
+                    </form>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if page.is_visible %}
+                    <form action="{% url "pages:pagegeneratetoken" page.pk %}" method="post">
+                      {% csrf_token %}
+                      {% if page.token %}
+                        <p id="{{page.pk}}-token">{{ request|tokenurl:page }}</p>
+                        <button type="button" onclick="copyToClipboard('#{{page.pk}}-token')" class="btn btn-outline-secondary">{% trans "Copy link" %}</button>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#newLinkModal">
+                          {% trans "Generate new link" %}
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="newLinkModal" tabindex="-1" role="dialog" aria-labelledby="newLinkModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="newLinkModalLabel">{% trans "New link for sharing" %}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <p>
+                                  {% blocktrans trimmed %}
+                                    The current link will become invalid if you generate a new one!
+                                    People you shared the old link with will no longer be able to see your page,
+                                    unless you send them the new link.
+                                  {% endblocktrans %}
+                                </p>
+                                <p>
+                                  {% blocktrans trimmed %}
+                                    Click cancel if you don't want to generate a new link and keep using the old one.
+                                  {% endblocktrans %}
+                                </p>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Cancel" %}</button>
+                                <button type="submit" class="btn btn-primary">{% trans "Generate new link" %}</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {% else %}
+                          <button type="submit" name="toggle" class="btn btn-outline-primary">
+                            {% trans "Generate link" %}
+                          </button>
+                        {% endif %}
+                    </form>
+                  {% elif not page.token %}
+                  <p class="text-secondary">
+                    {% blocktrans trimmed %}
+                      Your page is currently private. Noone except you can view it. Change the page visibility to generate a sharing link.
+                    {% endblocktrans %}
+                  </p>
+                  {% else %}
+                    <p class="text-secondary">
+                      {{ request|tokenurl:page }}
+                    </p>
+                    <div class="alert alert-danger" role="alert">
+                      {% blocktrans trimmed %}
+                      This link will not work as long as the visibility of your page is set to private.
+                      {% endblocktrans %}
+                    </div>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% else %}
+    <div class="row">
+      <div class="col">
+        {% url "pages:createpage" as create_url%}
+        {% blocktrans %}
+          You don't have any pages yet. <a href="{{url}}">Create one.</a>
+        {% endblocktrans %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock content %}
+{% block scripts %}
+<script>
+  function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    console.log($(element).text());
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    console.log($temp.val());
+    $temp.remove();
+  }
+</script>
+{% endblock scripts %}
