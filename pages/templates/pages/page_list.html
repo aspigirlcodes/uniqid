@@ -134,7 +134,7 @@
     <div class="row">
       <div class="col">
         {% url "pages:createpage" as create_url%}
-        {% blocktrans %}
+        {% blocktrans trimmed %}
           You don't have any pages yet. <a href="{{url}}">Create one.</a>
         {% endblocktrans %}
       </div>
