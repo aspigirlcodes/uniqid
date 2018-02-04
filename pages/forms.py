@@ -228,7 +228,8 @@ class ModuleSortForm(ModelForm):
                 not set(cleaned_data.values()) == \
                 set(range(1, self.page.module_num + 1)):
             logger.info("sort page %s submitted with wrong positions:%s",
-                        self.page.id, cleaned_data.values().join(", "))
+                        self.page.id,
+                        ", ".join(str(x) for x in cleaned_data.values()))
             raise(ValidationError(_("You can use each position only once."),
                                   code="double_value"))
         return cleaned_data
