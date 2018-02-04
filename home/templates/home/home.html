@@ -28,72 +28,121 @@
     </div>
   </div>
 </section>
-<section id="how">
+<section id="idea">
   <div class="container">
-    <div class="row mt-4">
-      <div class="col-12">
-        <h2>{% trans "How it works" %}</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-md-4 text-center">
-        <img src="{% static "img/icon-step-1.svg" %}" class="img-fluid my-4"/>
-        <h3>{% trans "Step 1: Create" %}</h3>
-        <p>
-          {% trans "Choose from our predefined modules and add your own content." %}
-        </p>
-      </div>
-      <div class="col-12 col-md-4 text-center">
-        <img src="{% static "img/icon-step-2.svg" %}" class="img-fluid my-4"/>
-        <h3>{% trans "Step 2: Arrange" %}</h3>
-        <p>
-          {% trans "Arrange the modules in the order you want them." %}
-        </p>
-      </div>
-      <div class="col-12 col-md-4 text-center">
-        <img src="{% static "img/icon-step-3.svg" %}" class="img-fluid my-4"/>
-        <h3>{% trans "Step 3: Finish" %}</h3>
-        <p>
-          {% trans "Once you're happy, you can save the result to your device, share it, or print it out." %}
-        </p>
-      </div>
-    </div>
-    <div class="row mb-4">
-      <div class="col-12 text-right">
-        <a href="{% url "pages:createpage" %}" role="button" class="btn btn-success">{% trans "Let's do this!" context "Action button" %}</a>
+    <div class="row fill-60-viewport align-items-center">
+      <div class="col">
+        <div class="row mt-4">
+          <div class="col-12">
+            <h2>{% trans "The Idea" %}</h2>
+          </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+          <div class="d-none d-md-block col-md-3 text-center">
+            <img src="{% static "img/person.svg" %}" class="img-fluid p-4 "/>
+          </div>
+          <div class="d-none d-md-block col-md-1">
+            <img src="{% static "img/arrow.svg" %}" class="img-fluid"/>
+          </div>
+          <div class="d-none d-md-block col-md-3 text-center">
+            <img src="{% static "img/infosheet.svg" %}" class="img-fluid p-4"/>
+          </div>
+          <div class="d-none d-md-block col-md-1">
+            <img src="{% static "img/arrow.svg" %}" class="img-fluid"/>
+          </div>
+          <div class="d-none d-md-block col-md-3 text-center">
+            <img src="{% static "img/person.svg" %}" class="img-fluid p-4"/>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-12 col-md-4 text-center">
+            <h3>{% trans "Autistic people, their supporters and allies..." %}</h3>
+          </div>
+          <div class="col-12 col-md-4 text-center">
+            <h3>{% trans "...Can create infosheets for different occasions..." %}</h3>
+          </div>
+          <div class="col-12 col-md-4 text-center">
+            <h3>{% trans "...And share them with others involved" %}</h3>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
-<section id="why" class="bg-light">
+<section id="how" class="bg-grey text-white">
   <div class="container">
-    <div class="row pt-4">
-      <div class="col-12">
-        <h2>{% trans "Why should I create a personalised autism infographic?" %}</h2>
+    <div class="row fill-60-viewport align-items-center">
+      <div class="col">
+        <div class="row pt-4">
+          <div class="col-12">
+            <h2>{% trans "How it works" %}</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-4 text-center">
+            <img src="{% static "img/icon-step-1.svg" %}" class="img-fluid my-4"/>
+            <h3>{% trans "Step 1: Create" %}</h3>
+            <p>
+              {% trans "Choose from our predefined modules and add your own content." %}
+            </p>
+          </div>
+          <div class="col-12 col-md-4 text-center">
+            <img src="{% static "img/icon-step-2.svg" %}" class="img-fluid my-4"/>
+            <h3>{% trans "Step 2: Arrange" %}</h3>
+            <p>
+              {% trans "Arrange the modules in the order you want them." %}
+            </p>
+          </div>
+          <div class="col-12 col-md-4 text-center">
+            <img src="{% static "img/icon-step-3.svg" %}" class="img-fluid my-4"/>
+            <h3>{% trans "Step 3: Finish" %}</h3>
+            <p>
+              {% trans "Once you're happy, you can save the result to your device, share it, or print it out." %}
+            </p>
+          </div>
+        </div>
+        <div class="row pb-4">
+          <div class="col-12 text-right">
+            <a href="{% url "pages:createpage" %}" role="button" class="btn btn-success">{% trans "Let's do this!" context "Action button" %}</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row py-4">
-      <div class="col-12 col-md-4">
-        <h3>{% trans "You are unique" %}</h3>
-        <p>{% blocktrans trimmed %}
-          As are all autistic people. There is no one explanation that fits all.
-          {% endblocktrans %}
-        </p>
-      </div>
-      <div class="col-12 col-md-4">
-        <h3>{% trans "You're worth to be understood" %}</h3>
-        <p>{% blocktrans trimmed %}
-          We are convinced that the right explanation can lead to more acceptance.
-          {% endblocktrans %}
-        </p>
-      </div>
-      <div class="col-12 col-md-4">
-        <h3>{% trans "Explaining isn't always easy" %}</h3>
-        <p>{% blocktrans trimmed %}
-          By creating an infographic you will be prepared for those situations
-          where you can't find the right words or don't have the energy to speak.
-          {% endblocktrans %}
-        </p>
+  </div>
+</section>
+<section id="why">
+  <div class="container ">
+    <div class="row fill-60-viewport align-items-center">
+      <div class="col">
+        <div class="row py-4">
+          <div class="col-12">
+            <h2>{% trans "Why should I create a personalised autism infographic?" %}</h2>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-12 col-md-4">
+            <h3>{% trans "You are unique" %}</h3>
+            <p>{% blocktrans trimmed %}
+              As are all autistic people. There is no one explanation that fits all.
+              {% endblocktrans %}
+            </p>
+          </div>
+          <div class="col-12 col-md-4">
+            <h3>{% trans "You're worth to be understood" %}</h3>
+            <p>{% blocktrans trimmed %}
+              We are convinced that the right explanation can lead to more acceptance.
+              {% endblocktrans %}
+            </p>
+          </div>
+          <div class="col-12 col-md-4">
+            <h3>{% trans "Explaining isn't always easy" %}</h3>
+            <p>{% blocktrans trimmed %}
+              By creating an infographic you will be prepared for those situations
+              where you can't find the right words or don't have the energy to speak.
+              {% endblocktrans %}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

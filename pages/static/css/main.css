@@ -2,13 +2,16 @@ html, body{
   height:100% !important;
 }
 
+.bg-grey{
+  background-color: #72767B
+}
 
 #banner {
   background: linear-gradient( to right, rgba(62,68,74,0.9) , rgba(52,58,64,0.6)), url('../img/banner.jpg') 0% 0%/cover
 }
 
 .fill-60-viewport {
-  min-height: 60vh
+  min-height: 90vh
 }
 
 .fill-30-viewport
