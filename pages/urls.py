@@ -117,7 +117,7 @@ urlpatterns = [
 
     url(r'^(?P<pk>[0-9]+)/sortmodules/$', ModuleSortView.as_view(),
         name="sortmodules"),
-    url(r'^(?P<pk>[0-9]+)/preview/$',
+    url(r'^(?P<pk>[0-9]+)/preview/(?P<reason>creating|final)/$',
         PagePreview.as_view(), name="pagepreview"),
     url(r'^viewpage/(?P<uidb64>[0-9A-Za-z_\-]+)/'
         '(?P<token>[0-9A-Za-z]{1,20})/$',

@@ -1,3 +1,4 @@
+{% load i18n %}
 {% with id=widget.attrs.id %}
 <div{% if id %} id="{{ id }}"{% endif %}
 {% if widget.attrs.class %} class="{{ widget.attrs.class }}"{% endif %}>
@@ -8,6 +9,10 @@
   {% endif %}
   {% for option in options %}
     <div class="form-check">{% include option.template_name with widget=option %}</div>
+    <div class="text-right d-none dyn-btn" id="{{id }}_{{index}}_button">
+        <button type="submit" name="submit_module"
+        class="btn btn-lg btn-primary"> {% trans "Create module" context "Button" %} </button>
+    </div>
   {% endfor %}
   {% if group %}
     </div>

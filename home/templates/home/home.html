@@ -30,7 +30,7 @@
 </section>
 <section id="idea">
   <div class="container">
-    <div class="row fill-60-viewport align-items-center">
+    <div class="row fill-80-viewport align-items-center">
       <div class="col">
         <div class="row mt-4">
           <div class="col-12">
@@ -54,7 +54,7 @@
             <img src="{% static "img/person.svg" %}" class="img-fluid p-4"/>
           </div>
         </div>
-        <div class="row mb-5">
+        <div class="row">
           <div class="col-12 col-md-4 text-center">
             <h3>{% trans "Autistic people, their supporters and allies..." %}</h3>
           </div>
@@ -65,13 +65,18 @@
             <h3>{% trans "...And share them with others involved" %}</h3>
           </div>
         </div>
+        <div class="row pb-4">
+          <div class="col-12 text-right">
+            <a href="{% url "home:faq" %}" role="button" class="btn btn-success">{% trans "Read more" context "Action button" %}</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 <section id="how" class="bg-grey text-white">
   <div class="container">
-    <div class="row fill-60-viewport align-items-center">
+    <div class="row fill-80-viewport align-items-center">
       <div class="col">
         <div class="row pt-4">
           <div class="col-12">
@@ -112,7 +117,7 @@
 </section>
 <section id="why">
   <div class="container ">
-    <div class="row fill-60-viewport align-items-center">
+    <div class="row fill-80-viewport align-items-center">
       <div class="col">
         <div class="row py-4">
           <div class="col-12">

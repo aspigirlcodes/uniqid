@@ -37,7 +37,7 @@
                     <p class="text-secondary">{% trans "No Title" %}</p>
                   {% endif %}
                     <div>
-                    <a href="{% url "pages:pagepreview" page.id %}" class="btn btn-outline-secondary">{% trans "Preview" %}</a>
+                    <a href="{% url "pages:pagepreview" page.id "final"%}" class="btn btn-outline-secondary">{% trans "Preview" %}</a>
                     <a href="{% url "pages:addmodule" page.id %}" class="btn btn-outline-primary">
                       {% trans "Edit" %}
                     </a>
@@ -135,7 +135,7 @@
       <div class="col">
         {% url "pages:createpage" as create_url%}
         {% blocktrans trimmed %}
-          You don't have any pages yet. <a href="{{url}}">Create one.</a>
+          You don't have any pages yet. <a href="{{create_url}}">Create one.</a>
         {% endblocktrans %}
       </div>
     </div>

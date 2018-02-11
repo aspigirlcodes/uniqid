@@ -47,7 +47,7 @@ class Page(models.Model):
     is_active = models.BooleanField(verbose_name=_("Is active"),
                                     default=True,
                                     blank=True)
-    is_visible = models.BooleanField(verbose_name=_("Is active"),
+    is_visible = models.BooleanField(verbose_name=_("Is visible"),
                                      default=False,
                                      blank=True)
     token = models.CharField(verbose_name=_("Token"), blank=True, default="",

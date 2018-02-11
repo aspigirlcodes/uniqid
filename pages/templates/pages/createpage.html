@@ -64,6 +64,11 @@
               {% endblocktrans %}
             </p>
           </div>
+          <div class="col-12">
+            <div class="text-right">
+              <a href="{% url "pages:pagepreview" object.id "creating"%}" class="btn btn-secondary"> {% trans "View preview" context "Button" %} </a>
+            </div>
+          </div>
         </div>
         <div class="row my-3" id="accordion" role="tablist">
           {% for module in modules %}
@@ -146,3 +151,12 @@
   </div>
 </section>
 {% endblock content %}
+{% block scripts %}
+<script>
+$('input[type=radio][name=module]').change(function() {
+    $(".dyn-btn").addClass("d-none")
+    $("#"+this.id+"_button").removeClass("d-none")
+
+   });
+</script>
+{% endblock scripts %}
