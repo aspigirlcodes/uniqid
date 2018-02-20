@@ -1,4 +1,5 @@
 import logging
+
 from django.views.generic import CreateView, DetailView, UpdateView, \
                                  DeleteView, ListView
 from django.core.urlresolvers import reverse
@@ -119,9 +120,8 @@ class ModuleCreateView(UserPassesTestMixin, CreateView):
                         self.request.user.username,
                         self.object.type, self.object.page.id)
         else:
-            logger.info("empty %s module for page %s by user %s not added",
-                        self.object.type, self.object.page.id,
-                        self.request.user.username,)
+            logger.info("empty module for page %s by user %s not added",
+                        self.page.id, self.request.user.username,)
         url = reverse("pages:addmodule", args=[self.page.id, ])
         return HttpResponseRedirect(url)
 
@@ -552,7 +552,7 @@ class ModuleSortView(UserPassesTestMixin, UpdateView):
                     module.position = new_position
                     module.save()
         return HttpResponseRedirect(
-            reverse("pages:pagelistview"))
+            reverse("pages:pagelist"))
 
     def test_func(self):
         return self.request.user == self.get_object().user
@@ -564,6 +564,7 @@ class PagePreview(UserPassesTestMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["reason"] = self.kwargs.get("reason")
         context['modules'] = self.object.get_all_modules_sorted()
         return context
 
@@ -641,3 +642,8 @@ class ViewPageTokenView(DetailView):
         else:
             logger.info("Invalid token link used for page %s", page_id)
             raise Http404(_("No Page found matching the query"))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['modules'] = self.object.get_all_modules_sorted()
+        return context

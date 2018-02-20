@@ -1,8 +1,16 @@
 {% extends "pages/base.html" %}
+{% load i18n %}
 
 {% block content %}
 <section id="page" class="pb-5">
   <div class="container">
+    <div class="row">
+      <div class="col">
+        <a href={% if reason == "creating" %}"{% url "pages:addmodule" page.id %}"
+                {% elif reason == "final" %}"{% url "pages:pagelist" %}"{% endif %}>
+                {% trans "back" %} </a>
+      </div>
+    </div>
     {% if page.title %}
       <div class="row p-5">
         <div class="col-12">

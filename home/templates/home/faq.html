@@ -1,0 +1,50 @@
+{% extends "pages/base.html" %}
+{% load i18n %}
+{% block content %}
+<section id="empty">
+  <div class="container">
+    <div class="row p-5">
+      <div class="col-12">
+        <h1 class="my-3"> {% trans "Frequently Asked Questions" %} </h1>
+        <h2 class="mt-5 mb-3">{% trans "Who can make an autism infographic?" %}</h2>
+        <p>
+          {% blocktrans trimmed %}
+          Anyone can make one! All you need is an email address to create an account.
+          Autistic people can make infosheets for themselves. Parents can make them for/together with their children.
+          Teachers or carers can make them for/together with people they are supporting.
+          {% endblocktrans %}
+        </p>
+        <p>
+          {% blocktrans trimmed %}
+          There is only one thing you should take care of: If you are making and sharing an Infographic about someone else,
+          be sure to inform them and get their consent.
+          Autistic people have right to privacy and self-determination just like anybody else!
+          {% endblocktrans %}
+        </p>
+        <h2 class="mt-5 mb-3">{% trans "What situations can autism infographics be used for?" %}</h2>
+        <p>
+          {% blocktrans trimmed %}
+          We have created a wide range of modules, including those where you can add your own text and images.
+          Our Infographics can therefore be used in almost any situation. You can make very elaborate ones to inform coworkers
+          or teachers you will work closely together with. But also very brief ones for emergency situations.
+          {% endblocktrans %}
+        </p>
+        <p>
+          {% blocktrans trimmed %}
+          You can share your infographics with others, but that doesn't mean you should. You might just as well make some
+          just for you, as a reminder of what to do in a certain situation for example.
+          {% endblocktrans %}
+        </p>
+        <h2 class="mt-5 mb-3">{% trans "Can I make more than one?" %}</h2>
+        <p>
+          {% blocktrans trimmed %}
+          Yes! You can make as many as you want and customise them depending on the situation.
+          {% endblocktrans %}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock content %}

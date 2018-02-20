@@ -29,13 +29,15 @@
                 {% if url_name == 'home' %}<span class="sr-only">(current)</span>{% endif %}</a>
             </li>
             <li class="nav-item {% if url_name == 'createpage' %}active{% endif %}">
-              <a class="nav-link px-3 btn btn-outline-success" href="{% url "pages:createpage" %}">{%trans "Create one!" context "action button" %}
+              <a class="nav-link px-3" href="{% url "pages:createpage" %}">{%trans "Create one!" context "action button" %}
               {% if url_name == 'createpage' %}<span class="sr-only">(current)</span>{% endif %}</a>
             </li>
+            {% comment %}
             <li class="nav-item {% if url_name == 'how' %}active{% endif %}">
               <a class="nav-link px-3" href="{% url "home:how" %}">{% trans "How it works" context "menu item" %}
               {% if url_name == 'how' %}<span class="sr-only">(current)</span>{% endif %}</a>
             </li>
+            {% endcomment %}
             <li class="nav-item {% if url_name == 'examples' %}active{% endif %}">
               <a class="nav-link px-3" href="{% url "home:examples" %}">{% trans "Examples" context "menu item" %}
               {% if url_name == 'examples' %}<span class="sr-only">(current)</span>{% endif %}</a>
@@ -44,10 +46,12 @@
               <a class="nav-link px-3" href="{% url "home:faq" %}">{% trans "FAQ" context "menu item" %}
               {% if url_name == 'faq' %}<span class="sr-only">(current)</span>{% endif %}</a>
             </li>
+            {% comment %}
             <li class="nav-item {% if url_name == 'about' %}active{% endif %}">
               <a class="nav-link px-3" href="{% url "home:about" %}">{% trans "About" context "menu item" %}
               {% if url_name == 'about' %}<span class="sr-only">(current)</span>{% endif %}</a>
             </li>
+            {% endcomment %}
           </ul>
           <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}

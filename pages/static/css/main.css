@@ -1,7 +1,10 @@
 html, body{
-  height:100%;
+  height:100% !important;
 }
 
+.bg-grey{
+  background-color: #72767B
+}
 
 #banner {
   background: linear-gradient( to right, rgba(62,68,74,0.9) , rgba(52,58,64,0.6)), url('../img/banner.jpg') 0% 0%/cover
@@ -9,6 +12,10 @@ html, body{
 
 .fill-60-viewport {
   min-height: 60vh
+}
+
+.fill-80-viewport {
+  min-height: 80vh
 }
 
 .fill-30-viewport

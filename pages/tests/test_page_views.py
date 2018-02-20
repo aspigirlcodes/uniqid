@@ -49,8 +49,7 @@ class SortModulesTestCase(TestCase):
                                      'position_2': '3',
                                      'position_3': '1',
                                      'submit': ''})
-        self.assertRedirects(response, reverse("pages:pagepreview",
-                                               args=[self.page.id, ]))
+        self.assertRedirects(response, reverse("pages:pagelist"))
         self.module1.refresh_from_db()
         self.module2.refresh_from_db()
         self.module3.refresh_from_db()
