@@ -113,3 +113,27 @@ class PageListViewTestCase(TestCase):
         self.assertContains(response, self.page1)
         self.assertNotContains(response, self.page2)
         self.assertNotContains(response, self.page3)
+
+
+class DeletePageTestCase(TestCase):
+    def setUp(self):
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+        self.page = Page.objects.create(title="testpage",
+                                        user=self.user,
+                                        module_num=3)
+        self.module1 = GeneralInfoModule.objects.create(page=self.page,
+                                                        name="sara",
+                                                        position=1)
+        self.module2 = CommunicationModule.objects.create(
+            page=self.page, suggestions_free=["help me"], position=2)
+        self.module3 = DoDontModule.objects.create(
+            page=self.page, do_choices=[DoDontModule.DO_QUIET], position=3)
+
+    def test_delete(self):
+        url = reverse('pages:deletepage', args=[str(self.page.id)])
+        response = self.client.post(url, {'delete': ''})
+        self.assertRedirects(response, reverse('pages:pagelist'))
+        self.assertEquals(Page.objects.all().count(), 0)

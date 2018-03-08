@@ -41,6 +41,7 @@
                     <a href="{% url "pages:addmodule" page.id %}" class="btn btn-outline-primary">
                       {% trans "Edit" %}
                     </a>
+                    <a href="{% url "pages:deletepage" page.id%}" class="btn btn-outline-danger">{% trans "Delete" %}</a>
                   </div>
                 </td>
                 <td><p>{{ page.created_at|date }}</p></td>

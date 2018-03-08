@@ -2,7 +2,7 @@ import logging
 
 from django.views.generic import CreateView, DetailView, UpdateView, \
                                  DeleteView, ListView
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import UserPassesTestMixin, \
                                        LoginRequiredMixin
@@ -51,6 +51,21 @@ class PageCreateView(PageCreateAccessMixin, CreateView):
         url_name = "pages:create" + form.cleaned_data['module']
         url = reverse(url_name, args=[self.object.id, ])
         return HttpResponseRedirect(url)
+
+
+class PageDeleteView(UserPassesTestMixin, DeleteView):
+    model = Page
+    template_name = "pages/deletepage.html"
+    success_url = reverse_lazy("pages:pagelist")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['modules'] = self.object.get_all_modules_sorted()
+        return context
+
+    def test_func(self):
+        page = self.get_object()
+        return self.request.user == page.user
 
 
 class SelectModuleView(UserPassesTestMixin, UpdateView):
