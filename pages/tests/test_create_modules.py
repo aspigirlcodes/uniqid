@@ -20,15 +20,22 @@ class CreateGeneralinfoModuleTestCase(TestCase):
     def test_create(self):
         url = reverse('pages:creategeneralinfomodule',
                       args=[str(self.page.id)])
-        response = self.client.post(url,
-                                    {'identity': '01_autistic',
-                                     'name': 'dsfad',
-                                     'submit_add_more': ''})
+        with open('pages/tests/assets/picture.png', 'rb') as image_file:
+            response = self.client.post(url,
+                                        {'identity': '01_autistic',
+                                         'name': 'dsfad',
+                                         'identity_free': 'bla',
+                                         'pronouns': "they/them",
+                                         'picture': image_file,
+                                         'submit_add_more': ''})
         self.assertRedirects(response,
                              reverse("pages:addmodule", args=[self.page.id, ]))
         module = GeneralInfoModule.objects.get(name='dsfad')
         self.assertEqual(module.page, self.page)
         self.assertEqual(module.identity, GeneralInfoModule.ID_AUTISTIC)
+        self.assertEqual(module.identity_free, "bla")
+        self.assertEqual(module.pronouns, "they/them")
+        self.assertIsNotNone(module.picture)
 
     def test_create_empty(self):
         url = reverse('pages:creategeneralinfomodule',

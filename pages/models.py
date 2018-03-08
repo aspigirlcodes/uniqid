@@ -196,6 +196,7 @@ class GeneralInfoModule(Module):
     ID_NEURODIV = "05_neurodiv"
     ID_ASP_SYN = "06_asp_syn"
     ID_ASPIE = "07_aspie"
+    ID_OTHER = "08_other"
 
     IDENTITIES = (
         (ID_AUTISTIC, _("I am autistic")),
@@ -205,6 +206,7 @@ class GeneralInfoModule(Module):
         (ID_NEURODIV, _("I am neurodivergent")),
         (ID_ASP_SYN, _("I have Asperger syndrome")),
         (ID_ASPIE, _("I am an aspie")),
+        (ID_OTHER, _("Other"))
     )
 
     template = "pages/_generalinfo.html"
@@ -221,6 +223,16 @@ class GeneralInfoModule(Module):
                                 choices=IDENTITIES,
                                 default="",
                                 blank=True)
+    identity_free = models.CharField(
+        verbose_name=_("Specify your identity if you chose other above"),
+        max_length=255, default="", blank=True)
+    pronouns = models.CharField(verbose_name=_("Prefered pronouns"),
+                                max_length=255, default="",
+                                blank=True)
+    picture = models.ImageField(verbose_name=_("Image"), blank=True,
+                                null=True, upload_to="infomodule")
+    remarks = models.TextField(verbose_name=_("Remarks"),
+                               default="", blank=True)
 
     def __str__(self):
         return "{page} Generalinfomodule: {name}, {id}"\
@@ -682,9 +694,9 @@ class ModulePicture(models.Model):
     module = models.ForeignKey(FreePictureModule, verbose_name=_("module"),
                                on_delete=models.CASCADE)
     picture = models.ImageField(verbose_name=_("Image"), blank=True,
-                                null=True)
+                                null=True, upload_to="picturemodule")
     description = models.TextField(verbose_name=_("Image description"),
-                                   null=True, blank=True)
+                                   default="", blank=True)
     title = models.CharField(verbose_name=_("Image title"),
                              max_length=255, default="", blank=True)
 

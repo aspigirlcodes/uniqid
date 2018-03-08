@@ -1,9 +1,13 @@
 {% extends "pages/base_createmodule.html" %}
 {% load widget_tweaks %}
 {% load i18n %}
+{% load static %}
 
 {% block module_name %}
 {% trans "General Information Module" %}
+{% endblock %}
+{% block form_head %}
+  <form action="" method="post" enctype="multipart/form-data">
 {% endblock %}
 {% block module_form %}
   <div class="row">
@@ -35,8 +39,6 @@
         {{ form.name|add_class:"form-control" }}
         {% endif %}
       </div>
-    </div>
-    <div class="col-12 col-md-6">
       <div class="form-group">
         <label for="{{form.identity.auto_id}}">
           {{ form.identity.label }}
@@ -52,6 +54,83 @@
         </div>
         {% else %}
         {{ form.identity|add_class:"form-control" }}
+        {% endif %}
+      </div>
+      <div class="form-group">
+        <label for="{{form.identity_free.auto_id}}">
+          {{ form.identity_free.label }}
+        </label>
+        {% if form.identity_free.errors %}
+        {{ form.identity_free|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.identity_free.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.identity_free|add_class:"form-control" }}
+        {% endif %}
+      </div>
+      <div class="form-group">
+        <label for="{{form.pronouns.auto_id}}">
+          {{ form.pronouns.label }}
+        </label>
+        {% if form.pronouns.errors %}
+        {{ form.pronouns|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.pronouns.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.pronouns|add_class:"form-control" }}
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="form-group">
+        <label for="{{form.picture.auto_id}}">
+          {{ form.picture.label }}
+        </label>
+        {% if form.picture.errors %}
+        {{ form.picture|add_class:"form-control-file is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.picture.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.picture|add_class:"form-control-file" }}
+        {% endif %}
+      </div>
+      <div id="picture_preview" class="py-4">
+        <img src="{% static "img/blank-profile-picture.png" %}" class="rounded-circle mx-auto d-block profile-img" alt="avatar">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="{{form.remarks.auto_id}}">
+          {{ form.remarks.label }}
+        </label>
+        {% if form.remarks.errors %}
+        {{ form.remarks|add_class:"form-control is-invalid" }}
+        <div class="invalid-feedback">
+          <ul class="list-unstyled">
+            {% for error in form.remarks.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        {{ form.remarks|add_class:"form-control" }}
         {% endif %}
       </div>
     </div>

@@ -71,7 +71,8 @@ class ModuleMixin(object):
 class GeneralInfoModuleForm(ModuleMixin, ModelForm):
     class Meta:
         model = GeneralInfoModule
-        fields = ['name', 'identity']
+        fields = ['name', 'identity', 'identity_free', 'pronouns', 'picture',
+                  'remarks']
 
 
 class CommunicationModuleForm(ModuleMixin, ModelForm):
