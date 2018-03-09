@@ -57,6 +57,8 @@ class Page(models.Model):
                                     blank=True)
     token_count = models.PositiveIntegerField(verbose_name=_("Token Count"),
                                               default=0, blank=True)
+    is_example = models.BooleanField(_("Is example"), default=False,
+                                     blank=True)
 
     def get_all_modules(self, **kwargs):
         """
@@ -75,6 +77,7 @@ class Page(models.Model):
             self.freepicturemodule_set.filter(**kwargs),
         ]
 
+    @property
     def get_all_modules_sorted(self):
         """
         Returns a list of modules sorted by their position field.

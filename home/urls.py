@@ -20,7 +20,7 @@ examples/
 """
 from django.conf.urls import url
 from django.views.generic import TemplateView
-from .views import switch_lang
+from .views import switch_lang, ExampleListView
 
 urlpatterns = [
     url(r'^i18n/set-lang/(?P<lang>\w{2})/', switch_lang, name="switch_lang"),
@@ -32,8 +32,7 @@ urlpatterns = [
         name="faq"),
     url(r'^about/', TemplateView.as_view(template_name='pages/empty.html'),
         name="about"),
-    url(r'^examples/',
-        TemplateView.as_view(template_name='home/examples.html'),
+    url(r'^examples/', ExampleListView.as_view(),
         name="examples"),
     url(r'^', TemplateView.as_view(template_name='home/home.html'),
         name="home"),
