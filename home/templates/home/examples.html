@@ -16,9 +16,15 @@
           {% for example in page_list %}
             <div class="tab-pane fade{% if forloop.first %} show active{% endif %}" id="example{{forloop.counter}}" role="tabpanel" aria-labelledby="ex{{forloop.counter}}-tab">
               {% if example.title %}
-                <div class="row py-3">
-                  <div class="col-12">
+                <div class="row py-3 align-items-center justify-content-between">
+                  <div class="col-auto">
                     <h1>{{example.title}}</h1>
+                  </div>
+                  <div class="col-auto text-right">
+                    <form action="{% url "pages:duplicatepage" example.id %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" name="toggle" class="btn btn-success">{% trans "Start from this example" %}</button>
+                    </form>
                   </div>
                 </div>
               {% endif %}
