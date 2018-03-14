@@ -2,8 +2,8 @@ import logging
 
 from django.views.generic import CreateView, DetailView, UpdateView, \
                                  DeleteView, ListView
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.contrib.auth.mixins import UserPassesTestMixin, \
                                        LoginRequiredMixin
 from django.utils.encoding import force_text
@@ -53,6 +53,21 @@ class PageCreateView(PageCreateAccessMixin, CreateView):
         return HttpResponseRedirect(url)
 
 
+class PageDeleteView(UserPassesTestMixin, DeleteView):
+    model = Page
+    template_name = "pages/deletepage.html"
+    success_url = reverse_lazy("pages:pagelist")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['modules'] = self.object.get_all_modules_sorted
+        return context
+
+    def test_func(self):
+        page = self.get_object()
+        return self.request.user == page.user
+
+
 class SelectModuleView(UserPassesTestMixin, UpdateView):
     """
     Update page and add new modules.
@@ -63,7 +78,7 @@ class SelectModuleView(UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['modules'] = self.object.get_all_modules_sorted()
+        context['modules'] = self.object.get_all_modules_sorted
         return context
 
     def form_valid(self, form):
@@ -535,13 +550,13 @@ class ModuleSortView(UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['modules'] = self.object.get_all_modules_sorted()
+        context['modules'] = self.object.get_all_modules_sorted
         return context
 
     def form_valid(self, form):
         if form.has_changed():
             for index, module in \
-                    enumerate(self.object.get_all_modules_sorted()):
+                    enumerate(self.object.get_all_modules_sorted):
                 new_position = form.cleaned_data.get(
                     "position_{}".format(index + 1))
                 if new_position is not module.position:
@@ -565,7 +580,7 @@ class PagePreview(UserPassesTestMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["reason"] = self.kwargs.get("reason")
-        context['modules'] = self.object.get_all_modules_sorted()
+        context['modules'] = self.object.get_all_modules_sorted
         return context
 
     def test_func(self):
@@ -579,6 +594,72 @@ class PageListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user,
                                              is_active=True)
+
+
+class PageDuplicateView(LoginRequiredMixin, UpdateView):
+    model = Page
+    http_method_names = ['post']
+    fields = []
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if not self.object.is_example:
+            return HttpResponseForbidden()
+        modules = self.object.get_all_modules_sorted
+        # duplicate page
+        self.object.is_example = False
+        self.object.user = request.user
+        self.object.pk = None
+        self.object.save()
+        # duplicate Modules
+        for module in modules:
+            if module.type == "CommunicationModule":
+                methods = module.communicationmethods_set.all()
+                module.page = self.object
+                module.pk = None
+                module.save()
+                for method in methods:
+                    method.module = module
+                    method.pk = None
+                    method.save()
+            elif module.type == "MedicationModule":
+                medications = module.medicationitem_set.all()
+                module.page = self.object
+                module.pk = None
+                module.save()
+                for med in medications:
+                    intakes = med.medicationintake_set.all()
+                    med.module = module
+                    med.pk = None
+                    med.save()
+                    for intake in intakes:
+                        intake.medication = med
+                        intake.pk = None
+                        intake.save()
+            elif module.type == "ContactModule":
+                contacts = module.modulecontact_set.all()
+                module.page = self.object
+                module.pk = None
+                module.save()
+                for contact in contacts:
+                    contact.module = module
+                    contact.pk = None
+                    contact.save()
+            elif module.type == "FreePictureModule":
+                pictures = module.modulepicture_set.all()
+                module.page = self.object
+                module.pk = None
+                module.save()
+                for picture in pictures:
+                    picture.module = module
+                    picture.pk = None
+                    picture.save()
+            else:
+                module.page = self.object
+                module.pk = None
+                module.save()
+        return HttpResponseRedirect(reverse("pages:addmodule",
+                                            args=[str(self.object.pk)]))
 
 
 class PageVisibilityView(UserPassesTestMixin, UpdateView):
@@ -645,5 +726,5 @@ class ViewPageTokenView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['modules'] = self.object.get_all_modules_sorted()
+        context['modules'] = self.object.get_all_modules_sorted
         return context

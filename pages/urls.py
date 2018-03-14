@@ -32,15 +32,15 @@ from .views import GeneralInfoModuleCreateView, PageCreateView,\
                    FreePictureModuleUpdateView, MedicationModuleUpdateView, \
                    MedicationModuleDetailView, MedicationItemDeleteView, \
                    ModuleSortView, PageListView, PageVisibilityView, \
-                   PageTokenGenerationView, ViewPageTokenView
+                   PageTokenGenerationView, ViewPageTokenView, PageDeleteView,\
+                   PageDuplicateView
 
 urlpatterns = [
     url(r'^createpage/$', PageCreateView.as_view(), name="createpage"),
-    # url(r'^createpage/',
-    #     TemplateView.as_view(template_name='pages/empty.html'),
-    #     name="createpage"),
     url(r'^(?P<pk>[0-9]+)/addmodule/$',
         SelectModuleView.as_view(), name="addmodule"),
+    url(r'^deletepage/(?P<pk>[0-9]+)/$', PageDeleteView.as_view(),
+        name="deletepage"),
 
     url(r'^(?P<page_id>[0-9]+)/creategeneralinfomodule/$',
         GeneralInfoModuleCreateView.as_view(), name="creategeneralinfomodule"),
@@ -126,5 +126,7 @@ urlpatterns = [
         PageVisibilityView.as_view(), name="pagevisibility"),
     url(r'^(?P<pk>[0-9]+)/generatetoken/$',
         PageTokenGenerationView.as_view(), name="pagegeneratetoken"),
-    url(r'^mypages/$', PageListView.as_view(), name="pagelist")
+    url(r'^mypages/$', PageListView.as_view(), name="pagelist"),
+    url(r'^(?P<pk>[0-9]+)/duplicatepage/$',
+        PageDuplicateView.as_view(), name="duplicatepage"),
 ]

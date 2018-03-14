@@ -1,6 +1,8 @@
 from django.utils import translation
 from django.shortcuts import redirect
+from django.views.generic import ListView
 
+from pages.models import Page
 # Create your views here.
 
 
@@ -28,3 +30,12 @@ def switch_lang(request, lang):
         #         domain=settings.LANGUAGE_COOKIE_DOMAIN,
         #     )
     return redirect(redirect_to)
+
+
+class ExampleListView(ListView):
+    model = Page
+    template_name = "home/examples.html"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_example=True,
+                                             is_active=True)
