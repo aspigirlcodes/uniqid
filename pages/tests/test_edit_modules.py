@@ -92,7 +92,6 @@ class EditCommunicationModuleTestCase(TestCase):
         self.assertRedirects(response,
                              reverse("pages:addmodule", args=[self.page.id, ]))
         self.assertEqual(self.page.communicationmodule_set.count(), 0)
-        self.assertEqual(CommunicationMethods.objects.count(), 0)
         self.assertEqual(self.page.module_num, 0)
 
 
@@ -188,8 +187,10 @@ class EditMedicationModuleTestCase(TestCase):
         self.assertRedirects(response,
                              reverse("pages:addmodule", args=[self.page.id, ]))
         self.assertEqual(self.page.medicationmodule_set.count(), 0)
-        self.assertEqual(MedicationItem.objects.count(), 0)
-        self.assertEqual(MedicationIntake.objects.count(), 0)
+        self.assertEqual(MedicationItem.objects.filter(name="mymed")
+                         .count(), 0)
+        self.assertEqual(MedicationIntake.objects.filter(pk=self.intake1.pk)
+                         .count(), 0)
         self.assertEqual(self.page.module_num, 0)
 
     def test_delete_medicationitem(self):
@@ -201,8 +202,9 @@ class EditMedicationModuleTestCase(TestCase):
                              reverse("pages:medicationmoduledetail",
                                      args=[self.module.id, ]))
         self.assertEqual(self.page.medicationmodule_set.count(), 1)
-        self.assertEqual(MedicationItem.objects.count(), 0)
-        self.assertEqual(MedicationIntake.objects.count(), 0)
+        self.assertEqual(self.module.medicationitem_set.count(), 0)
+        self.assertEqual(MedicationIntake.objects.filter(pk=self.intake1.pk)
+                         .count(), 0)
         self.assertEqual(self.page.module_num, 1)
 
 
@@ -263,7 +265,7 @@ class EditContactModuleTestCase(TestCase):
         self.assertRedirects(response,
                              reverse("pages:addmodule", args=[self.page.id, ]))
         self.assertEqual(self.page.contactmodule_set.count(), 0)
-        self.assertEqual(ModuleContact.objects.count(), 0)
+        self.assertEqual(ModuleContact.objects.filter(title="bla").count(), 0)
         self.page.refresh_from_db()
         self.assertEqual(self.page.module_num, 0)
 
@@ -350,7 +352,7 @@ class EditFreeListModuleTestCase(TestCase):
         self.assertEqual(self.page.module_num, 0)
 
 
-class CreateFreePictureModuleTestCase(TestCase):
+class EditFreePictureModuleTestCase(TestCase):
     def setUp(self):
         self.user = UserModel.objects.create_user("testuser",
                                                   email="test@test.tt",
@@ -398,7 +400,8 @@ class CreateFreePictureModuleTestCase(TestCase):
         self.assertRedirects(response,
                              reverse("pages:addmodule", args=[self.page.id, ]))
         self.assertEqual(self.page.freepicturemodule_set.count(), 0)
-        self.assertEqual(ModulePicture.objects.count(), 0)
+        self.assertEqual(ModulePicture.objects.filter(pk=self.image.pk)
+                         .count(), 0)
         self.page.refresh_from_db()
         self.assertEqual(self.page.module_num, 0)
 

@@ -18,8 +18,8 @@ class CreatePageTestCase(TestCase):
                                     {'title': 'testpage',
                                      'module': 'generalinfomodule',
                                      'submit': ''})
-        self.assertEqual(Page.objects.all().count(), 1)
-        page = Page.objects.first()
+        self.assertEqual(Page.objects.filter(title="testpage").count(), 1)
+        page = Page.objects.get(title="testpage")
         self.assertRedirects(response, reverse("pages:creategeneralinfomodule",
                                                args=[page.id, ]))
         self.assertEqual(page.user, user)
@@ -136,4 +136,4 @@ class DeletePageTestCase(TestCase):
         url = reverse('pages:deletepage', args=[str(self.page.id)])
         response = self.client.post(url, {'delete': ''})
         self.assertRedirects(response, reverse('pages:pagelist'))
-        self.assertEquals(Page.objects.all().count(), 0)
+        self.assertEquals(Page.objects.filter(title="testpage").count(), 0)

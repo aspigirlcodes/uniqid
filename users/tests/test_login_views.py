@@ -7,6 +7,7 @@ from django.utils.encoding import force_bytes
 
 from uniqid.testing_utils import MessageTestMixin
 from ..forms import default_token_generator
+from pages.models import Page
 
 UserModel = get_user_model()
 
@@ -164,7 +165,7 @@ class RegistrationTestCase(MessageTestMixin, TestCase):
 
 class LoginTestCase(TestCase):
     def setUp(self):
-        self.user = UserModel.objects.create_user("testuser",
+        self.user = UserModel.objects.create_user("test@test.tt",
                                                   email="test@test.tt",
                                                   password="test")
         self.user.profile.email_confirmed = True
@@ -182,6 +183,21 @@ class LoginTestCase(TestCase):
                                      "password": "test"})
         self.assertFormError(response, "form", "username",
                              "Enter a valid email address.")
+
+    def test_redirect_no_pages(self):
+        url = reverse("users:login")
+        response = self.client.post(url,
+                                    {'username': "test@test.tt",
+                                     "password": "test"})
+        self.assertRedirects(response, reverse("pages:createpage"))
+
+    def test_redirect_has_pages(self):
+        Page.objects.create("test", user=self.user)
+        url = reverse("users:login")
+        response = self.client.post(url,
+                                    {'username': "test@test.tt",
+                                     "password": "test"})
+        self.assertRedirects(response, reverse("pages:mypages"))
 
 
 class PasswordChangeTestCase(MessageTestMixin, TestCase):

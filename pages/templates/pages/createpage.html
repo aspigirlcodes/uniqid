@@ -7,16 +7,44 @@
 <section id="create-form" class="pb-5">
   <div class="container">
     {% for message in messages %}
-      <div class="alert {% if 'error' in message.tags %}alert-danger
-                        {% elif 'success' in message.tags %}alert-success
-                        {% elif 'warning' in message.tags %}alert-warning
-                        {% else %}alert-info{% endif %} my-3" role="alert">
-        {% if 'safe' in message.tags %}
-          {{ message|safe }}
-        {% else %}
-          {{ message }}
-        {% endif %}
+      {% if not "modal" in message.tags %}
+        <div class="alert {% if 'error' in message.tags %}alert-danger
+                          {% elif 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% else %}alert-info{% endif %} my-3" role="alert">
+          {% if 'safe' in message.tags %}
+            {{ message|safe }}
+          {% else %}
+            {{ message }}
+          {% endif %}
+        </div>
+      {% else %}
+      <div class="alert alert-success my-3" id="registrationAlert" role="alert">
+        {{ message }}
       </div>
+        <div class="modal" id="registrationModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{% trans "You can now start creating your page."%}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <ul>
+                  <li>{% trans "We've sent you an email to confirm your account in case you want to keep using it." %}</li>
+                  <li>{% trans "This email contains a link to set your account password" %}</li>
+                  <li>{% trans "You can do all of this later and can start creating your first page now!" %}</li>
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">{% trans "continue" %}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
     {% endfor %}
     <form action="" method="post">
       {% csrf_token %}
@@ -152,6 +180,12 @@
 </section>
 {% endblock content %}
 {% block scripts %}
+{# open registrationmodal on pageload #}
+<script>
+$('#registrationAlert').remove()
+$('#registrationModal').modal('show')
+</script>
+{# show submit button next to chosen module #}
 <script>
 $('input[type=radio][name=module]').change(function() {
     $(".dyn-btn").addClass("d-none")

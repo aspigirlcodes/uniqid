@@ -15,17 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from .views import PasswordResetConfirmView, RegisterView, PasswordChangeView
-from .forms import default_token_generator, EmailAuthenticationForm
+from .views import PasswordResetConfirmView, RegisterView, PasswordChangeView,\
+                   LoginView
+from .forms import default_token_generator
 # from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    url(r'^login/$',
-        auth_views.LoginView.as_view(
-            template_name='users/login.html',
-            authentication_form=EmailAuthenticationForm),
-        name="login"),
+    url(r'^login/$', LoginView.as_view(), name="login"),
     url(r'^logout/$',
         auth_views.LogoutView.as_view(), name="logout"),
     url(r'^resetpassword/$',
@@ -41,24 +38,7 @@ urlpatterns = [
         name="emailsent"),
     url(r'^setpassword/(?P<uidb64>[0-9A-Za-z_\-]+)/'
         '(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        PasswordResetConfirmView.as_view(
-            template_name="users/pwset.html",
-            token_generator=default_token_generator,
-            success_url="/users/login/"
-        ),
-        name="setpw"),
-    url(r'^register/$',
-        RegisterView.as_view(
-            template_name='users/register.html',
-            email_template_name="users/email_register.html",
-            subject_template_name="users/subject_register.txt",
-            token_generator=default_token_generator,
-            success_url="/pages/createpage/"),
-        name="register"),
-    url(r'^changepassword/$',
-        PasswordChangeView.as_view(
-            template_name='users/pwchange.html',
-            login_url="/users/login/",
-            success_url="/"),
-        name="changepw")
+        PasswordResetConfirmView.as_view(), name="setpw"),
+    url(r'^register/$', RegisterView.as_view(), name="register"),
+    url(r'^changepassword/$', PasswordChangeView.as_view(), name="changepw")
 ]
