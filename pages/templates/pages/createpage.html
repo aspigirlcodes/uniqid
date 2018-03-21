@@ -46,6 +46,14 @@
         </div>
       {% endif %}
     {% endfor %}
+    <div class="alert alert-info my-3" role="alert">
+      {% url 'home:examples'  as example_url %}
+      {% blocktrans %}
+        If you don't want to start from scratch,
+        you can copy one of our <a href="{{example_url}}" class="alert-link">examples</a>
+        and start from there.
+      {% endblocktrans %}
+    </div>
     <form action="" method="post">
       {% csrf_token %}
       <div class="row mt-4">
