@@ -94,7 +94,7 @@ class RegisterView(UserPassesTestMixin, auth_views.PasswordResetView):
 
 
 class LoginView(auth_views.LoginView):
-    template_name = 'users/login.html',
+    template_name = 'users/login.html'
     authentication_form = EmailAuthenticationForm
 
     def get_success_url(self):
@@ -110,7 +110,7 @@ class LoginView(auth_views.LoginView):
         )
 
         if not url_is_safe:
-            if self.request.user.pages.exists():
+            if self.request.user.page_set.exists():
                 redirect_to = reverse("pages:pagelist")
             else:
                 redirect_to = reverse("pages:createpage")

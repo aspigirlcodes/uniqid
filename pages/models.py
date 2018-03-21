@@ -35,7 +35,9 @@ class Page(models.Model):
     objects = PageManager()
 
     title = models.CharField(verbose_name=_("Page Title"), max_length=255,
-                             default="", blank=True)
+                             default="", blank=True,
+                             help_text=_("No inspiration? You can leave this "
+                                         "field empty or fill it out later"))
     module_num = models.PositiveIntegerField(default=0, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              verbose_name=_("User"),
@@ -231,7 +233,9 @@ class GeneralInfoModule(Module):
         max_length=255, default="", blank=True)
     pronouns = models.CharField(verbose_name=_("Prefered pronouns"),
                                 max_length=255, default="",
-                                blank=True)
+                                blank=True,
+                                help_text=_("She/Her/Hers, He/Him/His, "
+                                            "They/Them/Theirs, etc."))
     picture = models.ImageField(verbose_name=_("Image"), blank=True,
                                 null=True, upload_to="infomodule")
     remarks = models.TextField(verbose_name=_("Remarks"),

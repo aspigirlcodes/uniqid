@@ -56,7 +56,7 @@
         {{ form.identity|add_class:"form-control" }}
         {% endif %}
       </div>
-      <div class="form-group">
+      <div class="form-group" id="other_free">
         <label for="{{form.identity_free.auto_id}}">
           {{ form.identity_free.label }}
         </label>
@@ -87,7 +87,10 @@
           </ul>
         </div>
         {% else %}
-        {{ form.pronouns|add_class:"form-control" }}
+        {{ form.pronouns|add_class:"form-control"|attr:"aria-describedby:pronouns-help" }}
+        <p id="pronouns-help" class="form-text text-muted">
+          {{ form.pronouns.help_text }}
+        </p>
         {% endif %}
       </div>
     </div>
@@ -110,7 +113,14 @@
         {% endif %}
       </div>
       <div id="picture_preview" class="py-4">
-        <img src="{% static "img/blank-profile-picture.png" %}" class="rounded-circle mx-auto d-block profile-img" alt="avatar">
+        <img
+          {% if object.picture %}
+            src="{{ object.picture.url }}"
+          {% else %}
+            src="{% static "img/blank-profile-picture.png" %}"
+          {% endif %}
+          class="rounded-circle mx-auto d-block profile-img" id="profile_img" alt="avatar">
+
       </div>
     </div>
   </div>
@@ -136,3 +146,37 @@
     </div>
   </div>
 {% endblock module_form %}
+{% block scripts %}
+{{ block.super }}
+<script>
+// display free text when other selected
+function display_other(element){
+  var selected = $(element).val();
+  if(selected == "{{object.ID_OTHER}}"){
+    $("#other_free").show();
+  }
+  else{
+    $("#other_free").hide();
+  }
+}
+display_other($('#id_identity'))
+$('#id_identity').change(function(){display_other(this)});
+
+// preview image
+function readURL(input) {
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+          $('#profile_img').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+  }
+}
+$("#id_picture").change(function () {
+    readURL(this);
+});
+
+</script>
+{% endblock scripts %}

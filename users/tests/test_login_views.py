@@ -86,7 +86,7 @@ class RegistrationTestCase(MessageTestMixin, TestCase):
         user = UserModel.objects.get(username="bla@bla.bla")
         self.assertEqual(user.email, "bla@bla.bla")
         message = self.getmessage(response)
-        self.assertEqual(message.tags, "success")
+        self.assertIn("success", message.tags)
         self.assertIn("You can now start creating your page.",
                       message.message)
 
@@ -192,12 +192,12 @@ class LoginTestCase(TestCase):
         self.assertRedirects(response, reverse("pages:createpage"))
 
     def test_redirect_has_pages(self):
-        Page.objects.create("test", user=self.user)
+        Page.objects.create(title="test", user=self.user)
         url = reverse("users:login")
         response = self.client.post(url,
                                     {'username': "test@test.tt",
                                      "password": "test"})
-        self.assertRedirects(response, reverse("pages:mypages"))
+        self.assertRedirects(response, reverse("pages:pagelist"))
 
 
 class PasswordChangeTestCase(MessageTestMixin, TestCase):

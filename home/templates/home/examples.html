@@ -24,7 +24,7 @@
                     <div class="col-auto text-right">
                       <form action="{% url "pages:duplicatepage" example.id %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" name="toggle" class="btn btn-success">{% trans "Start from this example" %}</button>
+                        <button type="submit" name="submit" class="btn btn-success">{% trans "Start from this example" %}</button>
                       </form>
                     </div>
                   {% endif %}

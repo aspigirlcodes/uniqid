@@ -83,7 +83,10 @@
               </ul>
             </div>
             {% else %}
-            {{ form.title|add_class:"form-control form-control-lg" }}
+            {{ form.title|add_class:"form-control form-control-lg"|attr:"aria-describedby:module-help" }}
+            <p id="title-help" class="form-text text-muted">
+              {{ form.title.help_text }}
+            </p>
             {% endif %}
           </div>
         </div>

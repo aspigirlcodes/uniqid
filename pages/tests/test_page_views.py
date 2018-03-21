@@ -137,3 +137,23 @@ class DeletePageTestCase(TestCase):
         response = self.client.post(url, {'delete': ''})
         self.assertRedirects(response, reverse('pages:pagelist'))
         self.assertEquals(Page.objects.filter(title="testpage").count(), 0)
+
+
+class DuplicateExampleTestCase(TestCase):
+    def setUp(self):
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+
+    def test_duplicate_example(self):
+        examplepage = Page.objects.filter(is_example=True)[0]
+        url = reverse('pages:duplicatepage', args=[str(examplepage.id)])
+        response = self.client.post(url, {'submit': ''})
+        self.assertEqual(self.user.page_set.filter(title=examplepage.title)
+                         .count(), 1)
+        copiedpage = self.user.page_set.get(title=examplepage.title)
+        self.assertRedirects(response, reverse("pages:addmodule",
+                                               args=[str(copiedpage.id)]))
+        self.assertFalse(copiedpage.is_example)
+        self.assertFalse(copiedpage.is_visible)
