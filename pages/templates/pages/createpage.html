@@ -48,7 +48,7 @@
     {% endfor %}
     <div class="alert alert-info my-3" role="alert">
       {% url 'home:examples'  as example_url %}
-      {% blocktrans %}
+      {% blocktrans trimmed %}
         If you don't want to start from scratch,
         you can copy one of our <a href="{{example_url}}" class="alert-link">examples</a>
         and start from there.
