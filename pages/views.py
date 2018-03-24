@@ -608,6 +608,7 @@ class PageDuplicateView(LoginRequiredMixin, UpdateView):
         modules = self.object.get_all_modules_sorted
         # duplicate page
         self.object.is_example = False
+        self.object.is_visible = False
         self.object.user = request.user
         self.object.pk = None
         self.object.save()

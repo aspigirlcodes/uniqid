@@ -125,6 +125,7 @@ class CreateCommunicationModuleTestCase(TestCase):
         self.assertEqual(module.suggestions_free, [])
 
     def test_create_empty_all(self):
+        methods_before = CommunicationMethods.objects.count()
         url = reverse('pages:createcommunicationmodule',
                       args=[str(self.page.id)])
         response = self.client.post(
@@ -141,7 +142,7 @@ class CreateCommunicationModuleTestCase(TestCase):
         self.assertRedirects(response,
                              reverse("pages:addmodule", args=[self.page.id, ]))
         self.assertEqual(self.page.communicationmodule_set.count(), 0)
-        self.assertEqual(CommunicationMethods.objects.count(), 0)
+        self.assertEqual(CommunicationMethods.objects.count(), methods_before)
 
 
 class CreateDoDontModuleTestCase(TestCase):
@@ -259,6 +260,8 @@ class CreateMedicationModuleTestCase(TestCase):
         self.assertEqual(medicationitem.remarks, 'bla2')
 
     def test_create_another_empty(self):
+        items_before = MedicationItem.objects.count()
+        intakes_before = MedicationIntake.objects.count()
         url = reverse('pages:createmedicationmodule',
                       args=[str(self.page.id)])
         response = self.client.post(
@@ -278,7 +281,7 @@ class CreateMedicationModuleTestCase(TestCase):
                              args=[self.page.id, module.id])
         self.assertRedirects(response, update_url)
         self.assertEqual(module.medicationitem_set.count(), 0)
-        self.assertEqual(MedicationIntake.objects.count(), 0)
+        self.assertEqual(MedicationIntake.objects.count(), intakes_before)
         # add a second empty medicationitem to this
         response_2 = self.client.post(
             update_url,
@@ -294,8 +297,8 @@ class CreateMedicationModuleTestCase(TestCase):
         self.assertRedirects(response_2,
                              reverse("pages:addmodule", args=[self.page.id, ]))
         self.assertEqual(self.page.medicationmodule_set.count(), 0)
-        self.assertEqual(MedicationItem.objects.count(), 0)
-        self.assertEqual(MedicationIntake.objects.count(), 0)
+        self.assertEqual(MedicationItem.objects.count(), items_before)
+        self.assertEqual(MedicationIntake.objects.count(), intakes_before)
 
     def test_create_empty_formset(self):
         url = reverse('pages:createmedicationmodule',
@@ -342,6 +345,8 @@ class CreateMedicationModuleTestCase(TestCase):
         self.assertEqual(medicationitem.remarks, '')
 
     def test_create_empty_all(self):
+        items_before = MedicationItem.objects.count()
+        intakes_before = MedicationIntake.objects.count()
         url = reverse('pages:createmedicationmodule',
                       args=[str(self.page.id)])
         response = self.client.post(
@@ -358,8 +363,8 @@ class CreateMedicationModuleTestCase(TestCase):
         self.assertRedirects(response,
                              reverse("pages:addmodule", args=[self.page.id, ]))
         self.assertEqual(self.page.medicationmodule_set.count(), 0)
-        self.assertEqual(MedicationItem.objects.count(), 0)
-        self.assertEqual(MedicationIntake.objects.count(), 0)
+        self.assertEqual(MedicationItem.objects.count(), items_before)
+        self.assertEqual(MedicationIntake.objects.count(), intakes_before)
 
 
 class CreateContactModuleTestCase(TestCase):
@@ -398,6 +403,7 @@ class CreateContactModuleTestCase(TestCase):
         self.assertEqual(module.modulecontact_set.count(), 2)
 
     def test_create_empty(self):
+        contacts_before = ModuleContact.objects.count()
         url = reverse('pages:createcontactmodule',
                       args=[str(self.page.id)])
         response = self.client.post(
@@ -416,7 +422,7 @@ class CreateContactModuleTestCase(TestCase):
         self.assertRedirects(response,
                              reverse("pages:addmodule", args=[self.page.id, ]))
         self.assertEqual(self.page.contactmodule_set.count(), 0)
-        self.assertEqual(ModuleContact.objects.count(), 0)
+        self.assertEqual(ModuleContact.objects.count(), contacts_before)
 
 
 class CreateFreeTextModuleTestCase(TestCase):
@@ -560,6 +566,7 @@ class CreateFreePictureModuleTestCase(TestCase):
         self.assertEqual(module.title, '')
 
     def test_create_empty_all(self):
+        pictures_before = ModulePicture.objects.count()
         url = reverse('pages:createfreepicturemodule',
                       args=[str(self.page.id)])
         response = self.client.post(
@@ -575,4 +582,4 @@ class CreateFreePictureModuleTestCase(TestCase):
         self.assertRedirects(response,
                              reverse("pages:addmodule", args=[self.page.id, ]))
         self.assertEqual(self.page.freepicturemodule_set.count(), 0)
-        self.assertEqual(ModulePicture.objects.count(), 0)
+        self.assertEqual(ModulePicture.objects.count(), pictures_before)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-02 10:46+0100\n"
+"POT-Creation-Date: 2018-03-24 11:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,13 +24,13 @@ msgstr "Coiffeurbesuch"
 
 #: home/templates/home/example1.html:15 home/templates/home/example2.html:15
 #: home/templates/home/example3.html:15
-#: pages/templates/pages/_generalinfo.html:13
+#: pages/templates/pages/_generalinfo.html:17
 msgid "Hi,"
 msgstr "Hallo,"
 
 #: home/templates/home/example1.html:17 home/templates/home/example2.html:17
 #: home/templates/home/example3.html:17
-#: pages/templates/pages/_generalinfo.html:15
+#: pages/templates/pages/_generalinfo.html:19
 #, python-format
 msgid "I am %(name)s."
 msgstr "Ich bin %(name)s."
@@ -46,7 +46,7 @@ msgstr ""
 "Lese weiter und erfahre mehr darüber was Autismus für mich bedeutet und wie "
 "Sie mir helfen können."
 
-#: home/templates/home/example1.html:34 pages/models.py:237
+#: home/templates/home/example1.html:34 pages/models.py:256
 msgid "Communication"
 msgstr "Kommunikation"
 
@@ -55,23 +55,23 @@ msgid "In general"
 msgstr "Allgemein"
 
 #: home/templates/home/example1.html:44 home/templates/home/example1.html:64
-#: pages/models.py:319 pages/templates/pages/_communication.html:19
+#: pages/models.py:338 pages/templates/pages/_communication.html:19
 msgid "You can use"
 msgstr "Du kannst benutzen"
 
 #: home/templates/home/example1.html:46 home/templates/home/example1.html:53
-#: home/templates/home/example1.html:66 pages/models.py:307
+#: home/templates/home/example1.html:66 pages/models.py:326
 msgid "Spoken language"
 msgstr "Mündliche Kommunikation"
 
 #: home/templates/home/example1.html:47 home/templates/home/example1.html:54
 #: home/templates/home/example1.html:67 home/templates/home/example1.html:73
-#: pages/models.py:308
+#: pages/models.py:327
 msgid "Written language"
 msgstr "Schriftliche Kommunikation"
 
 #: home/templates/home/example1.html:51 home/templates/home/example1.html:71
-#: pages/models.py:326 pages/templates/pages/_communication.html:30
+#: pages/models.py:345 pages/templates/pages/_communication.html:30
 msgid "I will use"
 msgstr "Ich werde benutzen"
 
@@ -80,12 +80,12 @@ msgid "When I am stressed"
 msgstr "In eine Stresssituation"
 
 #: home/templates/home/example1.html:83 home/templates/home/example2.html:34
-#: pages/models.py:341
+#: pages/models.py:360
 msgid "Do's and Don'ts"
 msgstr "Do's and Don'ts"
 
 #: home/templates/home/example1.html:90 home/templates/home/example2.html:42
-#: pages/models.py:408
+#: pages/models.py:427
 msgid "Don't ask me too many questions"
 msgstr "Stellen Sie mich nicht zu viele Fragen"
 
@@ -96,7 +96,7 @@ msgstr ""
 "zuschlagen)"
 
 #: home/templates/home/example1.html:98 home/templates/home/example2.html:49
-#: pages/models.py:396
+#: pages/models.py:415
 msgid "Ask before touching my stuff"
 msgstr "Berühren Sie meine Sachen nicht ohne zuerst zu fragen"
 
@@ -106,14 +106,14 @@ msgstr ""
 "Benutzen Sie keine Produkte mit ausgesprochenen Geruch ohne zuerst zu fragen"
 
 #: home/templates/home/example1.html:106 home/templates/home/example2.html:58
-#: pages/models.py:374
+#: pages/models.py:393
 msgid "Leave me enough time to answer your questions or to make decisions"
 msgstr ""
 "Lassen Sie mich genügend Zeit um Fragen zu beantworten oder Entscheidungen "
 "zu treffen"
 
 #: home/templates/home/example1.html:107 home/templates/home/example2.html:59
-#: pages/models.py:391
+#: pages/models.py:410
 msgid "Tell me what is going to happen beforehand"
 msgstr "Sagen Sie mir im Voraus was passieren wird"
 
@@ -140,7 +140,7 @@ msgstr "Arztbesuch"
 msgid "I have an Autism Spectrum Condition."
 msgstr "Ich habe eine Autismusspektrumstörung"
 
-#: home/templates/home/example2.html:41 pages/models.py:406
+#: home/templates/home/example2.html:41 pages/models.py:425
 msgid "Don't touch me without permission"
 msgstr "Berühren Sie mich nicht ohne meine Zustimmung"
 
@@ -149,7 +149,7 @@ msgid "Ask me if I am ready to go before you take me to a new place"
 msgstr ""
 "Fragen Sie mich ob ich parat bin bevor Sie mich zu einen neuen Ort bringen"
 
-#: home/templates/home/example2.html:57 pages/models.py:389
+#: home/templates/home/example2.html:57 pages/models.py:408
 msgid "Give me clear instructions if I have to do something"
 msgstr "Ich brauche klare Instruktionen wenn ich etwas machen soll"
 
@@ -157,7 +157,7 @@ msgstr "Ich brauche klare Instruktionen wenn ich etwas machen soll"
 msgid "Write important information down for me."
 msgstr "Schreiben Sie allen wichtigen Informationen für mich auf."
 
-#: home/templates/home/example2.html:70 pages/models.py:520
+#: home/templates/home/example2.html:70 pages/models.py:539
 msgid "Sensory sensitivities"
 msgstr "Sensorische Empfindlichkeit"
 
@@ -169,7 +169,7 @@ msgstr "Ich bin sehr empfindlich bezüglich Geräusche"
 msgid "I am very sensitive to light"
 msgstr "Ich bin sehr empfindlich bezüglich Licht "
 
-#: home/templates/home/example2.html:84 pages/models.py:546
+#: home/templates/home/example2.html:84 pages/models.py:565
 msgid "I can't cope with fluorescent lighting"
 msgstr "Ich kann das Licht von Leuchtstofflampen nicht ertragen "
 
@@ -191,7 +191,7 @@ msgstr ""
 "Ich habe Schwierigkeiten damit Schmerzen und andere Symptome zu erkennen und/"
 "oder darüber zu berichten"
 
-#: home/templates/home/example2.html:106 pages/models.py:450
+#: home/templates/home/example2.html:106 pages/models.py:469
 msgid "Medication"
 msgstr "Medikation"
 
@@ -219,8 +219,8 @@ msgstr "Wann"
 msgid "Quantity"
 msgstr "Wie viel"
 
-#: home/templates/home/example2.html:117 pages/models.py:467
-#: pages/templates/pages/_medication.html:17
+#: home/templates/home/example2.html:117 pages/models.py:241
+#: pages/models.py:486 pages/templates/pages/_medication.html:17
 #: pages/templates/pages/createmedicationmodule.html:21
 #: pages/templates/pages/deletemedicationitem.html:20
 #: pages/templates/pages/medicationmoduledetail.html:21
@@ -254,7 +254,7 @@ msgid "before sleeping"
 msgstr "vor dem Schlafen"
 
 #: home/templates/home/example2.html:146 home/templates/home/example3.html:48
-#: pages/models.py:593
+#: pages/models.py:612
 msgid "Contacts"
 msgstr "Kontakte"
 
@@ -301,17 +301,90 @@ msgstr "Bitte helfen Sie mir zurück zum Hotel zu gelangen."
 msgid "Emergency contact"
 msgstr "Notfallkontakt"
 
-#: home/templates/home/examples.html:10
-msgid "Example 1"
-msgstr "Beispiel 1"
+#: home/templates/home/examples.html:11
+#, fuzzy
+#| msgctxt "menu item"
+#| msgid "Examples"
+msgid "Example"
+msgstr "Beispiele"
 
-#: home/templates/home/examples.html:13
-msgid "Example 2"
-msgstr "Beispiel 2"
+#: home/templates/home/examples.html:27
+msgid "Start from this example"
+msgstr "Dieses Beispiel als Template benutzen"
 
-#: home/templates/home/examples.html:16
-msgid "Example 3"
-msgstr "Beispiel 3"
+#: home/templates/home/faq.html:8
+msgid "Frequently Asked Questions"
+msgstr "Häufig gestellte Fragen"
+
+#: home/templates/home/faq.html:9
+msgid "Who can make an autism infographic?"
+msgstr "Wer kann eine personalisierte Autismusinfografik erstellen?"
+
+#: home/templates/home/faq.html:11
+msgid ""
+"Anyone can make one! All you need is an email address to create an account. "
+"Autistic people can make infosheets for themselves. Parents can make them "
+"for/together with their children. Teachers or carers can make them for/"
+"together with people they are supporting."
+msgstr ""
+"Jeder kann das! Alles was es braucht ist eine Email Addresse für die "
+"erstellung eines Benutzerkontos. Autist_inn_en können Informationsseiten "
+"über sich selber erstellen. Eltern können sie für oder zusammen mit ihre "
+"Kindern machen. Lehrpersonen oder andere Begleitpersonen können sie für oder "
+"zusammen mit denjenigen machen denen sie unterstützen."
+
+#: home/templates/home/faq.html:18
+msgid ""
+"There is only one thing you should take care of: If you are making and "
+"sharing an Infographic about someone else, be sure to inform them and get "
+"their consent. Autistic people have right to privacy and self-determination "
+"just like anybody else!"
+msgstr ""
+"Es gibt nur eins worauf man achten soll: Beim kreieren und teilen einer "
+"Infoseite für jemanden anderen als sich selbst, sollte man diese Person "
+"immer darüber informieren und seine/ihre zustimmung einholen. Autist_inn_en "
+"haben ein Recht auf Privatsphäre und Selbstbestimmung so wie jede andere "
+"auch!"
+
+#: home/templates/home/faq.html:24
+msgid "What situations can autism infographics be used for?"
+msgstr "In welche Situationen kann man eine Autismusinfografik benutzen?"
+
+#: home/templates/home/faq.html:26
+msgid ""
+"We have created a wide range of modules, including those where you can add "
+"your own text and images. Our Infographics can therefore be used in almost "
+"any situation. You can make very elaborate ones to inform coworkers or "
+"teachers you will work closely together with. But also very brief ones for "
+"emergency situations."
+msgstr ""
+"Wir haben ein grosse Auswahl an module kreiert. Auch solche wo man ganz frei "
+"Text und Bilder einfügen kann. Dadurch können unsere Infografiken in fast "
+"jede Situation benutzt werden. Du kannst sehr ausführliche Seiten erstellen "
+"um Mitarbeiter oder Lehrpersonen mit wem du nahe zusammenarbeitest zu "
+"informieren. Aber auch sehr kürze Seiten für Notfallsituationen."
+
+#: home/templates/home/faq.html:33
+msgid ""
+"You can share your infographics with others, but that doesn't mean you "
+"should. You might just as well make some just for you, as a reminder of what "
+"to do in a certain situation for example."
+msgstr ""
+"Du kannst die Infografiken mit andern teilen, aber dies is nicht "
+"obligatorisch. Du kannst auch welche für dich selber machen. Als eine "
+"Erinnerungsstütze was man in bestimmte Situationen machen soll zum Beispiel."
+
+#: home/templates/home/faq.html:38
+msgid "Can I make more than one?"
+msgstr "Kann ich mehr als eine Infographik machen?"
+
+#: home/templates/home/faq.html:40
+msgid ""
+"Yes! You can make as many as you want and customise them depending on the "
+"situation."
+msgstr ""
+"Sicher! Du kannst so viele machen wie du möchtest und sie individuell an "
+"die jeweilige Situation anpassen."
 
 #: home/templates/home/home.html:25
 msgid "Personalised Autism Infographics"
@@ -322,33 +395,55 @@ msgctxt "Action button"
 msgid "Create one!"
 msgstr "Probiere es aus!"
 
-#: home/templates/home/home.html:35
+#: home/templates/home/home.html:37
+msgid "The Idea"
+msgstr "Die Idee"
+
+#: home/templates/home/home.html:59
+msgid "Autistic people, their supporters and allies..."
+msgstr "Autist_inn_en, ihre Helfer und Bezugspersonen..."
+
+#: home/templates/home/home.html:62
+msgid "...Can create infosheets for different occasions..."
+msgstr ""
+"...Können Informationsseiten für unterschiedliche Situationen erstellen..."
+
+#: home/templates/home/home.html:65
+msgid "...And share them with others involved"
+msgstr "...Und sie mit anderen Beteiligten teilen"
+
+#: home/templates/home/home.html:70
+msgctxt "Action button"
+msgid "Read more"
+msgstr "Mehr Lesen"
+
+#: home/templates/home/home.html:83
 msgid "How it works"
 msgstr "Wie es funktioniert"
 
-#: home/templates/home/home.html:41
+#: home/templates/home/home.html:89
 msgid "Step 1: Create"
 msgstr "Schritt 1: Erstellen"
 
-#: home/templates/home/home.html:43
+#: home/templates/home/home.html:91
 msgid "Choose from our predefined modules and add your own content."
 msgstr ""
 "Wähle einen unseren vordefinierten Modulen und füge deine eigenen Inhalte "
 "hinzu."
 
-#: home/templates/home/home.html:48
+#: home/templates/home/home.html:96
 msgid "Step 2: Arrange"
 msgstr "Schritt 2: Anordnen"
 
-#: home/templates/home/home.html:50
+#: home/templates/home/home.html:98
 msgid "Arrange the modules in the order you want them."
 msgstr "Platziere die Module in die von dir gewünschte Reihenfolge."
 
-#: home/templates/home/home.html:55
+#: home/templates/home/home.html:103
 msgid "Step 3: Finish"
 msgstr "Schritt 3: Fertigstellen"
 
-#: home/templates/home/home.html:57
+#: home/templates/home/home.html:105
 msgid ""
 "Once you're happy, you can save the result to your device, share it, or "
 "print it out."
@@ -356,43 +451,43 @@ msgstr ""
 "Wenn du mit dem Resultat zufrieden bist, kannst du es speichern, teilen, "
 "oder ausdrucken."
 
-#: home/templates/home/home.html:63
+#: home/templates/home/home.html:111
 msgctxt "Action button"
 msgid "Let's do this!"
 msgstr "Legen wir los!"
 
-#: home/templates/home/home.html:72
+#: home/templates/home/home.html:124
 msgid "Why should I create a personalised autism infographic?"
 msgstr "Wieso sollte ich eine personalisierte Autismusinfografik erstellen?"
 
-#: home/templates/home/home.html:77
+#: home/templates/home/home.html:129
 msgid "You are unique"
 msgstr "Du bist einzigartig"
 
-#: home/templates/home/home.html:78
+#: home/templates/home/home.html:130
 msgid "As are all autistic people. There is no one explanation that fits all."
 msgstr ""
 "Genau wie die anderen Autisten auch. Es gibt keine generische Beschreibung "
 "die für jeden passt."
 
-#: home/templates/home/home.html:84
+#: home/templates/home/home.html:136
 msgid "You're worth to be understood"
 msgstr "Du bist es Wert verstanden zu werden."
 
-#: home/templates/home/home.html:85
+#: home/templates/home/home.html:137
 msgid ""
 "We are convinced that the right explanation can lead to more acceptance."
 msgstr ""
 "Wir sind davon überzeugt, dass die passende Erklärung zu mehr Akzeptanz "
 "führen kann."
 
-#: home/templates/home/home.html:91
+#: home/templates/home/home.html:143
 #, fuzzy
 #| msgid "Explaining isn't allways easy"
 msgid "Explaining isn't always easy"
 msgstr "Das Erläutern ist nicht immer einfach"
 
-#: home/templates/home/home.html:92
+#: home/templates/home/home.html:144
 msgid ""
 "By creating an infographic you will be prepared for those situations where "
 "you can't find the right words or don't have the energy to speak."
@@ -401,12 +496,12 @@ msgstr ""
 "Situationen wo dir die richtige Worte nicht einfallen, oder wenn du keine "
 "Energie zum Reden hast."
 
-#: home/templates/home/home.html:107
+#: home/templates/home/home.html:161
 msgid ""
 "Personalised Autism Infographics is a project by and for autistic people."
 msgstr "Dies ist ein Projekt von und für Autisten"
 
-#: home/templates/home/home.html:112
+#: home/templates/home/home.html:166
 msgid ""
 "It has been created as a thesis project of the bachelor in computer science "
 "at the University of Bern."
@@ -444,12 +539,12 @@ msgstr "Oder wähle eine weitere Module"
 msgid "You have to choose a module."
 msgstr "Wähle eine Module aus."
 
-#: pages/forms.py:80 pages/models.py:293
+#: pages/forms.py:81 pages/models.py:312
 msgid "Other communication suggestions"
 msgstr "Mehr Hinweise zum Thema Kommunikation"
 
-#: pages/forms.py:84 pages/forms.py:99 pages/forms.py:107 pages/forms.py:128
-#: pages/forms.py:136 pages/forms.py:144 pages/forms.py:172 pages/forms.py:194
+#: pages/forms.py:85 pages/forms.py:100 pages/forms.py:108 pages/forms.py:129
+#: pages/forms.py:137 pages/forms.py:145 pages/forms.py:173 pages/forms.py:195
 msgid ""
 "Click the plus-sign at the end of the last item to add more items. Empty "
 "lines will be ignored."
@@ -457,41 +552,41 @@ msgstr ""
 "Du kannst mehr Einträge hinzufügen indem de auf das Plus-Zeichen am Ende des "
 "letzten Eintrags Klickst. Leere Einträge werden ignoriert."
 
-#: pages/forms.py:95 pages/models.py:329
+#: pages/forms.py:96 pages/models.py:348
 msgid "Other communication methods I might use"
 msgstr "Andere Kommunikationsmethoden die ich Benutze."
 
-#: pages/forms.py:103 pages/models.py:322
+#: pages/forms.py:104 pages/models.py:341
 msgid "Other communication methods you can use"
 msgstr "Andere Kommunikationsmethoden die Sie Benutzen können"
 
-#: pages/forms.py:124 pages/models.py:424
+#: pages/forms.py:125 pages/models.py:443
 msgid "More things others can do"
 msgstr "Mehr Sachen die Andere für dich machen können."
 
-#: pages/forms.py:132 pages/models.py:432
+#: pages/forms.py:133 pages/models.py:451
 msgid "More things others should ask"
 msgstr "Mehr Sachen die Andere Fragen sollten"
 
-#: pages/forms.py:140 pages/models.py:440
+#: pages/forms.py:141 pages/models.py:459
 msgid "More things others shouldn't do"
 msgstr "Mehr Sachen die Andere nicht machen dürfen"
 
-#: pages/forms.py:168 pages/models.py:576
+#: pages/forms.py:169 pages/models.py:595
 msgid "More additional sensory info"
 msgstr "Mehr Zusätzliche Informationen zu sensorische Empfindlichkeiten"
 
-#: pages/forms.py:190 pages/models.py:656
+#: pages/forms.py:191 pages/models.py:675
 msgid "Items"
 msgstr "Items"
 
-#: pages/forms.py:221
+#: pages/forms.py:222
 #, fuzzy
 #| msgid "Position"
 msgid "position"
 msgstr "Position"
 
-#: pages/forms.py:232
+#: pages/forms.py:234
 msgid "You can use each position only once."
 msgstr "Jede Position kann nur einmal benutzt werden."
 
@@ -499,73 +594,96 @@ msgstr "Jede Position kann nur einmal benutzt werden."
 msgid "Page Title"
 msgstr "Titel der Seite"
 
-#: pages/models.py:41
+#: pages/models.py:39
+msgid "No inspiration? You can leave this field empty or fill it out later"
+msgstr ""
+"Keine Inspiration? Dieses Feld ist nicht obligatorisch und man kann es auch "
+"später noch ausfüllen"
+
+#: pages/models.py:43
 msgid "User"
 msgstr "Benutzer"
 
-#: pages/models.py:44 pages/templates/pages/page_list.html:25
+#: pages/models.py:46 pages/templates/pages/page_list.html:25
 msgid "Created at"
 msgstr "Erstellt am"
 
-#: pages/models.py:47 pages/models.py:50
+#: pages/models.py:49
 msgid "Is active"
 msgstr "Ist aktiv"
 
-#: pages/models.py:53
+#: pages/models.py:52
+#, fuzzy
+#| msgid "Make visible"
+msgid "Is visible"
+msgstr "Sichtbar machen"
+
+#: pages/models.py:55
 msgid "Token"
 msgstr "Token"
 
-#: pages/models.py:55
+#: pages/models.py:57
 msgid "Token created at"
 msgstr "Token erstellt am"
 
-#: pages/models.py:58
+#: pages/models.py:60
 msgid "Token Count"
 msgstr "Token Zähler"
 
-#: pages/models.py:167
+#: pages/models.py:62
+#, fuzzy
+#| msgctxt "menu item"
+#| msgid "Examples"
+msgid "Is example"
+msgstr "Beispiele"
+
+#: pages/models.py:172
 msgid "Page"
 msgstr "Seite"
 
-#: pages/models.py:169
+#: pages/models.py:174
 msgid "Position"
 msgstr "Position"
 
-#: pages/models.py:190
+#: pages/models.py:195
 msgid "General info module"
 msgstr "Allgemeine Informationen"
 
-#: pages/models.py:201
+#: pages/models.py:207
 msgid "I am autistic"
 msgstr "Ich bin Autist*in"
 
-#: pages/models.py:202
+#: pages/models.py:208
 msgid "I have autism"
 msgstr "Ich habe Autismus"
 
-#: pages/models.py:203
+#: pages/models.py:209
 msgid "I am on the autism spectrum"
 msgstr "Ich bin im Autismus-Spektrum"
 
-#: pages/models.py:204
+#: pages/models.py:210
 msgid "I have an autism spectrum disorder"
 msgstr "Ich habe eine Autismusspektrumstörung"
 
-#: pages/models.py:205
+#: pages/models.py:211
 msgid "I am neurodivergent"
 msgstr "Ich bin Neurodivergent"
 
-#: pages/models.py:206
+#: pages/models.py:212
 #, fuzzy
 #| msgid "I have aspergers syndrome"
 msgid "I have Asperger syndrome"
 msgstr "Ich habe das Asperger-Syndrom"
 
-#: pages/models.py:207
+#: pages/models.py:213
 msgid "I am an aspie"
 msgstr "Ich bin ein Aspie"
 
-#: pages/models.py:212
+#: pages/models.py:214
+msgid "Other"
+msgstr "Andere"
+
+#: pages/models.py:219
 msgid ""
 "With this module you can introduce yourself. Add a picture if you want to, "
 "state your pronouns or disclose your autism. As in all our modules, all of "
@@ -576,19 +694,37 @@ msgstr ""
 "Autismusdiagnose offenlegen. Wie in alle unsere Module sind alle diese "
 "Angaben optional."
 
-#: pages/models.py:217 pages/models.py:609
+#: pages/models.py:224 pages/models.py:628
 msgid "Name"
 msgstr "Name"
 
-#: pages/models.py:219
+#: pages/models.py:226
 msgid "Identity"
 msgstr "Identität"
 
-#: pages/models.py:233
+#: pages/models.py:232
+msgid "Specify your identity if you chose other above"
+msgstr ""
+"Wenn du oben andere gewählt hast, kannst du deine Identität hier "
+"spezifizieren"
+
+#: pages/models.py:234
+msgid "Prefered pronouns"
+msgstr "Bevorzugte Pronomen"
+
+#: pages/models.py:237
+msgid "She/Her/Hers, He/Him/His, They/Them/Theirs, etc."
+msgstr "3. Person zB sie, er, si_er, xier, ... und/oder 2. Person du, Sie"
+
+#: pages/models.py:239 pages/models.py:703
+msgid "Image"
+msgstr "Bild"
+
+#: pages/models.py:252
 msgid "Communication module"
 msgstr "Kommunikationsmodul"
 
-#: pages/models.py:239
+#: pages/models.py:258
 msgid ""
 "This module lets you describe your communication preferences in different "
 "situations. In addition you can give others tips on how to communicate "
@@ -598,40 +734,40 @@ msgstr ""
 "unterschiedliche Situationen angeben. Zudem kannst du noch zusätzliche Tipps "
 "geben wie andere die Kommunikation mit dir Effektiver gestalten können."
 
-#: pages/models.py:262
+#: pages/models.py:281
 #, fuzzy
 #| msgid "Use simple words and short senteces."
 msgid "Use simple words and short sentences."
 msgstr "Benutzen Sie einfache Wörter und kurze Sätze."
 
-#: pages/models.py:263
+#: pages/models.py:282
 msgid "Be very concrete and specific. Avoid very broad questions."
 msgstr ""
 "Machen Sie sehr konkrete und spezifische Angaben. Vermeiden Sie sehr offene "
 "Fragen."
 
-#: pages/models.py:265
+#: pages/models.py:284
 msgid "Show me diagrams or pictures whenever possible."
 msgstr "Zeigen Sie mir wenn möglich Diagramme oder Bilder."
 
-#: pages/models.py:266
+#: pages/models.py:285
 msgid "Write down important information or instructions for me."
 msgstr ""
 "Schreiben Sie alle wichtige Informationen und Instruktionen für mich auf."
 
-#: pages/models.py:267
+#: pages/models.py:286
 msgid "Give me very detailed information."
 msgstr "Geben Sie mir sehr detaillierte Informationen."
 
-#: pages/models.py:268
+#: pages/models.py:287
 msgid "Focus only on the most important information."
 msgstr "Fokussieren Sie nur auf die wichtigste Informationen."
 
-#: pages/models.py:269
+#: pages/models.py:288
 msgid "Be patient with me if I need to ask a lot of questions."
 msgstr "Seien Sie geduldig wenn ich viele Frage stelle."
 
-#: pages/models.py:271
+#: pages/models.py:290
 msgid ""
 "Give me extra time to process what you have said. Especially if I have to "
 "answer questions."
@@ -639,24 +775,24 @@ msgstr ""
 "Geben Sie mir extra Zeit um das gesagte zu verarbeiten. Besonders wenn ich "
 "Fragen beantworten muss."
 
-#: pages/models.py:273
+#: pages/models.py:292
 #, fuzzy
 #| msgid "Do not try to talk to me while ther are other noises."
 msgid "Do not try to talk to me while there are other noises."
 msgstr ""
 "Versuchen Sie nicht mit mir zu reden wenn es Hintergrundgeräusche gibt."
 
-#: pages/models.py:274
+#: pages/models.py:293
 msgid "If I seem rude, I don't mean it. I'm just really direct."
 msgstr ""
 "Wenn ich unhöflich erscheine ist dies nicht so gemeint. Ich bin einfach sehr "
 "direkt."
 
-#: pages/models.py:276
+#: pages/models.py:295
 msgid "I often take language too literally."
 msgstr "Ich nehme das gesagte oft zu wörtlich."
 
-#: pages/models.py:277
+#: pages/models.py:296
 msgid ""
 "I may have difficulty understanding tone of voice, facial expressions, or "
 "body language."
@@ -664,62 +800,62 @@ msgstr ""
 "Ich habe Schwierigkeiten Intonation, Gesichtsausdrücke oder Körpersprache zu "
 "interpretieren."
 
-#: pages/models.py:279
+#: pages/models.py:298
 msgid "I may have a hard time communicating, even if my speech sounds fluent."
 msgstr ""
 "Ich habe manchmal Schwierigkeiten mit der Kommunikation, auch wenn meine "
 "Sprache Fliessend erscheint."
 
-#: pages/models.py:281
+#: pages/models.py:300
 msgid "I can be involved in decisions even though I have difficulty speaking."
 msgstr ""
 "Ich kann in Entscheidungen mit einbezogen werden obwohl ich Schwierigkeiten "
 "habe zu reden."
 
-#: pages/models.py:283
+#: pages/models.py:302
 msgid "My ability to communicate changes a lot, depending on the situation."
 msgstr "Meine Kommunikationsfähigkeiten sind sehr Situationsabhängig."
 
-#: pages/models.py:285
+#: pages/models.py:304
 msgid "I have a hard time using the telephone."
 msgstr "Ich habe Schwierigkeiten mit Telefonieren."
 
-#: pages/models.py:290
+#: pages/models.py:309
 msgid "Communication suggestions"
 msgstr "Kommunikationshinweise "
 
-#: pages/models.py:309
+#: pages/models.py:328
 msgid "Text based alternative to speech"
 msgstr "Textbasierte alternative zu gesprochene Sprache"
 
-#: pages/models.py:310
+#: pages/models.py:329
 msgid "Picture based alternative to speech"
 msgstr "Bildbasierte alternative zu gesprochene Sprache"
 
-#: pages/models.py:311
+#: pages/models.py:330
 #, fuzzy
 #| msgid "Official signlanguage"
 msgid "Official sign-language"
 msgstr "Offizielle Gebärdensprache"
 
-#: pages/models.py:312
+#: pages/models.py:331
 msgid "Other signs, gestures or behaviours"
 msgstr "Andere Gebärden, Bewegungen oder Verhaltensweisen."
 
-#: pages/models.py:315
+#: pages/models.py:334
 msgid "Situation"
 msgstr "Situation"
 
-#: pages/models.py:331 pages/models.py:469 pages/models.py:619
-#: pages/models.py:682
+#: pages/models.py:350 pages/models.py:488 pages/models.py:638
+#: pages/models.py:701
 msgid "module"
 msgstr "Module"
 
-#: pages/models.py:337 pages/templates/pages/createdodontmodule.html:6
+#: pages/models.py:356 pages/templates/pages/createdodontmodule.html:6
 msgid "Do's and Don'ts module"
 msgstr "Do's and Don'ts Modul"
 
-#: pages/models.py:343
+#: pages/models.py:362
 msgid ""
 "With this module, you can provide 3 quick lists with things people can do, "
 "shouldn't do, or should ask you first."
@@ -727,51 +863,51 @@ msgstr ""
 "Mit dieser Module erstellst du 3 Listen die auf einen Blick vermitteln was "
 "andern Tun können, lassen sollen und nachfragen sollen."
 
-#: pages/models.py:376
+#: pages/models.py:395
 msgid "Use natural light and turn off fluorescent lights if possible"
 msgstr ""
 "Benutzen sie natürliches Licht und schalten Sie womöglich Leuchtstofflampen "
 "aus."
 
-#: pages/models.py:378
+#: pages/models.py:397
 msgid "Try to find a quiet room or space for me"
 msgstr "Versuchen Sie einen ruhigen Ort für mich zu finden."
 
-#: pages/models.py:379
+#: pages/models.py:398
 msgid "Let me use my headphones to listen to my favorite music"
 msgstr ""
 "Lassen Sie mich meine Kopfhörer benutzen und meine Lieblingsmusik hören."
 
-#: pages/models.py:381
+#: pages/models.py:400
 msgid "Let me use my ear protection to block out noises"
 msgstr "Lassen Sie mich meinen Hörschutz benutzen."
 
-#: pages/models.py:383
+#: pages/models.py:402
 msgid ""
 "Let me fidget, move around, flap my arms or make other sounds or motions"
 msgstr ""
 "Lassen Sie mich zappeln, flattern, oder andere Geräusche oder Bewegungen "
 "machen."
 
-#: pages/models.py:385
+#: pages/models.py:404
 msgid "Talk to me with a calm voice"
 msgstr "Reden Sie mit ruhiger Stimme"
 
-#: pages/models.py:386
+#: pages/models.py:405
 msgid "Tel me about changes in plans as soon as possible"
 msgstr "Informieren Sie mich so bald wie möglich über Planänderungen."
 
-#: pages/models.py:387
+#: pages/models.py:406
 msgid "Turn of the TV, radio or other things that make noise"
 msgstr ""
 "Schalten Sie der Fernseher, das Radio und andere Geräte die Geräusche "
 "produzieren ab."
 
-#: pages/models.py:395
+#: pages/models.py:414
 msgid "Ask before you touch me"
 msgstr "Fragen Sie mich bevor Sie mich berühren"
 
-#: pages/models.py:397
+#: pages/models.py:416
 #, fuzzy
 #| msgid "Ask me if I am ready to go before you take me to a new place"
 msgid ""
@@ -780,36 +916,36 @@ msgid ""
 msgstr ""
 "Fragen Sie mich ob ich parat bin bevor Sie mich zu einen neuen Ort bringen"
 
-#: pages/models.py:399
+#: pages/models.py:418
 msgid "Ask me about what method of communication I want to use"
 msgstr "Fragen Sie mich wie ich kommunizieren möchte."
 
-#: pages/models.py:401
+#: pages/models.py:420
 msgid ""
 "Ask me if I want to talk or socialize before introducing me to new people"
 msgstr ""
 "Fragen Sie mich ob ich das möchte bevor Sie mich neuen Leuten vorstellen."
 
-#: pages/models.py:407
+#: pages/models.py:426
 msgid "Don't force me to make eye contact"
 msgstr "Zwingen Sie mich nicht Augenkontakt zu machen."
 
-#: pages/models.py:409
+#: pages/models.py:428
 msgid "Do not sit or stand close to me unless it is necessary"
 msgstr ""
 "Stehen oder Sitzen Sie nicht zu nah wenn es nicht absolut notwendig ist."
 
-#: pages/models.py:411
+#: pages/models.py:430
 msgid "Avoid chitchat"
 msgstr "Vermeiden Sie Smalltalk"
 
-#: pages/models.py:412
+#: pages/models.py:431
 msgid "Don't talk a lot to try to calm me, as this has the contrary effect"
 msgstr ""
 "Versuchen Sie nicht mich mit vielen Wörtern zu beruhigen. Damit bewirken Sie "
 "dem Gegenteil."
 
-#: pages/models.py:414
+#: pages/models.py:433
 #, fuzzy
 #| msgid "Don't make unexpected hard noises such as slamming the door"
 msgid "Don't make unexpected hard noises such as slamming a door"
@@ -817,23 +953,23 @@ msgstr ""
 "Machen Sie keine unerwartete laute Geräusche (zum Beispiel die Türe "
 "zuschlagen)"
 
-#: pages/models.py:420
+#: pages/models.py:439
 msgid "Things others can do to help you"
 msgstr "Sachen die andern machen können um dich zu helfen"
 
-#: pages/models.py:428
+#: pages/models.py:447
 msgid "Things people should ask you about"
 msgstr "Sachen die andere dich fragen sollten"
 
-#: pages/models.py:436
+#: pages/models.py:455
 msgid "Things others should not do"
 msgstr "Sachen die man niemals machen sollte"
 
-#: pages/models.py:446 pages/templates/pages/createmedicationmodule.html:9
+#: pages/models.py:465 pages/templates/pages/createmedicationmodule.html:9
 msgid "Medication module"
 msgstr "Medikamente"
 
-#: pages/models.py:452
+#: pages/models.py:471
 msgid ""
 "Here you can create a table with your medication and when you take how much "
 "of it. This can be useful for doctors or caregivers, or just as a reminder "
@@ -843,29 +979,29 @@ msgstr ""
 "wie viel du davon nimmst. Diese Information kann sinnvoll sein für Ärzte "
 "oder sonstige Fachpersonen, oder als Erinnerung für dich selbst."
 
-#: pages/models.py:465
+#: pages/models.py:484
 msgid "Medication name"
 msgstr "Name des Medikaments"
 
-#: pages/models.py:491
+#: pages/models.py:510
 msgid "Intake time"
 msgstr "Zeitpunkt der Einnahme"
 
-#: pages/models.py:493
+#: pages/models.py:512
 msgid "Intake quantity"
 msgstr "Einnahmemenge"
 
-#: pages/models.py:496
+#: pages/models.py:515
 msgid "medication"
 msgstr "Medikament"
 
-#: pages/models.py:516
+#: pages/models.py:535
 #, fuzzy
 #| msgid "Choose another module"
 msgid "Sensory module"
 msgstr "Wähle eine weitere Module"
 
-#: pages/models.py:522
+#: pages/models.py:541
 msgid ""
 "This module presents your sensory profile. You can also add other "
 "information related to sensory processing."
@@ -873,31 +1009,31 @@ msgstr ""
 "Dieses Modul zeigt ein Sensorisches Profil an. Dazu kannst du noch weitere "
 "Angaben machen die mit sensorische Verarbeitung zu tun haben."
 
-#: pages/models.py:533
+#: pages/models.py:552
 msgid "Do not include"
 msgstr "Nicht aufnehmen"
 
-#: pages/models.py:534
+#: pages/models.py:553
 msgid "Very low"
 msgstr "Sehr gering"
 
-#: pages/models.py:535
+#: pages/models.py:554
 msgid "Lower than average"
 msgstr "Weniger als durchschnittlich"
 
-#: pages/models.py:536
+#: pages/models.py:555
 msgid "Average"
 msgstr "Durchschnittlich"
 
-#: pages/models.py:537
+#: pages/models.py:556
 msgid "Higher than average"
 msgstr "Mehr als durchschnittlich"
 
-#: pages/models.py:538
+#: pages/models.py:557
 msgid "Very high"
 msgstr "Sehr hoch"
 
-#: pages/models.py:547
+#: pages/models.py:566
 #, fuzzy
 #| msgid ""
 #| "I have trouble processing more than one sense at a time, for example "
@@ -909,7 +1045,7 @@ msgstr ""
 "Ich habe mühe damit mehr als einen Sinn gleichzeitig zu verarbeiten, zum "
 "Beispiel Ihnen zuhören währenddem das ich etwas anschaue"
 
-#: pages/models.py:550
+#: pages/models.py:569
 #, fuzzy
 #| msgid ""
 #| "I have difficulties recognizing and/or reporting pain or other symptoms"
@@ -918,31 +1054,31 @@ msgstr ""
 "Ich habe Schwierigkeiten damit Schmerzen und andere Symptome zu erkennen und/"
 "oder darüber zu berichten"
 
-#: pages/models.py:554
+#: pages/models.py:573
 msgid "Sensitivity to sound"
 msgstr "Empfindlichkeit bezüglich Geräusche"
 
-#: pages/models.py:558
+#: pages/models.py:577
 msgid "Sensitivity to light"
 msgstr "Empfindlichkeit bezüglich Licht "
 
-#: pages/models.py:562
+#: pages/models.py:581
 msgid "Sensitivity to smells"
 msgstr "Empfindlichkeit bezüglich Gerüche"
 
-#: pages/models.py:567
+#: pages/models.py:586
 msgid "Sensitivity to temperature"
 msgstr "Empfindlichkeit bezüglich Wärme/Kälte"
 
-#: pages/models.py:573
+#: pages/models.py:592
 msgid "Additional sensory info"
 msgstr "Zusätzliche sensorische Informationen"
 
-#: pages/models.py:589
+#: pages/models.py:608
 msgid "Contact module"
 msgstr "Kontakte"
 
-#: pages/models.py:595
+#: pages/models.py:614
 msgid ""
 "In this module you can add all kinds of contact data. As always, all fields "
 "are optional, so you can add contacts with only a phone number or email "
@@ -953,11 +1089,11 @@ msgstr ""
 "Emailadresse hinzufügen. Aber auch mit vollständige Adresse oder sogar eine "
 "Karte (noch nicht verfügbar)"
 
-#: pages/models.py:602
+#: pages/models.py:621
 msgid "Contact title"
 msgstr "Kontakt Titel"
 
-#: pages/models.py:604
+#: pages/models.py:623
 msgid ""
 "Choose a descriptive title for the contact. A good title may include the "
 "role of this contact, or the situation in which they can be contacted."
@@ -966,27 +1102,27 @@ msgstr ""
 "die Rolle dieses Kontakts enthalten, und/oder die Situation in welche sie*er "
 "kontaktiert werden sollte. "
 
-#: pages/models.py:611
+#: pages/models.py:630
 msgid "Address"
 msgstr "Adresse"
 
-#: pages/models.py:613
+#: pages/models.py:632
 msgid "Phone number"
 msgstr "Telefonnummer"
 
-#: pages/models.py:615
+#: pages/models.py:634
 msgid "Email address"
 msgstr "Emailadresse"
 
-#: pages/models.py:617
+#: pages/models.py:636
 msgid "Extra comment"
 msgstr "Zusätzlicher Kommentar"
 
-#: pages/models.py:625
+#: pages/models.py:644
 msgid "Free text module"
 msgstr "Freier Text"
 
-#: pages/models.py:627
+#: pages/models.py:646
 msgid ""
 "Here you can create a custom module containing text and a title. You can use "
 "it  for any text you want to add that doesn't have place in our pre-"
@@ -995,20 +1131,20 @@ msgstr ""
 "Eine freie Module mit einen Text und Titel. Du kannst diese Module für jeder "
 "Text verwenden der sonst nirgendwo Platz hat."
 
-#: pages/models.py:634 pages/models.py:653 pages/models.py:673
+#: pages/models.py:653 pages/models.py:672 pages/models.py:692
 #: pages/templates/pages/page_list.html:24
 msgid "Title"
 msgstr "Titel"
 
-#: pages/models.py:636
+#: pages/models.py:655
 msgid "Text"
 msgstr "Text"
 
-#: pages/models.py:645
+#: pages/models.py:664
 msgid "Free list module"
 msgstr "Freier Liste"
 
-#: pages/models.py:649
+#: pages/models.py:668
 #, fuzzy
 #| msgid ""
 #| "A place to add your own lists. List things you are good at, your hobies, "
@@ -1023,11 +1159,11 @@ msgstr ""
 "drin bist oder die du gern machst. Fragen die du für einen Gespräch "
 "vorbereitet hast und noch soviel mehr."
 
-#: pages/models.py:665
+#: pages/models.py:684
 msgid "Free picture module"
 msgstr "Freie Bilder"
 
-#: pages/models.py:667
+#: pages/models.py:686
 #, fuzzy
 #| msgid ""
 #| "Upload your own pictures and add a title and a description to them. "
@@ -1041,15 +1177,11 @@ msgstr ""
 "Hier kannst du Bilder hochladen und einen Titel und Beschreibung hinzufügen. "
 "Zeichnungen oder Fotos sind oft gute Mittel um etwas verständlich zu machen."
 
-#: pages/models.py:684
-msgid "Image"
-msgstr "Bild"
-
-#: pages/models.py:686
+#: pages/models.py:705
 msgid "Image description"
 msgstr "Bildbeschreibung"
 
-#: pages/models.py:688
+#: pages/models.py:707
 msgid "Image title"
 msgstr "Titel des Bildes"
 
@@ -1075,40 +1207,30 @@ msgctxt "action button"
 msgid "Create one!"
 msgstr "Probiere es aus!"
 
-#: pages/templates/pages/base.html:36
-msgctxt "menu item"
-msgid "How it works"
-msgstr "Wie es funktioniert"
-
-#: pages/templates/pages/base.html:40
+#: pages/templates/pages/base.html:43
 msgctxt "menu item"
 msgid "Examples"
 msgstr "Beispiele"
 
-#: pages/templates/pages/base.html:44
+#: pages/templates/pages/base.html:47
 msgctxt "menu item"
 msgid "FAQ"
 msgstr "FAQ"
 
-#: pages/templates/pages/base.html:48
-msgctxt "menu item"
-msgid "About"
-msgstr "Über uns"
-
-#: pages/templates/pages/base.html:60
+#: pages/templates/pages/base.html:66
 msgid "Change Password"
 msgstr "Passwort ändern"
 
-#: pages/templates/pages/base.html:63
+#: pages/templates/pages/base.html:69
 msgid "Log out"
 msgstr "Ausloggen"
 
-#: pages/templates/pages/base.html:67
+#: pages/templates/pages/base.html:73
 msgctxt "menu item"
 msgid "My Pages"
 msgstr "Meine Seiten"
 
-#: pages/templates/pages/base.html:72
+#: pages/templates/pages/base.html:78
 msgctxt "menu item"
 msgid "Log in"
 msgstr "Einloggen"
@@ -1179,7 +1301,7 @@ msgstr "Weiteres Bild hinzufügen"
 msgid "Free Text Module"
 msgstr "Module mit Freier Text"
 
-#: pages/templates/pages/creategeneralinfomodule.html:6
+#: pages/templates/pages/creategeneralinfomodule.html:7
 msgid "General Information Module"
 msgstr "Modul mit allgemeine Informationen"
 
@@ -1202,13 +1324,49 @@ msgctxt "Button"
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
-#: pages/templates/pages/createpage.html:58
+#: pages/templates/pages/createpage.html:29
+msgid "You can now start creating your page."
+msgstr "Du kannst jetzt anfangen deine Infoseite zu gestallten."
+
+#: pages/templates/pages/createpage.html:36
+msgid ""
+"We've sent you an email to confirm your account in case you want to keep "
+"using it."
+msgstr ""
+"Wir haben dich eine Email geschickt um dein Konto zu bestätigen falls du es "
+"weiter nutzen mochtest."
+
+#: pages/templates/pages/createpage.html:37
+msgid "This email contains a link to set your account password"
+msgstr "Dieses Email enthält einen Link womit du dein Passwort setzen kannst."
+
+#: pages/templates/pages/createpage.html:38
+msgid ""
+"You can do all of this later and can start creating your first page now!"
+msgstr ""
+"Du kannst aber jetzt sofort loslegen und das mit dem Email auch später noch "
+"machen."
+
+#: pages/templates/pages/createpage.html:42
+msgid "continue"
+msgstr "Weiter"
+
+#: pages/templates/pages/createpage.html:51
+#, python-format
+msgid ""
+"If you don't want to start from scratch, you can copy one of our <a href="
+"\"%(example_url)s\" class=\"alert-link\">examples</a> and start from there."
+msgstr "Wenn du nicht von Null anfangen möchtest, kannst du auch eine der "
+"<a href=\"%(example_url)s\" class=\"alert-link\">Beispiele</a> kopieren "
+"und für deine Zwecke abändern"
+
+#: pages/templates/pages/createpage.html:97
 #, fuzzy
 #| msgid "You allready have the following modules:"
 msgid "You already have the following modules:"
 msgstr "Du hast schon folgende Module erstellt:"
 
-#: pages/templates/pages/createpage.html:62
+#: pages/templates/pages/createpage.html:101
 msgid ""
 "We've listed them in the order you added them here. You can arrange them in "
 "the order you want in the next step."
@@ -1216,18 +1374,27 @@ msgstr ""
 "Wir haben sie in der Reihenfolge aufgelistet indem sie Hinzugefügt wurden. "
 "Du kannst die Reihenfolge in dem nächsten schritt ändern."
 
-#: pages/templates/pages/createpage.html:92
+#: pages/templates/pages/createpage.html:108
+#, fuzzy
+#| msgid "Preview"
+msgctxt "Button"
+msgid "View preview"
+msgstr "Vorschau"
+
+#: pages/templates/pages/createpage.html:136
 #: pages/templates/pages/page_list.html:42
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: pages/templates/pages/createpage.html:93
+#: pages/templates/pages/createpage.html:137
 #: pages/templates/pages/deletemedicationitem.html:50
 #: pages/templates/pages/deletemodule.html:26
+#: pages/templates/pages/deletepage.html:14
+#: pages/templates/pages/page_list.html:44
 msgid "Delete"
 msgstr "Löschen"
 
-#: pages/templates/pages/createpage.html:102
+#: pages/templates/pages/createpage.html:146
 msgid ""
 "When you are finished adding information, you can arrange your modules in "
 "the order you want in the next step."
@@ -1235,12 +1402,13 @@ msgstr ""
 "Wenn du alle gewünschten Informationen hinzugefügt hast kannst du im "
 "nächsten schritt die Reihenfolge festlegen."
 
-#: pages/templates/pages/createpage.html:109
+#: pages/templates/pages/createpage.html:153
 msgctxt "Button"
 msgid "Next step: Arrange modules"
 msgstr "Nächster Schritt: Modulen Anordnen"
 
-#: pages/templates/pages/createpage.html:141
+#: pages/templates/pages/createpage.html:185
+#: pages/templates/widgets/bs_checkbox_select.html:14
 msgctxt "Button"
 msgid "Create module"
 msgstr "Module Erstellen"
@@ -1255,6 +1423,7 @@ msgstr "Möchtest du dieser Medikamenteintrag wirklich löschen?"
 
 #: pages/templates/pages/deletemedicationitem.html:49
 #: pages/templates/pages/deletemodule.html:25
+#: pages/templates/pages/deletepage.html:13
 #, fuzzy
 #| msgctxt "Button"
 #| msgid "Back"
@@ -1263,6 +1432,12 @@ msgstr "Zurück"
 
 #: pages/templates/pages/deletemodule.html:19
 msgid "Are you sure you want to delete this module?"
+msgstr "Bist du sicher das du dieses Modul löschen möchtest?"
+
+#: pages/templates/pages/deletepage.html:11
+#, fuzzy
+#| msgid "Are you sure you want to delete this module?"
+msgid "Are you sure you want to delete this page?"
 msgstr "Bist du sicher das du dieses Modul löschen möchtest?"
 
 #: pages/templates/pages/empty.html:10
@@ -1307,36 +1482,40 @@ msgstr "Link"
 msgid "Preview"
 msgstr "Vorschau"
 
-#: pages/templates/pages/page_list.html:50
+#: pages/templates/pages/page_list.html:51
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: pages/templates/pages/page_list.html:52
+#: pages/templates/pages/page_list.html:53
 msgid "Make private"
 msgstr "Privat machen"
 
-#: pages/templates/pages/page_list.html:56
+#: pages/templates/pages/page_list.html:57
 msgid "Private"
 msgstr "Privat"
 
-#: pages/templates/pages/page_list.html:58
+#: pages/templates/pages/page_list.html:59
 msgid "Make visible"
 msgstr "Sichtbar machen"
 
-#: pages/templates/pages/page_list.html:68
+#: pages/templates/pages/page_list.html:70
+msgid "Link copied to clipboard"
+msgstr "Link wurde zur Zwisschenablage kopiert"
+
+#: pages/templates/pages/page_list.html:70
 msgid "Copy link"
 msgstr "Link kopieren"
 
-#: pages/templates/pages/page_list.html:71
-#: pages/templates/pages/page_list.html:99
+#: pages/templates/pages/page_list.html:73
+#: pages/templates/pages/page_list.html:101
 msgid "Generate new link"
 msgstr "Neuer Link generieren"
 
-#: pages/templates/pages/page_list.html:78
+#: pages/templates/pages/page_list.html:80
 msgid "New link for sharing"
 msgstr "Neuer Link zum Teilen"
 
-#: pages/templates/pages/page_list.html:85
+#: pages/templates/pages/page_list.html:87
 msgid ""
 "The current link will become invalid if you generate a new one! People you "
 "shared the old link with will no longer be able to see your page, unless you "
@@ -1346,7 +1525,7 @@ msgstr ""
 "mit denen du den alten Link geteilt hast werden deine Seite nicht mehr sehen "
 "können, ausser wenn du ihnen den neuen Link zukommen lasst."
 
-#: pages/templates/pages/page_list.html:92
+#: pages/templates/pages/page_list.html:94
 msgid ""
 "Click cancel if you don't want to generate a new link and keep using the old "
 "one."
@@ -1354,15 +1533,15 @@ msgstr ""
 "Wähle Abbrechen wenn du kein neuer Link generieren sondern der alte Link "
 "weiter benutzen möchtest"
 
-#: pages/templates/pages/page_list.html:98
+#: pages/templates/pages/page_list.html:100
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: pages/templates/pages/page_list.html:106
+#: pages/templates/pages/page_list.html:108
 msgid "Generate link"
 msgstr "Generiere Link"
 
-#: pages/templates/pages/page_list.html:112
+#: pages/templates/pages/page_list.html:114
 msgid ""
 "Your page is currently private. Noone except you can view it. Change the "
 "page visibility to generate a sharing link."
@@ -1371,7 +1550,7 @@ msgstr ""
 "die Sichtbarkeitseinstellung der Seite bevor du einen Link zum Teilen "
 "generieren kannst."
 
-#: pages/templates/pages/page_list.html:121
+#: pages/templates/pages/page_list.html:123
 msgid ""
 "This link will not work as long as the visibility of your page is set to "
 "private."
@@ -1379,10 +1558,16 @@ msgstr ""
 "Dieser Link ist ungültig so lange die Sichtbarkeit deiner Seite auf Privat "
 "gesetzt ist."
 
-#: pages/templates/pages/page_list.html:137
-#, python-format
-msgid "You don't have any pages yet. <a href=\"%(url)s\">Create one.</a>"
+#: pages/templates/pages/page_list.html:139
+#, fuzzy, python-format
+#| msgid "You don't have any pages yet. <a href=\"%(url)s\">Create one.</a>"
+msgid ""
+"You don't have any pages yet. <a href=\"%(create_url)s\">Create one.</a>"
 msgstr "Du hast noch keine Infoseiten. <a href=\"%(url)s\">Erstelle eine.</a>"
+
+#: pages/templates/pages/page_preview.html:11
+msgid "back"
+msgstr "Zurück"
 
 #: pages/templates/pages/sortmodules.html:38
 msgid "Sort Modules:"
@@ -1444,15 +1629,15 @@ msgid "I am much more sensitive to %(sense)s than most people."
 msgstr ""
 "Ich bin viel mehr als durchschnittlich empfindlich bezüglich %(sense)s."
 
-#: pages/views.py:643
+#: pages/views.py:726
 msgid "No Page found matching the query"
 msgstr "Keine Seite gefunden für diese Anfrage"
 
-#: uniqid/settings.py:115
+#: uniqid/settings.py:116
 msgid "English"
 msgstr "Englisch"
 
-#: uniqid/settings.py:116
+#: uniqid/settings.py:117
 msgid "German"
 msgstr "Deutsch"
 
@@ -1554,8 +1739,9 @@ msgid ""
 "The link you used was invalid, possibly because it has already been used, or "
 "because it has expired. Please <a href=\"%(reseturl)s\" class=\"alert-link"
 "\">request a new link</a>."
-msgstr "Dieser Link ist ungültig. Möglicherweise weil er schon mal benutzt "
-"wurde, oder weil er abgelaufen ist. <a href=\"%(reseturl)s\" class=\"alert-link"
+msgstr ""
+"Dieser Link ist ungültig. Möglicherweise weil er schon mal benutzt wurde, "
+"oder weil er abgelaufen ist. <a href=\"%(reseturl)s\" class=\"alert-link"
 "\">Beantrage bitte einen neunen Resetlink</a>."
 
 #: users/templates/users/register.html:10
@@ -1567,9 +1753,10 @@ msgid ""
 "All Infographics you create will be coupled to your email address. We will "
 "only email you about things concerning your account and your infographics. "
 "We will never give your email address to others."
-msgstr "Alle Infoseiten den du erstellst werden mit deine Emailadresse "
-"verbunden. Wir werden dich nur Emails schicken mit beziehung auf dein "
-"Benutzerkonto. Wir werden deine Emailadresse nicht weitergeben."
+msgstr ""
+"Alle Infoseiten den du erstellst werden mit deine Emailadresse verbunden. "
+"Wir werden dich nur Emails schicken mit beziehung auf dein Benutzerkonto. "
+"Wir werden deine Emailadresse nicht weitergeben."
 
 #: users/templates/users/register.html:41
 msgid "Already have an account?"
@@ -1591,28 +1778,48 @@ msgstr "Passwort Zurücksetzen"
 msgid "Finalize your registration"
 msgstr "Deine Registrierung"
 
-#: users/views.py:19
+#: users/views.py:25
 msgid "Your password was changed successfully."
 msgstr "Dein Passwort wurde erfolgreich geändert."
 
-#: users/views.py:42
+#: users/views.py:51
 msgid ""
 "Your password was changed successfully. Please log in with your new password."
-msgstr "Dein Passwort wurde erfolgreich geändert. Du kannst dich jetzt "
-"mit deinem neuem Passwort einloggen."
+msgstr ""
+"Dein Passwort wurde erfolgreich geändert. Du kannst dich jetzt mit deinem "
+"neuem Passwort einloggen."
 
-#: users/views.py:48
+#: users/views.py:57
 msgid "Thanks for registering. You can now log in with your new password."
-msgstr "Danke fürs Registrieren. Du kannst dich jetzt mit deinem neuem "
-"Passwort einloggen."
+msgstr ""
+"Danke fürs Registrieren. Du kannst dich jetzt mit deinem neuem Passwort "
+"einloggen."
 
-#: users/views.py:70
+#: users/views.py:84
 msgid ""
 "You can now start creating your page. We've sent you an email to confirm "
 "your account in case you want to keep using it."
-msgstr "Du kannst Jetzt anfangen deine Seite zu gestallten. Wir haben dich "
-"eine Email geschickt um dein Konto zu bestätigen falls du es weiter nutzen "
+msgstr ""
+"Du kannst Jetzt anfangen deine Seite zu gestallten. Wir haben dich eine "
+"Email geschickt um dein Konto zu bestätigen falls du es weiter nutzen "
 "mochtest."
+
+#~ msgid "Example 1"
+#~ msgstr "Beispiel 1"
+
+#~ msgid "Example 2"
+#~ msgstr "Beispiel 2"
+
+#~ msgid "Example 3"
+#~ msgstr "Beispiel 3"
+
+#~ msgctxt "menu item"
+#~ msgid "How it works"
+#~ msgstr "Wie es funktioniert"
+
+#~ msgctxt "menu item"
+#~ msgid "About"
+#~ msgstr "Über uns"
 
 #, fuzzy
 #~| msgid "Ask before touching my stuff"

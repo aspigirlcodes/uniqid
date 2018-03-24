@@ -18,8 +18,8 @@ class CreatePageTestCase(TestCase):
                                     {'title': 'testpage',
                                      'module': 'generalinfomodule',
                                      'submit': ''})
-        self.assertEqual(Page.objects.all().count(), 1)
-        page = Page.objects.first()
+        self.assertEqual(Page.objects.filter(title="testpage").count(), 1)
+        page = Page.objects.get(title="testpage")
         self.assertRedirects(response, reverse("pages:creategeneralinfomodule",
                                                args=[page.id, ]))
         self.assertEqual(page.user, user)
@@ -136,4 +136,24 @@ class DeletePageTestCase(TestCase):
         url = reverse('pages:deletepage', args=[str(self.page.id)])
         response = self.client.post(url, {'delete': ''})
         self.assertRedirects(response, reverse('pages:pagelist'))
-        self.assertEquals(Page.objects.all().count(), 0)
+        self.assertEquals(Page.objects.filter(title="testpage").count(), 0)
+
+
+class DuplicateExampleTestCase(TestCase):
+    def setUp(self):
+        self.user = UserModel.objects.create_user("testuser",
+                                                  email="test@test.tt",
+                                                  password="test")
+        self.client.login(username=self.user.username, password="test")
+
+    def test_duplicate_example(self):
+        examplepage = Page.objects.filter(is_example=True)[0]
+        url = reverse('pages:duplicatepage', args=[str(examplepage.id)])
+        response = self.client.post(url, {'submit': ''})
+        self.assertEqual(self.user.page_set.filter(title=examplepage.title)
+                         .count(), 1)
+        copiedpage = self.user.page_set.get(title=examplepage.title)
+        self.assertRedirects(response, reverse("pages:addmodule",
+                                               args=[str(copiedpage.id)]))
+        self.assertFalse(copiedpage.is_example)
+        self.assertFalse(copiedpage.is_visible)

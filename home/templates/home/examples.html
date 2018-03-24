@@ -20,12 +20,14 @@
                   <div class="col-auto">
                     <h1>{{example.title}}</h1>
                   </div>
-                  <div class="col-auto text-right">
-                    <form action="{% url "pages:duplicatepage" example.id %}" method="post">
-                      {% csrf_token %}
-                      <button type="submit" name="toggle" class="btn btn-success">{% trans "Start from this example" %}</button>
-                    </form>
-                  </div>
+                  {% if user.is_authenticated %}
+                    <div class="col-auto text-right">
+                      <form action="{% url "pages:duplicatepage" example.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="submit" class="btn btn-success">{% trans "Start from this example" %}</button>
+                      </form>
+                    </div>
+                  {% endif %}
                 </div>
               {% endif %}
               {% with modules=example.get_all_modules_sorted %}
