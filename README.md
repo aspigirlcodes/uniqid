@@ -56,6 +56,6 @@ Tags on master indicate the different releases.
 The last release is tagged 'v0.5'
 
 ## documentation
-[The written thesis about this project](thesis/tesis.pdf)
+[The written thesis about this project](thesis/thesis.pdf)
 
 [Reference documentation for this project](docs/_build/html/index.html)

@@ -4,6 +4,8 @@ __pycache__
 uniqid/settings_local.py
 logs/
 uniqid-env/
+doctrees/
+.buildinfo
 /static/
 /media/
 /pages/static/css/offline/
