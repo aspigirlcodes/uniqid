@@ -26,10 +26,29 @@ class PageManager(models.Manager):
 
 class Page(models.Model):
     """
-    A Page is a collection of Modules
+    A Page is a collection of Modules with some extras
 
-    A Page has a title and is linked to the user who created it
-    through the user field. It can contain any number of any type of modules.
+    A Page has a title and is linked to the :class:`django.contrib.auth.User`
+    who created it through the user field.
+    It knows whether it is active, visible, an example.
+    It can have a token for sharing through a secret url.
+
+    It can contain any number of any type of modules, and has the ability to
+    sort them by their position.
+
+    Module types:
+
+    * :class:`pages.models.GeneralInfoModule`
+    * :class:`pages.models.CommunicationModule`
+    * :class:`pages.models.DoDontModule`
+    * :class:`pages.models.MedicationModule`
+    * :class:`pages.models.SensoryModule`
+    * :class:`pages.models.ContactModule`
+    * :class:`pages.models.FreeTextModule`
+    * :class:`pages.models.FreeListModule`
+    * :class:`pages.models.FreePictureModule`
+
+
     """
 
     objects = PageManager()
@@ -48,10 +67,14 @@ class Page(models.Model):
                                       blank=True)
     is_active = models.BooleanField(verbose_name=_("Is active"),
                                     default=True,
-                                    blank=True)
+                                    blank=True,
+                                    help_text=_("consider non active views "
+                                                "as deleted"))
     is_visible = models.BooleanField(verbose_name=_("Is visible"),
                                      default=False,
-                                     blank=True)
+                                     blank=True,
+                                     help_text=_("visible to other users than "
+                                                 "the creating user."))
     token = models.CharField(verbose_name=_("Token"), blank=True, default="",
                              max_length=64)
     token_ts = models.DateTimeField(verbose_name=_("Token created at"),
@@ -64,7 +87,7 @@ class Page(models.Model):
 
     def get_all_modules(self, **kwargs):
         """
-        Returns a list of querysets, one per :class:`Module` type.
+        Returns a list of querysets, one per Module type.
         Kwargs will be passed to the filter method used to get the querysets.
         """
         return [
@@ -91,7 +114,7 @@ class Page(models.Model):
 
     def module_deleted(self, position):
         """
-        Handles cleanup when a :class:`Module` is deleted.
+        Handles cleanup when a Module is deleted.
 
         Counts down the pages module number.
         Counts down the position of all the modules
@@ -163,7 +186,7 @@ class Page(models.Model):
 class Module(models.Model):
     """
     Abstract baseclass modules can inherit from. It has a `ForeignKey`
-    relationship to :class:`Page` and a position field.
+    relationship to :class:`pages.models:Page` and a position field.
     """
     class Meta:
         abstract = True
@@ -171,7 +194,8 @@ class Module(models.Model):
 
     page = models.ForeignKey(Page, verbose_name=_("Page"),
                              on_delete=models.CASCADE)
-    position = models.IntegerField(verbose_name=_("Position"))
+    position = models.IntegerField(verbose_name=_("Position"),
+                                   help_text=_("1-based"))
 
     @property
     def type(self):
@@ -190,6 +214,12 @@ class Module(models.Model):
 
 
 class GeneralInfoModule(Module):
+    """
+    Module containing general information about the user.
+    such as name, (autism related) identity, picture, ...
+
+    identity field uses IDENTITIES as choices.
+    """
 
     class Meta:
         verbose_name = _("General info module")
@@ -247,6 +277,12 @@ class GeneralInfoModule(Module):
 
 
 class CommunicationModule(Module):
+    """
+    This module contains communication suggestions, and can contain multiple
+    :class:`pages.models.CommunicationMethods`.
+
+    The suggestions_choices field uses SUGGESTIONS as choices.
+    """
 
     class Meta:
         verbose_name = _("Communication module")
@@ -314,6 +350,14 @@ class CommunicationModule(Module):
 
 
 class CommunicationMethods(models.Model):
+    """
+    CommunicationMethods belong to a :class:`pages.models.CommunicationModule`.
+    They describe prefered communication methods in two directions
+    ('me to you' and 'you to me') for a certain situation.
+
+    The fields you_to_me_choices and  me_to_you_choices
+    both use METHODS as choices.
+    """
 
     SPOKEN = "01_spoken"
     WRITTEN = "02_written"
@@ -352,6 +396,15 @@ class CommunicationMethods(models.Model):
 
 
 class DoDontModule(Module):
+    """
+    Module containing lists of things to 'do', 'ask first' and 'don't do'.
+
+    do_choices field uses DOS as choices.
+
+    ask_choices field uses ASKS as choices.
+
+    dont_choices field uses DONTS as choices.
+    """
     class Meta:
         verbose_name = _("Do's and Don'ts module")
 
@@ -461,6 +514,9 @@ class DoDontModule(Module):
 
 
 class MedicationModule(Module):
+    """
+    This module can contain multiple :class:`pages.models.MedicationItem`.
+    """
     class Meta:
         verbose_name = _("Medication module")
 
@@ -478,6 +534,20 @@ class MedicationModule(Module):
 
 
 class MedicationItem(models.Model):
+    """
+    MedicationItems belong to a :class:`pages.models.MedicationModule`.
+
+    Each MedicationItem has a name, and a field for remarks
+
+    They can contain multiple :class:`pages.models.MedicationIntake`,
+    with further information.
+
+    They have a fixed position within the
+    :class:`pages.models.MedicationModule`,
+    depending on the order they were added. This position is
+    determined by the position field which is set automatically
+    in the save method.
+    """
     class Meta:
         ordering = ['module', 'position']
 
@@ -491,6 +561,14 @@ class MedicationItem(models.Model):
                                            db_index=True)
 
     def save(self, *args, **kwargs):
+        """
+        If creating
+
+        sets position field to the current maximum of positions within the
+        :class:`pages.models:MedicationModule` +1 and saves the object.
+
+        Else just save the object
+        """
         needs_position = self._state.adding
         if needs_position:
             try:
@@ -504,6 +582,16 @@ class MedicationItem(models.Model):
 
 
 class MedicationIntake(models.Model):
+    """
+    MedicationIntakes belong to a :class:`pages.models.MedicationItem`.
+
+    Each MedicationIntake has a time and quantity
+
+    They have a fixed position within the :class:`pages.models.MedicationItem`,
+    depending on the order they were added. This position is
+    determined by the position field which is set automatically
+    in the save method.
+    """
     class Meta:
         ordering = ['medication', 'position']
 
@@ -518,6 +606,14 @@ class MedicationIntake(models.Model):
                                            db_index=True)
 
     def save(self, *args, **kwargs):
+        """
+        If creating
+
+        sets position field to the current maximum of positions within the
+        :class:`pages.models.MedicationItem` +1 and saves the object.
+
+        Else just save the object
+        """
         needs_position = self._state.adding
         if needs_position:
             try:
@@ -531,6 +627,14 @@ class MedicationIntake(models.Model):
 
 
 class SensoryModule(Module):
+    """
+    Module containing sensory information.
+    One can state how sensitive one is to sound, light, smell and temperature.
+    On top of that further sensory information can be added.
+
+    sound, light, smell and temperature fields use RANGE as choices.
+    extra_choices uses EXTRAS as choices
+    """
     class Meta:
         verbose_name = _("Sensory module")
 
@@ -597,13 +701,20 @@ class SensoryModule(Module):
 
     @property
     def has_sensory_profile(self):
+        """
+        Does the module have either of the following fields set:
+        sound, light, smell, temperature.
+        """
         return self.sound != self.SENS_NONE \
-                or self.light != self.SENS_NONE \
-                or self.smell != self.SENS_NONE \
-                or self.temperature != self.SENS_NONE
+            or self.light != self.SENS_NONE \
+            or self.smell != self.SENS_NONE \
+            or self.temperature != self.SENS_NONE
 
 
 class ContactModule(Module):
+    """
+    This module can contain multiple :class:`pages.models.ModuleContact`.
+    """
     class Meta:
         verbose_name = _("Contact module")
 
@@ -618,6 +729,10 @@ class ContactModule(Module):
 
 
 class ModuleContact(models.Model):
+    """
+    ModuleContacts belong to a :class:`pages.models.ContactModule`.
+    They have a title, name, address, phone, email, and extra field.
+    """
     title = models.CharField(verbose_name=_("Contact title"),
                              max_length=255, default="", blank=True,
                              help_text=_("Choose a descriptive title for the "
@@ -640,6 +755,9 @@ class ModuleContact(models.Model):
 
 
 class FreeTextModule(Module):
+    """
+    Module for saving free text with a title.
+    """
     class Meta:
         verbose_name = _("Free text module")
 
@@ -660,6 +778,9 @@ class FreeTextModule(Module):
 
 
 class FreeListModule(Module):
+    """
+    Module for saving a list of items with a title.
+    """
     class Meta:
         verbose_name = _("Free list module")
 
@@ -680,6 +801,10 @@ class FreeListModule(Module):
 
 
 class FreePictureModule(Module):
+    """
+    This module has a title field and can contain multiple
+    :class:`pages.models.ModulePicture`.
+    """
     class Meta:
         verbose_name = _("Free picture module")
 
@@ -698,6 +823,10 @@ class FreePictureModule(Module):
 
 
 class ModulePicture(models.Model):
+    """
+    ModulePictures belong to a :class:`pages.models.PictureModule`.
+    They have a title, description and picture.
+    """
     module = models.ForeignKey(FreePictureModule, verbose_name=_("module"),
                                on_delete=models.CASCADE)
     picture = models.ImageField(verbose_name=_("Image"), blank=True,

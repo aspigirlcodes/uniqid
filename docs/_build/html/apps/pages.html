@@ -43,31 +43,72 @@
 <div class="section" id="module-pages.models">
 <span id="models"></span><h2>Models<a class="headerlink" href="#module-pages.models" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
+<dt id="pages.models.PageManager">
+<em class="property">class </em><code class="descname">PageManager</code><a class="headerlink" href="#pages.models.PageManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom filter methods related to the Page model.</p>
+<dl class="method">
+<dt id="pages.models.PageManager.active">
+<code class="descname">active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.PageManager.active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return only active pages.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="pages.models.Page">
 <em class="property">class </em><code class="descname">Page</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.Page" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Page is a collection of Modules</p>
-<p>A Page has a title and is linked to the user who created it
-through the user field. It can contain any number of any type of modules.</p>
+<dd><p>A Page is a collection of Modules with some extras</p>
+<p>A Page has a title and is linked to the <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.User</span></code>
+who created it through the user field.
+It knows whether it is active, visible, an example.
+It can have a token for sharing through a secret url.</p>
+<p>It can contain any number of any type of modules, and has the ability to
+sort them by their position.</p>
+<p>Module types:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../modules/pages.html#pages.models.GeneralInfoModule" title="pages.models.GeneralInfoModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.GeneralInfoModule</span></code></a></li>
+<li><a class="reference internal" href="../modules/pages.html#pages.models.CommunicationModule" title="pages.models.CommunicationModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.CommunicationModule</span></code></a></li>
+<li><a class="reference internal" href="../modules/pages.html#pages.models.DoDontModule" title="pages.models.DoDontModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.DoDontModule</span></code></a></li>
+<li><a class="reference internal" href="../modules/pages.html#pages.models.MedicationModule" title="pages.models.MedicationModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.MedicationModule</span></code></a></li>
+<li><a class="reference internal" href="../modules/pages.html#pages.models.SensoryModule" title="pages.models.SensoryModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.SensoryModule</span></code></a></li>
+<li><a class="reference internal" href="../modules/pages.html#pages.models.ContactModule" title="pages.models.ContactModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.ContactModule</span></code></a></li>
+<li><a class="reference internal" href="../modules/pages.html#pages.models.FreeTextModule" title="pages.models.FreeTextModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.FreeTextModule</span></code></a></li>
+<li><a class="reference internal" href="../modules/pages.html#pages.models.FreeListModule" title="pages.models.FreeListModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.FreeListModule</span></code></a></li>
+<li><a class="reference internal" href="../modules/pages.html#pages.models.FreePictureModule" title="pages.models.FreePictureModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.FreePictureModule</span></code></a></li>
+</ul>
 <dl class="method">
 <dt id="pages.models.Page.get_all_modules">
 <code class="descname">get_all_modules</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.Page.get_all_modules" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a list of querysets, one per <a class="reference internal" href="../modules/pages.html#pages.models.Module" title="pages.models.Module"><code class="xref py py-class docutils literal"><span class="pre">Module</span></code></a> type.
+<dd><p>Returns a list of querysets, one per Module type.
 Kwargs will be passed to the filter method used to get the querysets.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="pages.models.Page.get_all_modules_sorted">
-<code class="descname">get_all_modules_sorted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.Page.get_all_modules_sorted" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all_modules_sorted</code><a class="headerlink" href="#pages.models.Page.get_all_modules_sorted" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of modules sorted by their position field.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pages.models.Page.module_deleted">
 <code class="descname">module_deleted</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.Page.module_deleted" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles cleanup when a <a class="reference internal" href="../modules/pages.html#pages.models.Module" title="pages.models.Module"><code class="xref py py-class docutils literal"><span class="pre">Module</span></code></a> is deleted.</p>
+<dd><p>Handles cleanup when a Module is deleted.</p>
 <p>Counts down the pages module number.
 Counts down the position of all the modules
 comming after this module.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pages.models.Page.make_token">
+<code class="descname">make_token</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.Page.make_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a token that can be used to view the page until
+a new token is generated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pages.models.Page.check_token">
+<code class="descname">check_token</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.Page.check_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that the token allows access to this page.</p>
 </dd></dl>
 
 </dd></dl>
@@ -76,7 +117,7 @@ comming after this module.</p>
 <dt id="pages.models.Module">
 <em class="property">class </em><code class="descname">Module</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.Module" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract baseclass modules can inherit from. It has a <cite>ForeignKey</cite>
-relationship to <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">Page</span></code></a> and a position field.</p>
+relationship to <code class="xref py py-class docutils literal"><span class="pre">pages.models:Page</span></code> and a position field.</p>
 <dl class="attribute">
 <dt id="pages.models.Module.type">
 <code class="descname">type</code><a class="headerlink" href="#pages.models.Module.type" title="Permalink to this definition">¶</a></dt>
@@ -99,73 +140,151 @@ relationship to <a class="reference internal" href="../modules/pages.html#pages.
 
 <dl class="class">
 <dt id="pages.models.GeneralInfoModule">
-<em class="property">class </em><code class="descname">GeneralInfoModule</code><span class="sig-paren">(</span><em>id</em>, <em>page</em>, <em>position</em>, <em>name</em>, <em>identity</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.GeneralInfoModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">GeneralInfoModule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.GeneralInfoModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Module containing general information about the user.
+such as name, (autism related) identity, picture, …</p>
+<p>Related to a <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a></p>
+<p>identity field uses IDENTITIES as choices.</p>
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.CommunicationModule">
-<em class="property">class </em><code class="descname">CommunicationModule</code><span class="sig-paren">(</span><em>id</em>, <em>page</em>, <em>position</em>, <em>suggestions_choices</em>, <em>suggestions_free</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.CommunicationModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">CommunicationModule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.CommunicationModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>This module contains communication suggestions, and can contain multiple
+<a class="reference internal" href="../modules/pages.html#pages.models.CommunicationMethods" title="pages.models.CommunicationMethods"><code class="xref py py-class docutils literal"><span class="pre">pages.models.CommunicationMethods</span></code></a>.</p>
+<p>Related to a <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a></p>
+<p>The suggestions_choices field uses SUGGESTIONS as choices.</p>
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.CommunicationMethods">
-<em class="property">class </em><code class="descname">CommunicationMethods</code><span class="sig-paren">(</span><em>id</em>, <em>situation</em>, <em>you_to_me_choices</em>, <em>you_to_me_free</em>, <em>me_to_you_choices</em>, <em>me_to_you_free</em>, <em>module</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.CommunicationMethods" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">CommunicationMethods</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.CommunicationMethods" title="Permalink to this definition">¶</a></dt>
+<dd><p>CommunicationMethods belong to a <a class="reference internal" href="../modules/pages.html#pages.models.CommunicationModule" title="pages.models.CommunicationModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.CommunicationModule</span></code></a>.
+They describe prefered communication methods in two directions
+(‘me to you’ and ‘you to me’) for a certain situation.</p>
+<p>The fields you_to_me_choices and  me_to_you_choices
+both use METHODS as choices.</p>
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.DoDontModule">
-<em class="property">class </em><code class="descname">DoDontModule</code><span class="sig-paren">(</span><em>id</em>, <em>page</em>, <em>position</em>, <em>do_choices</em>, <em>do_free</em>, <em>ask_choices</em>, <em>ask_free</em>, <em>dont_choices</em>, <em>dont_free</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.DoDontModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">DoDontModule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.DoDontModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Module containing lists of things to ‘do’, ‘ask first’ and ‘don’t do’.</p>
+<p>Related to a <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a></p>
+<p>do_choices field uses DOS as choices.</p>
+<p>ask_choices field uses ASKS as choices.</p>
+<p>dont_choices field uses DONTS as choices.</p>
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.MedicationModule">
-<em class="property">class </em><code class="descname">MedicationModule</code><span class="sig-paren">(</span><em>id</em>, <em>page</em>, <em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.MedicationModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">MedicationModule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.MedicationModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>This module can contain multiple <a class="reference internal" href="../modules/pages.html#pages.models.MedicationItem" title="pages.models.MedicationItem"><code class="xref py py-class docutils literal"><span class="pre">pages.models.MedicationItem</span></code></a>.</p>
+<p>Related to a <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a></p>
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.MedicationItem">
-<em class="property">class </em><code class="descname">MedicationItem</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>remarks</em>, <em>module</em>, <em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.MedicationItem" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">MedicationItem</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.MedicationItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>MedicationItems belong to a <a class="reference internal" href="../modules/pages.html#pages.models.MedicationModule" title="pages.models.MedicationModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.MedicationModule</span></code></a>.</p>
+<p>Each MedicationItem has a name, and a field for remarks</p>
+<p>They can contain multiple <a class="reference internal" href="../modules/pages.html#pages.models.MedicationIntake" title="pages.models.MedicationIntake"><code class="xref py py-class docutils literal"><span class="pre">pages.models.MedicationIntake</span></code></a>, with further
+information.</p>
+<p>They have a fixed position within the <a class="reference internal" href="../modules/pages.html#pages.models.MedicationModule" title="pages.models.MedicationModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.MedicationModule</span></code></a>,
+depending on the order they were added. This position is
+determined by the position field which is set automatically
+in the save method.</p>
+<dl class="method">
+<dt id="pages.models.MedicationItem.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.MedicationItem.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>If creating</p>
+<p>sets position field to the current maximum of positions within the
+<code class="xref py py-class docutils literal"><span class="pre">pages.models:MedicationModule</span></code> +1 and saves the object.</p>
+<p>Else just save the object</p>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.MedicationIntake">
-<em class="property">class </em><code class="descname">MedicationIntake</code><span class="sig-paren">(</span><em>id</em>, <em>time</em>, <em>quantity</em>, <em>medication</em>, <em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.MedicationIntake" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">MedicationIntake</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.MedicationIntake" title="Permalink to this definition">¶</a></dt>
+<dd><p>MedicationIntakes belong to a <a class="reference internal" href="../modules/pages.html#pages.models.MedicationItem" title="pages.models.MedicationItem"><code class="xref py py-class docutils literal"><span class="pre">pages.models.MedicationItem</span></code></a>.</p>
+<p>Each MedicationIntake has a time and quantity</p>
+<p>They have a fixed position within the <a class="reference internal" href="../modules/pages.html#pages.models.MedicationItem" title="pages.models.MedicationItem"><code class="xref py py-class docutils literal"><span class="pre">pages.models.MedicationItem</span></code></a>,
+depending on the order they were added. This position is
+determined by the position field which is set automatically
+in the save method.</p>
+<dl class="method">
+<dt id="pages.models.MedicationIntake.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.MedicationIntake.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>If creating</p>
+<p>sets position field to the current maximum of positions within the
+<a class="reference internal" href="../modules/pages.html#pages.models.MedicationItem" title="pages.models.MedicationItem"><code class="xref py py-class docutils literal"><span class="pre">pages.models.MedicationItem</span></code></a> +1 and saves the object.</p>
+<p>Else just save the object</p>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.SensoryModule">
-<em class="property">class </em><code class="descname">SensoryModule</code><span class="sig-paren">(</span><em>id</em>, <em>page</em>, <em>position</em>, <em>sound</em>, <em>light</em>, <em>smell</em>, <em>temperature</em>, <em>extra_choices</em>, <em>extra_free</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.SensoryModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">SensoryModule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.SensoryModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Module containing sensory information.
+One can state how sensitive one is to sound, light, smell and temperature.
+On top of that further sensory information can be added.</p>
+<p>Related to a <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a></p>
+<p>sound, light, smell and temperature fields use RANGE as choices.
+extra_choices uses EXTRAS as choices</p>
+<dl class="attribute">
+<dt id="pages.models.SensoryModule.has_sensory_profile">
+<code class="descname">has_sensory_profile</code><a class="headerlink" href="#pages.models.SensoryModule.has_sensory_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the module have either of the following fields set:
+sound, light, smell, temperature.</p>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.ContactModule">
-<em class="property">class </em><code class="descname">ContactModule</code><span class="sig-paren">(</span><em>id</em>, <em>page</em>, <em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.ContactModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">ContactModule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.ContactModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>This module can contain multiple <a class="reference internal" href="../modules/pages.html#pages.models.ModuleContact" title="pages.models.ModuleContact"><code class="xref py py-class docutils literal"><span class="pre">pages.models.ModuleContact</span></code></a>.</p>
+<p>Related to a <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a></p>
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.ModuleContact">
-<em class="property">class </em><code class="descname">ModuleContact</code><span class="sig-paren">(</span><em>id</em>, <em>title</em>, <em>name</em>, <em>address</em>, <em>phone</em>, <em>email</em>, <em>extra</em>, <em>module</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.ModuleContact" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">ModuleContact</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.ModuleContact" title="Permalink to this definition">¶</a></dt>
+<dd><p>ModuleContacts belong to a <a class="reference internal" href="../modules/pages.html#pages.models.ContactModule" title="pages.models.ContactModule"><code class="xref py py-class docutils literal"><span class="pre">pages.models.ContactModule</span></code></a>.
+They have a title, name, address, phone, email, and extra field.</p>
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.FreeTextModule">
-<em class="property">class </em><code class="descname">FreeTextModule</code><span class="sig-paren">(</span><em>id</em>, <em>page</em>, <em>position</em>, <em>title</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.FreeTextModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">FreeTextModule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.FreeTextModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Module for saving free text with a title.</p>
+<p>Related to a <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a></p>
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.FreeListModule">
-<em class="property">class </em><code class="descname">FreeListModule</code><span class="sig-paren">(</span><em>id</em>, <em>page</em>, <em>position</em>, <em>title</em>, <em>items</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.FreeListModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">FreeListModule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.FreeListModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Module for saving a list of items with a title.</p>
+<p>Related to a <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a></p>
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.FreePictureModule">
-<em class="property">class </em><code class="descname">FreePictureModule</code><span class="sig-paren">(</span><em>id</em>, <em>page</em>, <em>position</em>, <em>title</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.FreePictureModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">FreePictureModule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.FreePictureModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>This module has a title field and can contain multiple
+<a class="reference internal" href="../modules/pages.html#pages.models.ModulePicture" title="pages.models.ModulePicture"><code class="xref py py-class docutils literal"><span class="pre">pages.models.ModulePicture</span></code></a>.</p>
+<p>Related to a <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a></p>
+</dd></dl>
 
 <dl class="class">
 <dt id="pages.models.ModulePicture">
-<em class="property">class </em><code class="descname">ModulePicture</code><span class="sig-paren">(</span><em>id</em>, <em>module</em>, <em>picture</em>, <em>description</em>, <em>title</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.ModulePicture" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descname">ModulePicture</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.ModulePicture" title="Permalink to this definition">¶</a></dt>
+<dd><p>ModulePictures belong to a <code class="xref py py-class docutils literal"><span class="pre">pages.models.PictureModule</span></code>.
+They have a title, description and picture.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-pages.views">
@@ -179,7 +298,20 @@ relationship to <a class="reference internal" href="../modules/pages.html#pages.
 <dl class="class">
 <dt id="pages.views.PageCreateView">
 <em class="property">class </em><code class="descname">PageCreateView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.views.PageCreateView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Allow a user to create a page and add a first module.</p>
+<dd><p>CreateView that allows a user to create a page and add a first module.</p>
+<p>Before saving the page is connected to the creating
+<code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.User</span></code> (login required).
+And the user is redirected to create page of the module
+they have selected in the form.</p>
+<p><strong>form_class</strong></p>
+<p>PageCreateForm</p>
+<p><strong>Context</strong></p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">object</span></code></dt>
+<dd>An instance of <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a>.</dd>
+</dl>
+<p><strong>Template:</strong></p>
+<p><a href="#id1"><span class="problematic" id="id2">:template:`pages/createpage.html`</span></a>.</p>
 <dl class="attribute">
 <dt id="pages.views.PageCreateView.model">
 <code class="descname">model</code><a class="headerlink" href="#pages.views.PageCreateView.model" title="Permalink to this definition">¶</a></dt>
@@ -189,9 +321,48 @@ relationship to <a class="reference internal" href="../modules/pages.html#pages.
 </dd></dl>
 
 <dl class="class">
+<dt id="pages.views.PageDeleteView">
+<em class="property">class </em><code class="descname">PageDeleteView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.views.PageDeleteView" title="Permalink to this definition">¶</a></dt>
+<dd><p>DeleteView that asks the user to confirm that he wants to delete this page.</p>
+<p>To access this view the user must be the owner of the page.</p>
+<p><strong>Context</strong></p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">object</span></code></dt>
+<dd>An instance of <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a>.</dd>
+<dt><code class="docutils literal"><span class="pre">modules</span></code></dt>
+<dd>a sorted list of modules belonging to this page.</dd>
+</dl>
+<p><strong>Template:</strong></p>
+<p><a href="#id3"><span class="problematic" id="id4">:template:`pages/deletepage.html`</span></a>.</p>
+<dl class="attribute">
+<dt id="pages.views.PageDeleteView.model">
+<code class="descname">model</code><a class="headerlink" href="#pages.views.PageDeleteView.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Page</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="pages.views.SelectModuleView">
 <em class="property">class </em><code class="descname">SelectModuleView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.views.SelectModuleView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update page and add new modules.</p>
+<dd><p>UpdateView to edit page and add new modules.</p>
+<p>To access this view the user must be the owner of the page.</p>
+<p>Depending on the submit button used the user is redirected:</p>
+<ul class="simple">
+<li>either to the create page of the module they have selected in the form.</li>
+<li>or to ModuleSortView.</li>
+</ul>
+<p><strong>form_class</strong></p>
+<p>AddModuleForm</p>
+<p><strong>Context</strong></p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">object</span></code></dt>
+<dd>An instance of <a class="reference internal" href="../modules/pages.html#pages.models.Page" title="pages.models.Page"><code class="xref py py-class docutils literal"><span class="pre">pages.models.Page</span></code></a>.</dd>
+<dt><code class="docutils literal"><span class="pre">modules</span></code></dt>
+<dd>A sorted list of modules belonging to this page.</dd>
+</dl>
+<p><strong>Template:</strong></p>
+<p><a href="#id5"><span class="problematic" id="id6">:template:`pages/createpage.html`</span></a>.</p>
 <dl class="attribute">
 <dt id="pages.views.SelectModuleView.model">
 <code class="descname">model</code><a class="headerlink" href="#pages.views.SelectModuleView.model" title="Permalink to this definition">¶</a></dt>

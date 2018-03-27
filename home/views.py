@@ -33,6 +33,9 @@ def switch_lang(request, lang):
 
 
 class ExampleListView(ListView):
+    """
+    A list of all pages that are an example and are active
+    """
     model = Page
     template_name = "home/examples.html"
 

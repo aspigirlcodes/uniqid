@@ -23,7 +23,7 @@ Setup postgres database
     ALTER ROLE myprojectuser SET timezone TO 'UTC';
     GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
     \q
-    # exist postgres user session
+    # exit postgres user session
     exit
 
 add local settings file
@@ -54,3 +54,8 @@ Running the development server
 master is the production branch, dev is the development branch.
 Tags on master indicate the different releases.
 The last release is tagged 'v0.5'
+
+## documentation
+[The written thesis about this project](thesis/tesis.pdf)
+
+[Reference documentation for this project](docs/_build/html/index.html)

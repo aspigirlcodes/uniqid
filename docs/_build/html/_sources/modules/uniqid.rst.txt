@@ -1,8 +1,5 @@
-uniqid package
+uniqid project
 ==============
-
-Submodules
-----------
 
 uniqid\.settings module
 -----------------------
@@ -14,9 +11,9 @@ uniqid\.settings module
 uniqid\.settings\_local module
 ------------------------------
 
-.. automodule:: uniqid.settings_local
-    :members:
-    :show-inheritance:
+This module is imported into the uniqid\.settings module.
+It is not checked in to version control and can therefore be used for local
+settings as well as settings that should not be publicly visible.
 
 uniqid\.testing\_utils module
 -----------------------------
@@ -36,13 +33,5 @@ uniqid\.wsgi module
 -------------------
 
 .. automodule:: uniqid.wsgi
-    :members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: uniqid
     :members:
     :show-inheritance:

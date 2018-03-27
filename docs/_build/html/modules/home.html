@@ -46,7 +46,8 @@
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>The home app contains mainly static pages.
 At the moment it does not define its own models.
-The only view that is not a basic template view is the language switcher.</p>
+The only views that are not  basic template views are the language switcher,
+and the examples page.</p>
 </div>
 <div class="section" id="module-home.urls">
 <span id="home-urls-module"></span><h2>home.urls module<a class="headerlink" href="#module-home.urls" title="Permalink to this headline">¶</a></h2>
@@ -54,7 +55,8 @@ The only view that is not a basic template view is the language switcher.</p>
 <dl class="docutils">
 <dt>i18n/set-lang/&lt;lang&gt;</dt>
 <dd>Changes the language and redirects back
-to the current view. Supported languages are English and German.</dd>
+to the current view. Supported languages are English and German.
+Uses <a class="reference internal" href="#home.views.switch_lang" title="home.views.switch_lang"><code class="xref py py-func docutils literal"><span class="pre">home.views.switch_lang()</span></code></a></dd>
 <dt>how/</dt>
 <dd>Directs to a static page with an in depth explanation of how to use
 the app. (currently empty)</dd>
@@ -62,14 +64,13 @@ the app. (currently empty)</dd>
 <dd>Directs to a static page with reasons why the app could be usefull.
 (currently empty)</dd>
 <dt>faq/</dt>
-<dd>Static page with frequently asked questions. (currently empty)</dd>
+<dd>Static page with frequently asked questions.</dd>
 <dt>about/</dt>
 <dd>Information about the project. (currently empty)</dd>
 <dt>examples/</dt>
-<dd>Some examples of what finished pages could look like.</dd>
-</dl>
-<dl class="docutils">
-<dt>/</dt>
+<dd>Some examples of what finished pages could look like.
+Uses <a class="reference internal" href="#home.views.ExampleListView" title="home.views.ExampleListView"><code class="xref py py-class docutils literal"><span class="pre">home.views.ExampleListView</span></code></a></dd>
+<dt><cite>/</cite></dt>
 <dd>The homepage.</dd>
 </dl>
 </div>
@@ -83,6 +84,19 @@ the app. (currently empty)</dd>
 And the page to redirect to after setting the language
 from the urls get parameters.
 The language sessions key is stored in the requests session.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="home.views.ExampleListView">
+<em class="property">class </em><code class="descname">ExampleListView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#home.views.ExampleListView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<p>A list of all pages that are an example and are active</p>
+<dl class="attribute">
+<dt id="home.views.ExampleListView.model">
+<code class="descname">model</code><a class="headerlink" href="#home.views.ExampleListView.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Page</span></code></p>
+</dd></dl>
+
 </dd></dl>
 
 </div>

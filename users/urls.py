@@ -1,24 +1,20 @@
 """users URL Configuration
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.11/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+* login/ uses :class:`users.views.LoginView`
+* logout/
+* resetpassword/
+* emailsent/
+* setpassword with token, uses :class:`users.views.PasswordResetConfirmView`
+* register uses :class:`users.views.RegisterView`
+* changepassword (for logged in user),
+  uses :class:`users.views.PasswordChangeView`
+
 """
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from .views import PasswordResetConfirmView, RegisterView, PasswordChangeView,\
                    LoginView
 from .forms import default_token_generator
-# from django.views.generic import TemplateView
 
 
 urlpatterns = [
@@ -34,7 +30,8 @@ urlpatterns = [
             success_url="/users/emailsent/"),
         name="resetpw"),
     url(r'^emailsent/$',
-        auth_views.LoginView.as_view(template_name='users/emailsent.html'),
+        auth_views.PasswordResetDoneView.as_view(
+            template_name='users/emailsent.html'),
         name="emailsent"),
     url(r'^setpassword/(?P<uidb64>[0-9A-Za-z_\-]+)/'
         '(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',

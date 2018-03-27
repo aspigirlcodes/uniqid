@@ -1,5 +1,9 @@
 
 class MessageTestMixin(object):
+    """
+    Helper functions for accessing messages from the django messages framework
+    during testing
+    """
     @classmethod
     def getmessage(cls, response):
         """Helper method to return message from response """
