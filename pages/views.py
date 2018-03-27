@@ -37,7 +37,21 @@ class PageCreateAccessMixin(LoginRequiredMixin):
 
 class PageCreateView(PageCreateAccessMixin, CreateView):
     """
-    Allow a user to create a page and add a first module.
+    CreateView that allows a user to create a page and add a first module.
+
+    Before saving the page is connected to the creating user.
+    And the user is redirected to create page of the module
+    they have selected in the form.
+
+    **form_class**
+
+    :class:`pages.forms.PageCreateForm`
+
+    **Context**
+
+    ``object``
+        An instance of :class:`pages.models.Page`.
+
     """
     model = Page
     form_class = PageCreateForm
@@ -54,6 +68,17 @@ class PageCreateView(PageCreateAccessMixin, CreateView):
 
 
 class PageDeleteView(UserPassesTestMixin, DeleteView):
+    """
+    DeleteView that asks the user to confirm that he wants to delete this page.
+
+    **Context**
+
+    ``object``
+        An instance of :class:`pages.models.Page`.
+    ``modules``
+        a sorted list of modules belonging to this page.
+
+    """
     model = Page
     template_name = "pages/deletepage.html"
     success_url = reverse_lazy("pages:pagelist")
@@ -64,13 +89,34 @@ class PageDeleteView(UserPassesTestMixin, DeleteView):
         return context
 
     def test_func(self):
+        """
+        Access test: Only the owner of the page can delete it.
+        """
         page = self.get_object()
         return self.request.user == page.user
 
 
 class SelectModuleView(UserPassesTestMixin, UpdateView):
     """
-    Update page and add new modules.
+    UpdateView to edit page and add new modules.
+
+    To access this view the user must be the owner of the page.
+
+    Depending on the submit button used the user is redirected:
+
+    * either to the create page of the module they have selected in the form.
+    * or to :class:`pages.views.ModuleSortView`.
+
+    **form_class**
+
+    :class:`pages.forms.AddModuleForm`
+
+    **Context**
+
+    ``object``
+        An instance of :class:`pages.models.Page`.
+    ``modules``
+        A sorted list of modules belonging to this page.
     """
     model = Page
     form_class = AddModuleForm
@@ -96,6 +142,9 @@ class SelectModuleView(UserPassesTestMixin, UpdateView):
         return HttpResponseRedirect(url)
 
     def test_func(self):
+        """
+        Access test: Only the owner of the page can edit it.
+        """
         return self.request.user == self.get_object().user
 
 
@@ -544,6 +593,22 @@ class FreePictureModuleDeleteView(ModuleDeleteView):
 
 
 class ModuleSortView(UserPassesTestMixin, UpdateView):
+    """
+    View for sorting the modules of a page by changing their
+    position field values.
+
+    **form_class**
+
+    :class:`pages.forms.ModuleSortForm`
+
+    **Context**
+
+    ``object``
+        An instance of :class:`pages.models.Page`.
+    ``modules``
+        a sorted list of modules belonging to this page.
+
+    """
     model = Page
     template_name = "pages/sortmodules.html"
     form_class = ModuleSortForm
@@ -554,6 +619,12 @@ class ModuleSortView(UserPassesTestMixin, UpdateView):
         return context
 
     def form_valid(self, form):
+        """
+        If the form is valid and something has changed:
+        go through the modules of the page and update their position.
+
+        redirect to :class:`pages.views.PageListView`
+        """
         if form.has_changed():
             for index, module in \
                     enumerate(self.object.get_all_modules_sorted):
@@ -570,10 +641,27 @@ class ModuleSortView(UserPassesTestMixin, UpdateView):
             reverse("pages:pagelist"))
 
     def test_func(self):
+        """
+        Access test: Only the owner of the page can arrange its modules.
+        """
         return self.request.user == self.get_object().user
 
 
 class PagePreview(UserPassesTestMixin, DetailView):
+    """
+    View for previewing the page.
+
+    **Context**
+
+    ``object``
+        An instance of :class:`pages.models.Page`.
+    ``modules``
+        a sorted list of modules belonging to this page.
+    ``reason``
+        reason from url kwargs. this determines where the 'back' button
+        redirects to.
+
+    """
     model = Page
     template_name = "pages/page_preview.html"
 
@@ -584,10 +672,16 @@ class PagePreview(UserPassesTestMixin, DetailView):
         return context
 
     def test_func(self):
+        """
+        Access test: Only the owner of the page can preview it.
+        """
         return self.request.user == self.get_object().user
 
 
 class PageListView(LoginRequiredMixin, ListView):
+    """
+    List of :class:`pages.models.page` objects belonging to the user.
+    """
     model = Page
     template_name = "pages/page_list.html"
 
@@ -597,11 +691,20 @@ class PageListView(LoginRequiredMixin, ListView):
 
 
 class PageDuplicateView(LoginRequiredMixin, UpdateView):
+    """
+    View for duplicating examples for a certain user.
+    Can only be accessed by post.
+    """
     model = Page
     http_method_names = ['post']
     fields = []
 
     def post(self, request, *args, **kwargs):
+        """
+        Duplicate the page and all its modules. Assign the user to the page.
+        Make the page duplicate not an example and not visible anymore.
+        Redirect the user to :class:`pages:views:SelectModuleView`
+        """
         self.object = self.get_object()
         if not self.object.is_example:
             return HttpResponseForbidden()
@@ -664,6 +767,10 @@ class PageDuplicateView(LoginRequiredMixin, UpdateView):
 
 
 class PageVisibilityView(UserPassesTestMixin, UpdateView):
+    """
+    Toggles the visibility of a :class:`pages.models.Page`.
+    Can only be accessed by post.
+    """
     model = Page
     http_method_names = ['post']
     fields = []
@@ -683,13 +790,24 @@ class PageVisibilityView(UserPassesTestMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
+        """
+        Redirect to :class:`pages.Views.PageListView`
+        """
         return reverse("pages:pagelist")
 
     def test_func(self):
+        """
+        Access test: Only the owner of the page can change its visibility.
+        """
         return self.request.user == self.get_object().user
 
 
 class PageTokenGenerationView(UserPassesTestMixin, UpdateView):
+    """
+    Generates a token for a :class:`pages.models.Page`.
+    Uses the pages :func:`pages.models.Page.make_token` method.
+    Can only be accessed by post.
+    """
     model = Page
     http_method_names = ['post']
     fields = []
@@ -703,13 +821,31 @@ class PageTokenGenerationView(UserPassesTestMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
+        """
+        Redirect to :class:`pages.Views.PageListView`
+        """
         return reverse("pages:pagelist")
 
     def test_func(self):
+        """
+        Access test: Only the owner of the page can generate a page token.
+        """
         return self.request.user == self.get_object().user
 
 
 class ViewPageTokenView(DetailView):
+    """
+    Allows anny user to see a :class:`pages.models.Page`
+    through a secret link containing a token.
+    (Only if page is visible and token valid)
+
+    **Context**
+
+    ``object``
+        An instance of :class:`pages.models.Page`.
+    ``modules``
+        a sorted list of modules belonging to this page.
+    """
     model = Page
     template_name = "pages/page_view.html"
 

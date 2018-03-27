@@ -1,0 +1,236 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Users app &#8212; uniqid 0.3 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="uniqid project" href="uniqid.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="users-app">
+<h1>Users app<a class="headerlink" href="#users-app" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The users app is responsible for all user account related logic.
+It relies heavily on logic provided by django.contrib.auth.
+However the user’s email address is used as a username.
+The email address is verified upon registration by sending a token link.
+The same kind of token link is also used for reseting the user’s password.</p>
+<p>Django’s user model is also  enhanced by the <a class="reference internal" href="#users.models.Profile" title="users.models.Profile"><code class="xref py py-class docutils literal"><span class="pre">users.models.Profile</span></code></a>
+model, that can contain extra user related information and is connected to
+the user by a one-to-one relationship.</p>
+</div>
+<div class="section" id="module-users.models">
+<span id="users-models-module"></span><h2>users.models module<a class="headerlink" href="#module-users.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="users.models.Profile">
+<em class="property">class </em><code class="descname">Profile</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.models.Profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Each user has one profile containing extra information.</p>
+<p>email_confirmed field indicates whether the user has already confirmed
+their email address.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="users.models.create_user_profile">
+<code class="descname">create_user_profile</code><span class="sig-paren">(</span><em>sender</em>, <em>instance</em>, <em>created</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.models.create_user_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each time when creating a user, also create a <a class="reference internal" href="#users.models.Profile" title="users.models.Profile"><code class="xref py py-class docutils literal"><span class="pre">users.models.Profile</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-users.urls">
+<span id="users-urls-module"></span><h2>users.urls module<a class="headerlink" href="#module-users.urls" title="Permalink to this headline">¶</a></h2>
+<p>users URL Configuration</p>
+<ul class="simple">
+<li>login/ uses <code class="xref py py-class docutils literal"><span class="pre">users.views.LoginView</span></code></li>
+<li>logout/</li>
+<li>resetpassword/</li>
+<li>emailsent/</li>
+<li>setpassword with token, uses <a class="reference internal" href="#users.views.PasswordResetConfirmView" title="users.views.PasswordResetConfirmView"><code class="xref py py-class docutils literal"><span class="pre">users.views.PasswordResetConfirmView</span></code></a></li>
+<li>register uses <a class="reference internal" href="#users.views.RegisterView" title="users.views.RegisterView"><code class="xref py py-class docutils literal"><span class="pre">users.views.RegisterView</span></code></a></li>
+<li>changepassword (for logged in user),
+uses <code class="xref py py-class docutils literal"><span class="pre">users.views.PasswordChangeView</span></code></li>
+</ul>
+</div>
+<div class="section" id="module-users.views">
+<span id="users-views-module"></span><h2>users.views module<a class="headerlink" href="#module-users.views" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="users.views.PasswordResetConfirmView">
+<em class="property">class </em><code class="descname">PasswordResetConfirmView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.PasswordResetConfirmView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.views.PasswordResetConfirmView</span></code></p>
+<p>View is accessed by a link containing a unique token.
+This token has been sent to the users email address either because they
+have just registered, or because they requested a password reset.</p>
+<p><strong>form_class</strong></p>
+<p><code class="xref py py-class docutils literal"><span class="pre">users.forms.SetPasswordConfirmForm</span></code></p>
+<p><strong>Context</strong></p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">ispwchange</span></code></dt>
+<dd>the user is not setting his password for the first time.</dd>
+</dl>
+<dl class="method">
+<dt id="users.views.PasswordResetConfirmView.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.PasswordResetConfirmView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Before redirecting to the login form,
+add a success message</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="users.views.RegisterView">
+<em class="property">class </em><code class="descname">RegisterView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.RegisterView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.mixins.UserPassesTestMixin</span></code>, <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.views.PasswordResetView</span></code></p>
+<p>Adaptation of the PasswordResetView for registering a user with
+their email address only and sending them a link to confirm their
+email address.</p>
+<p><strong>form_class</strong></p>
+<p><a class="reference internal" href="#users.forms.RegisterForm" title="users.forms.RegisterForm"><code class="xref py py-class docutils literal"><span class="pre">users.forms.RegisterForm</span></code></a></p>
+<dl class="attribute">
+<dt id="users.views.RegisterView.form_class">
+<code class="descname">form_class</code><a class="headerlink" href="#users.views.RegisterView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">RegisterForm</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="users.views.RegisterView.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="headerlink" href="#users.views.RegisterView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>If a new user has been created during this process, redirect to the
+<a class="reference internal" href="pages.html#pages.views.PageCreateView" title="pages.views.PageCreateView"><code class="xref py py-class docutils literal"><span class="pre">pages.views.PageCreateView</span></code></a>, otherwise to the email sent view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="users.views.RegisterView.test_func">
+<code class="descname">test_func</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#users.views.RegisterView.test_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access test: user should not be authenticated yet.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-users.forms">
+<span id="users-forms-module"></span><h2>users.forms module<a class="headerlink" href="#module-users.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="users.forms.TokenGenerator">
+<em class="property">class </em><code class="descname">TokenGenerator</code><a class="headerlink" href="#users.forms.TokenGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.tokens.PasswordResetTokenGenerator</span></code></p>
+<p>overwrites _make_hash_value to include <a class="reference internal" href="#users.models.Profile" title="users.models.Profile"><code class="xref py py-class docutils literal"><span class="pre">users.models.Profile</span></code></a>
+email_confirmed field.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="users.forms.RegisterForm">
+<em class="property">class </em><code class="descname">RegisterForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>field_order=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#users.forms.RegisterForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.forms.PasswordResetForm</span></code></p>
+<p>Addaptation of the PasswordResetForm to use for registering users and
+sending them a one time link to confirm their email address.</p>
+<dl class="method">
+<dt id="users.forms.RegisterForm.get_users">
+<code class="descname">get_users</code><span class="sig-paren">(</span><em>email</em><span class="sig-paren">)</span><a class="headerlink" href="#users.forms.RegisterForm.get_users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an email, return matching user(s) who should receive a reset.</p>
+<p>This allows subclasses to more easily customize the default policies
+that prevent inactive users and users with unusable passwords from
+resetting their password.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="users.forms.RegisterForm.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>domain_override=None</em>, <em>subject_template_name='users/subject_register.txt'</em>, <em>email_template_name='users/email_register.html'</em>, <em>use_https=False</em>, <em>token_generator=&lt;users.forms.TokenGenerator object&gt;</em>, <em>from_email=None</em>, <em>request=None</em>, <em>html_email_template_name=None</em>, <em>extra_email_context=None</em><span class="sig-paren">)</span><a class="headerlink" href="#users.forms.RegisterForm.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>If a user with this email address does not exist yet, create one.
+with username and email equal to this email address.</p>
+<p>If the user has not confirmed his email address yet:
+generates a one-use only link for setting password and sends to the
+user.</p>
+<p>Returns whether a user was created or not.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="users.forms.EmailAuthenticationForm">
+<em class="property">class </em><code class="descname">EmailAuthenticationForm</code><span class="sig-paren">(</span><em>request=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#users.forms.EmailAuthenticationForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.forms.AuthenticationForm</span></code></p>
+<p>adds email validation to the username field in the AuthenticationForm</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">&lt;no title&gt;</a><ul>
+      <li>Previous: <a href="uniqid.html" title="previous chapter">uniqid project</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Sara Peeters.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/modules/users.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

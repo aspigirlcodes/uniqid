@@ -3,6 +3,7 @@
 i18n/set-lang/<lang>
     Changes the language and redirects back
     to the current view. Supported languages are English and German.
+    Uses :func:`home.views.switch_lang`
 how/
     Directs to a static page with an in depth explanation of how to use
     the app. (currently empty)
@@ -10,13 +11,15 @@ why/
     Directs to a static page with reasons why the app could be usefull.
     (currently empty)
 faq/
-    Static page with frequently asked questions. (currently empty)
+    Static page with frequently asked questions.
 about/
     Information about the project. (currently empty)
 examples/
     Some examples of what finished pages could look like.
-/
+    Uses :class:`home.views.ExampleListView`
+`/`
     The homepage.
+
 """
 from django.conf.urls import url
 from django.views.generic import TemplateView

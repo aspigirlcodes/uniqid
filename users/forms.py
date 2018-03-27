@@ -19,6 +19,10 @@ UserModel = get_user_model()
 
 
 class TokenGenerator(PasswordResetTokenGenerator):
+    """
+    overwrites _make_hash_value to include :class:`users.models.Profile`
+    email_confirmed field.
+    """
     def _make_hash_value(self, user, timestamp):
         # Ensure results are consistent across DB backends
         login_timestamp = '' if user.last_login is None \
@@ -34,6 +38,11 @@ default_token_generator = TokenGenerator()
 
 
 class RegisterForm(PasswordResetForm):
+    """
+    Addaptation of the PasswordResetForm to use for registering users and
+    sending them a one time link to confirm their email address.
+    """
+
     def get_users(self, email):
         """Given an email, return matching user(s) who should receive a reset.
 
@@ -48,14 +57,20 @@ class RegisterForm(PasswordResetForm):
         return active_users
 
     def save(self, domain_override=None,
-             subject_template_name='registration/password_reset_subject.txt',
-             email_template_name='registration/password_reset_email.html',
+             subject_template_name="users/subject_register.txt",
+             email_template_name="users/email_register.html",
              use_https=False, token_generator=default_token_generator,
              from_email=None, request=None, html_email_template_name=None,
              extra_email_context=None):
         """
-        Generates a one-use only link for resetting password and sends to the
+        If a user with this email address does not exist yet, create one.
+        with username and email equal to this email address.
+
+        If the user has not confirmed his email address yet:
+        generates a one-use only link for setting password and sends to the
         user.
+
+        Returns whether a user was created or not.
         """
         email = self.cleaned_data["email"]
         users = self.get_users(email)
@@ -98,6 +113,10 @@ class RegisterForm(PasswordResetForm):
 
 class SetPasswordConfirmForm(SetPasswordForm):
     def save(self, commit=True):
+        """
+        If :class:`users.models.Profile` email_confirmed is False,
+        set it to True now. (setting the password confirms the email address)
+        """
         user = super().save(commit)
         logger.info("password reset done for user: %s", user.username)
         if not user.profile.email_confirmed:
@@ -109,6 +128,9 @@ class SetPasswordConfirmForm(SetPasswordForm):
 
 
 class EmailAuthenticationForm(AuthenticationForm):
+    """
+    adds email validation to the username field in the AuthenticationForm
+    """
     username = UsernameField(
         max_length=254,
         widget=EmailInput(attrs={'autofocus': True}),

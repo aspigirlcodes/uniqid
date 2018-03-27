@@ -30,9 +30,9 @@ pages\.views module
     :exclude-members: model
     :show-inheritance:
 
-pages\.forms module
--------------------
+templatetags pages_tags.py
+---------------------------
 
-.. automodule:: pages.forms
+.. automodule:: pages.templatetags.pages_tags
     :members:
     :show-inheritance:

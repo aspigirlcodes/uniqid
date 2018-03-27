@@ -19,6 +19,9 @@ class PasswordChangeView(UserPassesTestMixin, auth_views.PasswordChangeView):
     success_url = reverse_lazy("home:home")
 
     def form_valid(self, form):
+        """
+        Before redirecting add password changed successfully message.
+        """
         logger.info("user %s successfully changed password",
                     self.request.user.username)
         messages.success(self.request,
@@ -26,12 +29,31 @@ class PasswordChangeView(UserPassesTestMixin, auth_views.PasswordChangeView):
         return super().form_valid(form)
 
     def test_func(self):
+        """
+        Access test: a user can only change their password after their
+        email has been confirmed.
+        """
         if self.request.user.is_authenticated():
             return self.request.user.profile.email_confirmed
         return False
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    """
+    View is accessed by a link containing a unique token.
+    This token has been sent to the users email address either because they
+    have just registered, or because they requested a password reset.
+
+    **form_class**
+
+    :class:`users.forms.SetPasswordConfirmForm`
+
+    **Context**
+
+    ``ispwchange``
+        the user is not setting his password for the first time.
+
+    """
     form_class = SetPasswordConfirmForm
     template_name = "users/pwset.html"
     token_generator = default_token_generator
@@ -44,6 +66,10 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
         return context
 
     def form_valid(self, form):
+        """
+        Before redirecting to the login form,
+        add a success message
+        """
         if self.user.profile.email_confirmed:
             logger.info("successfull passwordreset for user %s",
                         self.user.username)
@@ -60,6 +86,16 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
 
 
 class RegisterView(UserPassesTestMixin, auth_views.PasswordResetView):
+    """
+    Adaptation of the PasswordResetView for registering a user with
+    their email address only and sending them a link to confirm their
+    email address.
+
+    **form_class**
+
+    :class:`users.forms.RegisterForm`
+
+    """
     form_class = RegisterForm
     template_name = 'users/register.html'
     email_template_name = "users/email_register.html"
@@ -68,6 +104,10 @@ class RegisterView(UserPassesTestMixin, auth_views.PasswordResetView):
     success_url = reverse_lazy("pages:createpage")
 
     def form_valid(self, form):
+        """
+        If a new user has been created during this process, redirect to the
+        :class:`pages.views.PageCreateView`, otherwise to the email sent view.
+        """
         opts = {
             'use_https': self.request.is_secure(),
             'token_generator': self.token_generator,
@@ -90,6 +130,9 @@ class RegisterView(UserPassesTestMixin, auth_views.PasswordResetView):
             return HttpResponseRedirect(reverse("users:emailsent"))
 
     def test_func(self):
+        """
+        Access test: user should not be authenticated yet.
+        """
         return not self.request.user.is_authenticated()
 
 
@@ -98,7 +141,14 @@ class LoginView(auth_views.LoginView):
     authentication_form = EmailAuthenticationForm
 
     def get_success_url(self):
-        """Ensure the user-originating redirection URL is safe."""
+        """
+        If there is a redirect_to parameter in either get or post,
+        check if it is safe and use this.
+
+        Else: if the user has created pages already, redirect to
+        :class:`pages.views.PageListView`, if not, redirect to
+        :class:`pages.views.PageCreateView`
+        """
         redirect_to = self.request.POST.get(
             self.redirect_field_name,
             self.request.GET.get(self.redirect_field_name, '')

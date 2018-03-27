@@ -64,7 +64,13 @@ class AddModuleForm(ModelForm):
 
 
 class ModuleMixin(object):
+    """
+    Use with moduleforms as modules should not be saved when all fields empty.
+    """
     def is_empty(self):
+        """
+        returns whether all fields of the form are empty. (cleaned_data)
+        """
         return not any(self.cleaned_data.values())
 
 

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>uniqid package &#8212; uniqid 0.3 documentation</title>
+    <title>uniqid project &#8212; uniqid 0.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="users package" href="users.html" />
+    <link rel="next" title="Users app" href="users.html" />
     <link rel="prev" title="Pages app" href="pages.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -40,11 +40,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="uniqid-package">
-<h1>uniqid package<a class="headerlink" href="#uniqid-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
+  <div class="section" id="uniqid-project">
+<h1>uniqid project<a class="headerlink" href="#uniqid-project" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-uniqid.settings">
 <span id="uniqid-settings-module"></span><h2>uniqid.settings module<a class="headerlink" href="#module-uniqid.settings" title="Permalink to this headline">¶</a></h2>
 <p>Django settings for uniqid project.</p>
@@ -54,40 +51,51 @@
 <p>For the full list of settings and their values, see
 <a class="reference external" href="https://docs.djangoproject.com/en/1.11/ref/settings/">https://docs.djangoproject.com/en/1.11/ref/settings/</a></p>
 </div>
-<div class="section" id="module-uniqid.settings_local">
-<span id="uniqid-settings-local-module"></span><h2>uniqid.settings_local module<a class="headerlink" href="#module-uniqid.settings_local" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="uniqid-settings-local-module">
+<h2>uniqid.settings_local module<a class="headerlink" href="#uniqid-settings-local-module" title="Permalink to this headline">¶</a></h2>
+<p>This module is imported into the uniqid.settings module.
+It is not checked in to version control and can therefore be used for local
+settings as well as settings that should not be publicly visible.</p>
 </div>
 <div class="section" id="module-uniqid.testing_utils">
 <span id="uniqid-testing-utils-module"></span><h2>uniqid.testing_utils module<a class="headerlink" href="#module-uniqid.testing_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="uniqid.testing_utils.MessageTestMixin">
+<em class="property">class </em><code class="descname">MessageTestMixin</code><a class="headerlink" href="#uniqid.testing_utils.MessageTestMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Helper functions for accessing messages from the django messages framework
+during testing</p>
+<dl class="classmethod">
+<dt id="uniqid.testing_utils.MessageTestMixin.getmessage">
+<em class="property">classmethod </em><code class="descname">getmessage</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#uniqid.testing_utils.MessageTestMixin.getmessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method to return message from response</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="uniqid.testing_utils.MessageTestMixin.getallmessages">
+<em class="property">classmethod </em><code class="descname">getallmessages</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#uniqid.testing_utils.MessageTestMixin.getallmessages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method to return message from response</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-uniqid.urls">
 <span id="uniqid-urls-module"></span><h2>uniqid.urls module<a class="headerlink" href="#module-uniqid.urls" title="Permalink to this headline">¶</a></h2>
 <p>uniqid URL Configuration</p>
 <dl class="docutils">
-<dt>The <cite>urlpatterns</cite> list routes URLs to views. For more information please see:</dt>
-<dd><a class="reference external" href="https://docs.djangoproject.com/en/1.11/topics/http/urls/">https://docs.djangoproject.com/en/1.11/topics/http/urls/</a></dd>
-</dl>
-<p>Examples:
-Function views</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li>Add an import:  from my_app import views</li>
-<li>Add a URL to urlpatterns:  url(r’^$’, views.home, name=’home’)</li>
-</ol>
-</div></blockquote>
-<dl class="docutils">
-<dt>Class-based views</dt>
-<dd><ol class="first last arabic simple">
-<li>Add an import:  from other_app.views import Home</li>
-<li>Add a URL to urlpatterns:  url(r’^$’, Home.as_view(), name=’home’)</li>
-</ol>
-</dd>
-<dt>Including another URLconf</dt>
-<dd><ol class="first last arabic simple">
-<li>Import the include() function: from django.conf.urls import url, include</li>
-<li>Add a URL to urlpatterns:  url(r’^blog/’, include(‘blog.urls’))</li>
-</ol>
-</dd>
+<dt>admin/</dt>
+<dd>The django admin</dd>
+<dt>i18n/</dt>
+<dd>Django translation tools</dd>
+<dt>jsi18n/</dt>
+<dd>The javascript catalog for translations</dd>
+<dt>users/</dt>
+<dd>urls from the users app</dd>
+<dt>pages/</dt>
+<dd>urls from the pages app</dd>
+<dt><cite>/</cite></dt>
+<dd>urls from the home app</dd>
 </dl>
 </div>
 <div class="section" id="module-uniqid.wsgi">
@@ -96,9 +104,6 @@ Function views</p>
 <p>It exposes the WSGI callable as a module-level variable named <code class="docutils literal"><span class="pre">application</span></code>.</p>
 <p>For more information on this file, see
 <a class="reference external" href="https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/">https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/</a></p>
-</div>
-<div class="section" id="module-uniqid">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-uniqid" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -113,7 +118,7 @@ Function views</p>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="modules.html">&lt;no title&gt;</a><ul>
       <li>Previous: <a href="pages.html" title="previous chapter">Pages app</a></li>
-      <li>Next: <a href="users.html" title="next chapter">users package</a></li>
+      <li>Next: <a href="users.html" title="next chapter">Users app</a></li>
   </ul></li>
   </ul></li>
 </ul>

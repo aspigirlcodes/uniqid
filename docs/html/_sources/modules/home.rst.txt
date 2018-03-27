@@ -6,7 +6,8 @@ Introduction
 
 The home app contains mainly static pages.
 At the moment it does not define its own models.
-The only view that is not a basic template view is the language switcher.
+The only views that are not  basic template views are the language switcher,
+and the examples page.
 
 home\.urls module
 -----------------
