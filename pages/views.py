@@ -673,8 +673,14 @@ class PagePreview(UserPassesTestMixin, DetailView):
 
     def test_func(self):
         """
-        Access test: Only the owner of the page can preview it.
+        Access test:
+
+        Normally only the owner of the page can preview it.
+        An exception is made for superusers who can view the page through
+        the django-admin.
         """
+        if self.kwargs.get("reason") == "admin":
+            return self.request.user.is_superuser
         return self.request.user == self.get_object().user
 
 

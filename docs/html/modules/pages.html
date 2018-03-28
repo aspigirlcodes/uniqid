@@ -122,6 +122,12 @@ a new token is generated.</p>
 <dd><p>Check that the token allows access to this page.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="pages.models.Page.get_absolute_url">
+<code class="descname">get_absolute_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pages.models.Page.get_absolute_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>only for use in the django-admin.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -510,7 +516,10 @@ redirects to.</dd>
 <dl class="method">
 <dt id="pages.views.PagePreview.test_func">
 <code class="descname">test_func</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pages.views.PagePreview.test_func" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access test: Only the owner of the page can preview it.</p>
+<dd><p>Access test:</p>
+<p>Normally only the owner of the page can preview it.
+An exception is made for superusers who can view the page through
+the django-admin.</p>
 </dd></dl>
 
 </dd></dl>

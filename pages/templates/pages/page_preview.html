@@ -7,7 +7,9 @@
     <div class="row">
       <div class="col">
         <a href={% if reason == "creating" %}"{% url "pages:addmodule" page.id %}"
-                {% elif reason == "final" %}"{% url "pages:pagelist" %}"{% endif %}>
+                {% elif reason == "final" %}"{% url "pages:pagelist" %}"
+                {% elif reason == "admin" %}"{% url "admin:pages_page_change" page.id %}"
+                {% endif %}>
                 {% trans "back" %} </a>
       </div>
     </div>
