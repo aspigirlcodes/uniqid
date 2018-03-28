@@ -36,3 +36,10 @@ templatetags pages_tags.py
 .. automodule:: pages.templatetags.pages_tags
     :members:
     :show-inheritance:
+
+custom fields and widgets fields.py
+-----------------------------------
+
+.. automodule:: pages.fields
+    :members:
+    :show-inheritance:

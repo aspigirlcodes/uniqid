@@ -661,6 +661,74 @@ and a string sense: (sound, light, smell or temperature)</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-pages.fields">
+<span id="custom-fields-and-widgets-fields-py"></span><h2>custom fields and widgets fields.py<a class="headerlink" href="#module-pages.fields" title="Permalink to this headline">¶</a></h2>
+<p>Formfields and widgets specific for the pages forms.
+Most of them are to be used with the
+<code class="xref py py-class docutils literal"><span class="pre">django.contrib.postgres.fields.array.ArrayField</span></code>.</p>
+<dl class="class">
+<dt id="pages.fields.ItemTextWidget">
+<em class="property">class </em><code class="descname">ItemTextWidget</code><span class="sig-paren">(</span><em>attrs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.fields.ItemTextWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.widgets.TextInput</span></code></p>
+<p>A text widget with a + button at the end to duplicate itself using
+javascript.</p>
+<p>Relies on bootstrap for the button.</p>
+<p>Meant to be used for CharField items in a
+<a class="reference internal" href="#pages.fields.DynamicSplitArrayField" title="pages.fields.DynamicSplitArrayField"><code class="xref py py-class docutils literal"><span class="pre">pages.fields.DynamicSplitArrayField</span></code></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pages.fields.DynamicSplitArrayWidget">
+<em class="property">class </em><code class="descname">DynamicSplitArrayWidget</code><span class="sig-paren">(</span><em>widget</em>, <em>max_size</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.fields.DynamicSplitArrayWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.widgets.Widget</span></code></p>
+<p>Derived from <code class="xref py py-class docutils literal"><span class="pre">django.contrib.postgres.forms.SplitArrayWidget</span></code>.</p>
+<p>It’s functionality is similar except that the number of subwidgets is
+variable and items can be added in the front-end as well.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pages.fields.DynamicSplitArrayField">
+<em class="property">class </em><code class="descname">DynamicSplitArrayField</code><span class="sig-paren">(</span><em>base_field</em>, <em>max_size</em>, <em>remove_nulls=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.fields.DynamicSplitArrayField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.fields.Field</span></code></p>
+<p>A formfield to work together with the
+<a class="reference internal" href="#pages.fields.DynamicSplitArrayWidget" title="pages.fields.DynamicSplitArrayWidget"><code class="xref py py-class docutils literal"><span class="pre">pages.fields.DynamicSplitArrayWidget</span></code></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pages.fields.ArraySelectMultiple">
+<em class="property">class </em><code class="descname">ArraySelectMultiple</code><span class="sig-paren">(</span><em>attrs=None</em>, <em>choices=()</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.fields.ArraySelectMultiple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.widgets.CheckboxSelectMultiple</span></code></p>
+<p>A checkbox  select multiple widget to be used with a
+<a class="reference internal" href="#pages.fields.ChoiceArrayField" title="pages.fields.ChoiceArrayField"><code class="xref py py-class docutils literal"><span class="pre">ChoiceArrayField</span></code></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pages.fields.ChoiceArrayField">
+<em class="property">class </em><code class="descname">ChoiceArrayField</code><span class="sig-paren">(</span><em>base_field</em>, <em>size=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.fields.ChoiceArrayField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.postgres.fields.array.ArrayField</span></code></p>
+<p>Modelfield that is a slight variation of the
+<code class="xref py py-class docutils literal"><span class="pre">django.contrib.postgres.fields.array.ArrayField</span></code>.</p>
+<p>When used with choices on the inner field it uses checkboxes instead
+of a dropdown select field in the forms.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pages.fields.RadioWithHelpSelect">
+<em class="property">class </em><code class="descname">RadioWithHelpSelect</code><span class="sig-paren">(</span><em>help_texts=None</em>, <em>attrs=None</em>, <em>choices=()</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.fields.RadioWithHelpSelect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.widgets.RadioSelect</span></code></p>
+<p>Variation of the RadioSelect widget.</p>
+<p>Allows to display a help text with each option.
+The help_texts are passed as a dictionary where each key is an option value
+and the value is the options help text.</p>
+<dl class="method">
+<dt id="pages.fields.RadioWithHelpSelect.optgroups">
+<code class="descname">optgroups</code><span class="sig-paren">(</span><em>name</em>, <em>value</em>, <em>attrs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pages.fields.RadioWithHelpSelect.optgroups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of optgroups for this widget.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 
 

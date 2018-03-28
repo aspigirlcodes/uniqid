@@ -1,3 +1,9 @@
+"""
+Formfields and widgets specific for the pages forms.
+Most of them are to be used with the
+:class:`django.contrib.postgres.fields.array.ArrayField`.
+"""
+
 import copy
 from itertools import chain
 
@@ -11,6 +17,15 @@ from django.utils.encoding import force_text
 
 
 class ItemTextWidget(TextInput):
+    """
+    A text widget with a + button at the end to duplicate itself using
+    javascript.
+
+    Relies on bootstrap for the button.
+
+    Meant to be used for CharField items in a
+    :class:`pages.fields.DynamicSplitArrayField`.
+    """
     template_name = 'widgets/itemtext.html'
 
     class Media:
@@ -18,6 +33,12 @@ class ItemTextWidget(TextInput):
 
 
 class DynamicSplitArrayWidget(Widget):
+    """
+    Derived from :class:`django.contrib.postgres.forms.SplitArrayWidget`.
+
+    It's functionality is similar except that the number of subwidgets is
+    variable and items can be added in the front-end as well.
+    """
     template_name = 'widgets/split_array_list.html'
 
     def __init__(self, widget, max_size, **kwargs):
@@ -98,6 +119,10 @@ class DynamicSplitArrayWidget(Widget):
 
 
 class DynamicSplitArrayField(Field):
+    """
+    A formfield to work together with the
+    :class:`pages.fields.DynamicSplitArrayWidget`.
+    """
     default_error_messages = {
         'item_invalid': _('Item %(nth)s in the array did not validate: '),
     }
@@ -144,6 +169,10 @@ class DynamicSplitArrayField(Field):
 
 
 class ArraySelectMultiple(CheckboxSelectMultiple):
+    """
+    A checkbox  select multiple widget to be used with a
+    :class:`ChoiceArrayField`.
+    """
     template_name = 'widgets/bs_checkbox_select.html'
     option_template_name = 'widgets/bs_checkbox_option.html'
 
@@ -165,6 +194,13 @@ class ArraySelectMultiple(CheckboxSelectMultiple):
 
 
 class ChoiceArrayField(ArrayField):
+    """
+    Modelfield that is a slight variation of the
+    :class:`django.contrib.postgres.fields.array.ArrayField`.
+
+    When used with choices on the inner field it uses checkboxes instead
+    of a dropdown select field in the forms.
+    """
 
     def formfield(self, **kwargs):
         defaults = {
@@ -180,6 +216,13 @@ class ChoiceArrayField(ArrayField):
 
 
 class RadioWithHelpSelect(RadioSelect):
+    """
+    Variation of the RadioSelect widget.
+
+    Allows to display a help text with each option.
+    The help_texts are passed as a dictionary where each key is an option value
+    and the value is the options help text.
+    """
     template_name = 'widgets/bs_checkbox_select.html'
     option_template_name = 'widgets/radio_option_with_help.html'
 
