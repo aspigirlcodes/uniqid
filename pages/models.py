@@ -9,6 +9,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.conf import settings
 from django.utils import six
 from django.utils.crypto import constant_time_compare, salted_hmac
+from django.urls import reverse
 
 from .fields import ChoiceArrayField
 
@@ -178,6 +179,12 @@ class Page(models.Model):
             six.text_type(self.pk) + six.text_type(self.token_count) +
             six.text_type(self.token_ts)
         )
+
+    def get_absolute_url(self):
+        """
+        only for use in the django-admin.
+        """
+        return reverse('pages:pagepreview', args=[str(self.id), "admin"])
 
     def __str__(self):
         return self.title

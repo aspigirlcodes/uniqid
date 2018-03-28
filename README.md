@@ -58,4 +58,4 @@ The last release is tagged 'v0.5'
 ## documentation
 [The written thesis about this project](thesis/thesis.pdf)
 
-[Reference documentation for this project](docs/_build/html/index.html)
+[Reference documentation for this project](https://aspigirlcodes.github.io/uniqid/)
